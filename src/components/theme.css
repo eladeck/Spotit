@@ -1,0 +1,221 @@
+nav {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    background-color:rgb(141, 221, 178);
+    font-size:40px;
+    height:60px;
+    border-top-left-radius: 11px;
+    border-top-right-radius: 11px;
+    font-family: 'Hind Madurai', sans-serif;
+  }
+
+  /* scroll-bar design
+  ::-webkit-scrollbar {
+    width: 50px;
+    height: 50px;
+    }
+    
+    // Track
+    ::-webkit-scrollbar-track {
+    // background:url("runway.png"); and to change the scroll to airplane on runway :) 
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+    background-image: url("../../public/img/control-tower-scroll.png");
+    background-repeat: no-repeat;
+    }
+    
+    ::-webkit-scrollbar-corner {
+    background: rgba(0,0,0,0);
+    } */
+  
+  .top-spotits {
+    text-align:center;
+  }
+  
+  .feed {
+    text-align:center;
+  }
+  
+
+  ul {
+    list-style-type: none;
+    padding: 0px;
+  }
+  
+  li {
+      padding:5px;
+  }
+  
+  .title {
+    margin-left: 150px;;
+    margin-right: 150px;
+
+    background-color: rgb(182, 200, 194);
+    color:rgb(35, 39, 42);
+    transition: 1s
+  }
+
+  .clickable-title {
+    margin-bottom: 0px;
+    margin-top: 80px;
+  }
+
+  .clickable-title:hover {
+      background-color: azure;
+      cursor: pointer;
+      transform: scale(0.95) rotate(5deg);
+  }
+  
+  .go-spotit {
+    text-align:center;
+  }
+
+/* imageWRAPPER!*/
+  .image-wrapper {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    display:block;
+    margin-bottom:15px;
+  }
+
+  .image-wrapper:hover {
+    box-shadow: 0 30px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  }
+/*IMAGE WRAPPER END*/
+  
+  @import url('https://fonts.googleapis.com/css?family=Bowlby+One+SC');
+
+  h1 {
+    text-align: center;
+    font-family: 'Bowlby One SC', cursive;
+  }
+
+  .feed > h1 {
+    text-align:center;
+  }
+
+  .image-wrapper > img {
+      width:100%;
+  }
+
+  .img-grade {
+    position: absolute;
+    width: fit-content;
+    margin-top:270px;
+    padding:5px;
+    font-size: 2em;
+  }
+  
+  .image-wrapper > h2 {
+      position: absolute;
+      width: fit-content;
+      text-align: left;
+      margin:auto;
+      padding:5px;
+      font-family: impact, sans-serif;
+      font-size: 2em;
+      text-transform: uppercase;
+      color: white;
+      letter-spacing: 1px;
+      text-shadow:
+          2px 2px 0 #000,
+          -2px -2px 0 #000,
+          2px -2px 0 #000,
+          -2px 2px 0 #000,
+          0 2px 0 #000,
+          2px 0 0 #000,
+          0 -2px 0 #000,
+          -2px 0 0 #000,
+          2px 2px 5px #000;
+  }
+
+        .scroll-container {
+            overflow: hidden;
+            max-height: 400px;
+       }
+
+       .scorll-ul{
+        animation: scroll 50s infinite linear;
+        width: fit-content;
+        align-content: center;
+        margin: auto;
+       }
+
+       .scorll-ul:hover{
+        animation-play-state:paused;
+       }
+
+       @keyframes scroll{
+           0%   {transform:translateY(0%); }
+           100%   {transform:translateY(-100%); }
+       }
+  
+  .container {
+    max-width: 120rem;
+    /*margin: 4vw auto;*/
+    background-color: rgba(241, 231, 231, 0.322);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2rem 6rem 0.5rem rgba(101, 90, 86, 0.2);
+    display: grid;
+    /*grid-template-rows: 10rem minmax(100rem, auto); no need because we have only 3 cols (no rows)*/
+    grid-template-columns: auto auto auto;
+    grid-template-areas: "top-spotits feed go-spotit"; 
+    grid-auto-columns: 100px;
+  }
+  
+  
+  /*MODALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL*/
+  .modal {
+    font-size:12px;
+  }
+  .modal > .header {
+    width: 100%;
+    border-bottom: 1px solid gray;
+    font-size: 18px;
+    text-align: center;
+    padding: 5px;
+  }
+  .modal > .content {
+    width: 100%;
+    padding: 10px 5px;
+    max-height:500px;
+    overflow-y: scroll;
+  }
+  .modal > .actions {
+    width: 100%;
+    padding: 10px 5px;
+    margin: auto;
+    text-align: center;
+  }
+  .modal > .close {
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    padding: 2px 5px;
+    line-height: 20px;
+    right: -10px;
+    top: -10px;
+    font-size: 24px;
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #cfcece;
+  }
+  /*MODAL*/
+
+  .top-spotit-user {
+    background-image:linear-gradient(to right, rgba(187, 234, 236, 0.342), rgba(11, 187, 231, 0.486), rgba(187, 234, 236, 0.342));
+    /* background-image:linear-gradient(to right, rgb(11, 187, 231), rgba(187, 234, 236, 0.342)); */
+    display: inline-block;
+    width: 334px;
+    border-radius: 15%;
+    margin: auto;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size:2em;
+
+  }
+  
