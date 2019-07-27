@@ -69,7 +69,8 @@ class Register extends Component {
         })
         .then(newUser => {
             console.log(`server just sent as with:`);
-            console.log(newUser);
+
+
             
             this.props.handleSuccessfulLogin(newUser)
         })

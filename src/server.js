@@ -10,8 +10,8 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.text());
 
 app.use(express.static("../public")) 
+app.use(express.static("./")) // for fetching images! because client knows the path to the images ./server/images/BAA380.jpg
 
-let userCollection = 4;
 let dbo;
 
 MongoClient.connect(mongoUrl, { useNewUrlParser: true }, (err, db) => {
@@ -19,8 +19,8 @@ MongoClient.connect(mongoUrl, { useNewUrlParser: true }, (err, db) => {
     console.log('Connected successfully to database!');
     dbo = db.db("SpotItCollection");
 
-    userCollection = dbo.collection('users');
-    app.locals.userCollection = userCollection;
+    app.locals.usersCollection = dbo.collection('users');
+    app.locals.imgCollection = dbo.collection('images');
 });
 
 console.log(`app local finished`)

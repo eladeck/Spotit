@@ -15,20 +15,24 @@ class Container extends Component {
       this.state = {
           isLoggedIn: false,
           screenToRender: "Register",
-          loggedInUser:{}
+          loggedInUser:null,
+          allFollowingImages:null
       }
 
       this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
       this.handleLogout = this.handleLogout.bind(this);
       this.switchScreen = this.switchScreen.bind(this);
+      this.extractAllImagesOfFollowings = this.extractAllImagesOfFollowings.bind(this);
+      this.extratAllFollowing = this.extratAllFollowing.bind(this)
     }
 
+    componentWillUnmount() {
+    } // componentWillUnmount
+    
     componentDidMount() {
       console.log(`---- in Contariner component DID mount ----`)
-    }
-    componentWillUnmount() {
-      console.log(`---- in Contariner component WILL UNmount ----`)
-    }
+      
+    } // componentDidMount
 
     handleLogout() {
       this.setState({
@@ -36,21 +40,78 @@ class Container extends Component {
         screenToRender: "Register"
       });
       console.log(`in Container\'s handle Logout!, screenToRender is ${this.state.screenToRender}`)
+    
     }
+
+    extractAllImagesOfFollowings(allFollowing) {
+
+      console.log(`in extract All Images Of following, allFollowing is`)
+      console.log(allFollowing)
+
+      const loggedInUser = this.state.loggedInUser
+      const allFollowingImages = []
+
+      let realAmountOfAllImages = 0
+      allFollowing.forEach(followerObj => realAmountOfAllImages += followerObj.images.length)
+
+      console.log(`real amount of all images is ${realAmountOfAllImages}`)
+      
+
+      allFollowing.forEach(followerObj => {
+
+        followerObj.images.forEach(imgId => {
+
+          fetch(`user/getImage?imgId=${imgId}`, {method:'GET', credentials:'include'})
+          .then(response => response.json())
+          .then(imgObj => {
+            allFollowingImages.push(imgObj);
+            if(allFollowingImages.length === realAmountOfAllImages) {
+              console.log(`allFollowingImages is`)
+              console.log(allFollowingImages)
+              this.setState({allFollowingImages})
+            } // if
+          }) // last then
+        }); // images forEach
+      }); // allFollowing forEach
+
+    } // extractAllImagesOfFollowings
+
+    extratAllFollowing() {
+      const loggedInUser = this.state.loggedInUser;
+
+      if(!loggedInUser) {
+        console.log(`loggedInUser is null`)
+      } else {
+
+        const loggedInUser = this.state.loggedInUser;
+        console.log(`in extract all following, loggedInUser is:`)
+        console.log(loggedInUser)
+
+        const allFollowing = [];
+
+        loggedInUser.following.forEach(followerUserName => {
+          fetch(`user/getUser?userName=${followerUserName}`, {method:'GET', credentials:'include'})
+          .then(response => response.json())
+          .then(followerObj => {
+            allFollowing.push(followerObj);
+            if(allFollowing.length === loggedInUser.following.length) {
+              this.extractAllImagesOfFollowings(allFollowing)
+            }
+          })
+        });
+      } // else
+
+    } // extratAllFollowing
     
 
     handleSuccessfulLogin(userToLogin) {
-
-      
-
       this.setState({
         isLoggedIn: true,
         screenToRender: "Main",
         loggedInUser: userToLogin,
-      });
+      }, this.extratAllFollowing);
 
-      console.log("in handleSuccessfulLogin!");
-    }
+    } // handleSuccessfulLogin
 
     switchScreen(nextScreen) {
       this.setState({
@@ -83,7 +144,11 @@ class Container extends Component {
 
         switch(this.state.screenToRender) {
           case "Main":
-            return <Main />; 
+            return (
+              <Main
+                allFollowingImages={this.state.allFollowingImages}
+              />
+            )
           case "Register":
             return <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />;
           default:

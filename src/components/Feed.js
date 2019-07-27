@@ -1,5 +1,7 @@
 
 import React, { Component } from "react"
+import Loader from 'react-loader-spinner'
+
 
 
 class Feed extends Component {
@@ -7,7 +9,7 @@ class Feed extends Component {
         super(props);
 
         this.state = {
-            images:[],
+            // images:[],
         } // Feed state
 
         this.importImages = this.importImages.bind(this);
@@ -27,18 +29,25 @@ class Feed extends Component {
         // });
 
         // 2. Create array of components (images) that will be displayed in the news feed.
-        const imageWrappers =  this.getImgesFromDB().map(el => {
-            return(
-                <div key={el.url + el.user} className="image-wrapper">
+        if(!this.props.allFollowingImages) {
+
+            console.log(`in Feed, allFollowingImages is null`)
+            return null;
+        } else {
+
+            const imageWrappers = this.props.allFollowingImages.map(el => {
+                return(
+                    <div key={el.url + el.user} className="image-wrapper">
                     <h2>{el.user}</h2>
                     <div className='img-grade'>&#9733; &#9733; &#9733; &#9734; &#9734;</div>
                     <img src={el.url} alt="not working" />
                 </div>
-            )
-        });
-
-        return imageWrappers;
-    }
+                )
+            });
+        
+            return imageWrappers;
+          } // else
+    } // importImages
 
     getImgesFromDB() {
         const jsonImages = [
@@ -86,11 +95,11 @@ class Feed extends Component {
         return  jsonImages;
     }
     render() {
-        console.log()
+        const images = this.importImages();
         return (
             <div className="feed">
                 <h1 className="title">Spotit Feed</h1>
-                {this.importImages()}
+                {images ? images : <Loader type="TailSpin" color="green" height={80} width={80} />}
             </div>
         ); 
     } // render

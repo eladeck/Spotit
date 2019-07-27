@@ -1,23 +1,39 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import TopSpotIts from "./TopSpotIts"
 import Feed from "./Feed"
 import GoSpotit from "./GoSpotit"
 import "./theme.css"
-function Main() {
-  return (
-    <Wrapper>
+
+class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    }
+
+  } // c'tor
+
+  // methods...
+
+  render() {
+
+    return (
+      <>
         <div className='container'>
             <TopSpotIts />    
-            <Feed />
+            <Feed
+                allFollowingImages={this.props.allFollowingImages}
+            />
             <GoSpotit />
         </div>
-    </Wrapper>
-  );
-}
+      </>
+    ) // return render
+  } // render
+} // Main Component
 
-const Wrapper = styled.div`
-    /* omitted */
-`;
+// const Wrapper = styled.div`
+//     /* omitted */
+// `;
 
 export default Main;
