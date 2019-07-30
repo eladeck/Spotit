@@ -39,10 +39,51 @@ router.get('/getImage', (req, res) => {
         } else {
             res.send(result[0]) // result[0] because it's an array
         }
-    })
+    });
+}); // getImage
 
+// Same like "/getImage", just this route, brings all the user's images in one time.
+router.get('/getImages', (req, res) => {
 
+    const userName = req.query.userName;
+    console.log(`userName is: `);
+    console.log(userName);
+    const imgCollection = req.app.locals.imgCollection;
+    const usersCollection = req.app.locals.usersCollection;
 
+    const images = [];
+    usersCollection.find({"userName": userName}).toArray((err, result) => {
+        if (err || result.length === 0) {
+            res.send(401, {errMsg:`no userName ${userName}.`});
+        } else {
+            const user = result[0];
+            console.log("found user");
+            console.log(user);
+
+            user.images.forEach(imgId => {
+                imgCollection.find({"_id": ObjectId(imgId)}).toArray(function(err, result) {
+                    if (err || result.length === 0) {
+                        res.send(401, {errMsg:`no such img with ${imgId} id`});
+                    } else {
+                        console.log("the image returned is:");
+                        console.log(result[0]);
+                        images.push(result[0]);
+
+                        if(images.length === user.images.length) {
+                            console.log("images array is: ")
+                            console.log(images);
+                            res.send(images);
+                        }
+
+                    }
+                });
+            });
+
+            // console.log("images array is: ")
+            // console.log(images);
+            // res.send(images);
+        }
+    });
 }); // getImage
 
 router.get('/login', (req, res) => {
