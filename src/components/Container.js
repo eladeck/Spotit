@@ -43,7 +43,7 @@ class Container extends Component {
     
     }
 
-    extractAllImagesOfFollowings(allFollowing) {
+   /* extractAllImagesOfFollowings(allFollowing) {
 
       console.log(`in extract All Images Of following, allFollowing is`)
       console.log(allFollowing)
@@ -75,6 +75,38 @@ class Container extends Component {
       }); // allFollowing forEach
 
     } // extractAllImagesOfFollowings
+*/
+
+    extractAllImagesOfFollowings(allFollowing) { // MODIFIED "extractAllImagesOfFollowings" method.
+
+      console.log(`in extract All Images Of following, allFollowing is`)
+      console.log(allFollowing)
+
+      const loggedInUser = this.state.loggedInUser
+      let allFollowingImages = []
+
+      let realAmountOfAllImages = 0
+      allFollowing.forEach(followerObj => realAmountOfAllImages += followerObj.images.length)
+
+      console.log(`real amount of all images is ${realAmountOfAllImages}`)
+      
+
+      allFollowing.forEach(followerObj => {
+        fetch(`user/getImages?userName=${followerObj.userName}`, {method: 'GET', credentials: 'include'})
+        .then(response => response.json())
+        .then(imgObj => {
+          console.log(`imgObj is`);
+          console.log(imgObj);
+          allFollowingImages = allFollowingImages.concat(imgObj);
+          console.log(`allFollowingImages length is ${allFollowingImages.length}.`)
+          if(allFollowingImages.length === realAmountOfAllImages) {
+            console.log(`allFollowingImages is`)
+            console.log(allFollowingImages)
+            this.setState({allFollowingImages})
+          } // if
+        }); // last then
+    });// End of forEach
+   } // extractAllImagesOfFollowings
 
     extratAllFollowing() {
       const loggedInUser = this.state.loggedInUser;

@@ -33,7 +33,7 @@ console.log(`app local finished`)
 app.use('/user', user);
 
 console.log(`nefore app.listen`)
-const port = 3001;
+const port = 3002;
 app.listen(port, () => console.log(`started listening to port ${port}!`))
 
 module.exports = MongoClient;
