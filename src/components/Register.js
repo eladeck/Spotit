@@ -81,7 +81,9 @@ class Register extends Component {
         return false;
     }
 
-    handleLogin() {
+    handleLogin(e) {
+        e.preventDefault(); //  to stop the page trying to load the action url. (and 'refresh' the page)
+        
         console.log(this.state.registeredUser.regUserName)
         console.log(this.state.registeredUser.regPassword)
 
@@ -184,13 +186,13 @@ class Register extends Component {
                 </form>
                 <hr />
 
-                <form>
+                <form onSubmit={this.handleLogin}>
                     <input  name="regUserName"  value={this.state.registeredUser.userName} onChange={this.handleChange}  placeholder="Username"  />
                     <br />
                     <input type="password" name="regPassword"  value={this.state.registeredUser.password} onChange={this.handleChange}  placeholder="Password" />
                     <br />
                     <div style={{color:"red"}}>{this.state.errMsg}</div>
-                    <button type="button" onClick={this.handleLogin}>Log In</button>
+                    <button type="submit">Log In</button>
                 </form>
                 <hr />
                 <h2>Entered information:</h2>
