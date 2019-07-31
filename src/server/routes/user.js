@@ -6,19 +6,7 @@ const bycrypt = require('bcryptjs');
 let userSchema = require('../models/userSchema');
 let dbo = require('../../server');
 
-
-// Register form
-router.get('/register', (req, res) => {
-    res.render('register');
-});
-
-router.get('/getUser', (req, res) => {
-
-    const userName = req.query.userName;
-    console.log(userName)
-    console.log(typeof userName)
-
-    const usersCollection = req.app.locals.usersCollection;
+router.getUserfromDb = (userName, usersCollection, res) => {
     usersCollection.find({userName}).toArray(function(err, result) {
         if (err || result.length === 0) {
             res.send(401, {errMsg:'no such user name'});
@@ -26,6 +14,26 @@ router.get('/getUser', (req, res) => {
             res.send(result[0])
         }
     })
+}
+
+// Register form
+router.get('/register', (req, res) => {
+
+
+    // const userId = Math.floor(Math.random() * 900000) + 100000; //some random number
+    // res.cookie('user_id', userId, {expires: new Date(2020, 1, 1)});
+    // res.send("you are signed up with the user id: " + userId + ". go back <a href='/'>HOME</a>")
+
+
+    res.render('register');
+});
+
+router.get('/getUser', (req, res) => {
+    const userName = req.query.userName;
+    console.log(userName)
+    console.log(typeof userName)
+    const usersCollection = req.app.locals.usersCollection;
+    router.getUserfromDb(userName, usersCollection, res);
 });
 
 router.get('/getImage', (req, res) => {
@@ -90,6 +98,8 @@ router.get('/login', (req, res) => {
     const userName = req.query.userName;
     const password = req.query.password;
 
+    res.cookie('userName', userName, {expires: new Date(2020, 1, 1)});
+
     // console.log(userName)
     // console.log(password)
     // console.log(typeof userName)
@@ -120,9 +130,10 @@ router.post('/addNewUser', (req, res) => {
     newUser.following = []
     newUser.followedBy = []
     newUser.images = []
-
+    
     delete newUser.password2
-
+    
+    res.cookie('userName', newUser.userName, {expires: new Date(2020, 1, 1)});
     console.log(newUser)
 
     // const name = newUser.name;
@@ -137,7 +148,7 @@ router.post('/addNewUser', (req, res) => {
     // req.checkBody('userName', 'User name is required').notEmpty();
     // req.checkBody('password', 'Password is required').notEmpty();
     // req.checkBody('password2', 'Passwords do not match').equals(password);
-
+    
     const usersCollection = req.app.locals.usersCollection;
     usersCollection.insertOne(newUser, function(err, res) {
         if (err) throw err;

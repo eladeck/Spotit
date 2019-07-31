@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import Loader from 'react-loader-spinner';
 import { Switch, Route, withRouter } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { Link } from "react-router-dom";
@@ -14,7 +15,7 @@ class Container extends Component {
 
       this.state = {
           isLoggedIn: false,
-          screenToRender: "Register",
+          screenToRender: null,
           loggedInUser:null,
           allFollowingImages:null
       }
@@ -31,7 +32,27 @@ class Container extends Component {
     
     componentDidMount() {
       console.log(`---- in Contariner component DID mount ----`)
-      
+      fetch('/home', {method: "GET", credentials: "include"})
+      .then(response => {
+        console.log("response: ")
+        console.log(response)
+        console.log(response.json());
+        return response.json()})
+      .then(obj => {
+        console.log("obj is-------------------")
+        console.log(obj)
+        if(obj.notLoggedInMessage) {
+          // Render Register.js
+          this.setState({
+            screenToRender: "Register"
+          })
+        } else {
+          this.setState({
+            loggedInUser: obj,
+            screenToRender: "Main"
+          });
+        }
+      });
     } // componentDidMount
 
     handleLogout() {
@@ -183,6 +204,8 @@ class Container extends Component {
             )
           case "Register":
             return <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />;
+          case null:
+              return  <Loader type="TailSpin" color="green" height={80} width={80} />
           default:
             return <div>{this.state.screenToRender}  is not a screen in the application.</div>;
         }
