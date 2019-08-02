@@ -36,7 +36,7 @@ class Container extends Component {
       .then(response => {
         console.log("response: ")
         console.log(response)
-        console.log(response.json());
+        //console.log(response.json());
         return response.json()})
       .then(obj => {
         console.log("obj is-------------------")
@@ -51,8 +51,10 @@ class Container extends Component {
             loggedInUser: obj,
             screenToRender: "Main"
           });
+          this.handleSuccessfulLogin(obj);
         }
-      });
+      })
+      .catch(err => console.log(err));
     } // componentDidMount
 
     handleLogout() {

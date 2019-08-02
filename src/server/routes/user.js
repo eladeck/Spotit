@@ -6,7 +6,7 @@ const bycrypt = require('bcryptjs');
 let userSchema = require('../models/userSchema');
 let dbo = require('../../server');
 
-router.getUserfromDb = (userName, usersCollection, res) => {
+router.getUserFromDb = (userName, usersCollection, res) => {
     usersCollection.find({userName}).toArray(function(err, result) {
         if (err || result.length === 0) {
             res.send(401, {errMsg:'no such user name'});
@@ -33,7 +33,7 @@ router.get('/getUser', (req, res) => {
     console.log(userName)
     console.log(typeof userName)
     const usersCollection = req.app.locals.usersCollection;
-    router.getUserfromDb(userName, usersCollection, res);
+    router.getUserFromDb(userName, usersCollection, res);
 });
 
 router.get('/getImage', (req, res) => {

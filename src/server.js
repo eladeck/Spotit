@@ -26,11 +26,13 @@ MongoClient.connect(mongoUrl, { useNewUrlParser: true }, (err, db) => {
 
 app.get('/home', (req, res) => {
     const userName = req.cookies.userName;
-    console.log(`in server.js: app.get('/'):`);
+    console.log(`in server.js: app.get('/home'):`);
     if(userName) {
         // Load user from database.
-        user.getUsersFromDb(userName, app.locals.usersCollection, res); // No need to add "res.send()" as getUsersFromDb does it already.
+        console.log(`in server.js: app.get('/home'): inside if`);
+        user.getUserFromDb(userName, app.locals.usersCollection, res); // No need to add "res.send()" as getUsersFromDb does it already.
     } else {
+        console.log(`in server.js: app.get('/home'): inside else`);
         res.send({notLoggedInMessage:"No user logged in."})
     }
 });
