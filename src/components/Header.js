@@ -1,8 +1,10 @@
 import React, { Component } from "react"
 // import pilotLogo from "./img/pilot-logo.jpg"
-import Container from './Container'
-import { Link } from "react-router-dom";
-
+import Container from './Container';
+import ImageForm from './ImageForm';
+import {BrowserRouter, Link,Route} from "react-router-dom";
+let Router = BrowserRouter;
+//let {BrowserRouter, Link,Route} = ReactRouterDOM;
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -71,15 +73,22 @@ class Header extends Component {
 
         
         return (
-            <nav>
-                <div style={titleStyle}>Spotit</div>
-                <input placeholder="Search..." style={inputStyle} type="textbox"></input>
-                {/* <Link to="/register"><div style={registerStyle}>Register</div></Link> */}
-                <div style={aboutStyle}>About</div>
-                <div onClick={this.handleLogout} style={airplaneLogo}>log out</div>
-                <img onClick={() => alert("--you won profile--")} style={airplaneLogo} src={"./img/airplane.png"} alt="not working" />
-                <img onClick={() => alert("--you won profile--")} style={pilotLogoStyle} src={"./img/pilot-logo.jpg"} alt="not working" />
-            </nav>
+            <Router>
+                <nav>
+
+                
+                    <div style={titleStyle}>Spotit</div>
+                    <input placeholder="Search..." style={inputStyle} type="textbox"></input>
+                    {/* <Link to="/register"><div style={registerStyle}>Register</div></Link> */}
+                    <div style={aboutStyle}>About</div>
+                    <div onClick={this.handleLogout} style={airplaneLogo}>log out</div>
+                    <div style={airplaneLogo}><Link to="/imageForm">Add Picture</Link></div>
+                    <img onClick={() => alert("--you won profile--")} style={airplaneLogo} src={"./img/airplane.png"} alt="not working" />
+                    <img onClick={() => alert("--you won profile--")} style={pilotLogoStyle} src={"./img/pilot-logo.jpg"} alt="not working" />
+
+                    <Route path="/imageForm" component={() => <ImageForm />} />
+                </nav>
+            </Router>
         );
     }
 

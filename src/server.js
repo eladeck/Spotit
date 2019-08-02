@@ -22,6 +22,12 @@ MongoClient.connect(mongoUrl, { useNewUrlParser: true }, (err, db) => {
     
     app.locals.usersCollection = dbo.collection('users');
     app.locals.imgCollection = dbo.collection('images');
+    app.locals.airlines = dbo.collection('airlines');
+    app.locals.aircrafts = dbo.collection('aircrafts');
+    app.locals.countries = dbo.collection('countries');
+    app.locals.cities = dbo.collection('cities');
+    app.locals.airports = dbo.collection('airports');
+    app.locals.cities = dbo.collection('cities');
 });
 
 app.get('/home', (req, res) => {
@@ -36,6 +42,42 @@ app.get('/home', (req, res) => {
         res.send({notLoggedInMessage:"No user logged in."})
     }
 });
+
+app.get('/imageFormData', async (req, res) => {
+    let imageFormData = {
+    };
+    const airlines = req.app.locals.airlines;
+    const aircrafts = req.app.locals.aircrafts;
+    const countries = req.app.locals.countries;
+    const cities = req.app.locals.cities;
+    const airports = req.app.locals.airports;
+    
+    const collectionPromise = (collection) => {
+        return new Promise((resolve, reject) => {
+            collection.find({}).toArray((err, result) => {
+                err ? reject(err) : resolve(result);
+            })});
+    }
+
+    const callCollectionPromise = async () => {
+        imageFormData.airlines = await (collectionPromise(airlines));
+        imageFormData.aircrafts = await (collectionPromise(aircrafts));
+        imageFormData.countries = await (collectionPromise(countries));
+        imageFormData.cities = await (collectionPromise(cities));
+        imageFormData.airports = await (collectionPromise(airports));
+        return imageFormData;
+    }
+
+    callCollectionPromise()
+    .then(result => {
+        res.send(result);
+    })
+    .catch(err => {
+        console.log(err);
+        res.send(401, {errMsg:`Error occured while fetching data from database.`});
+    });
+});
+
 app.use('/user', user);
 const port = 3002;
 app.listen(port, () => console.log(`started listening to port ${port}!`))

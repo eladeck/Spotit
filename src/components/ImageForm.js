@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 
-class Register extends Component {
+class ImageForm extends Component {
     constructor() {
         super()
         this.state = {
@@ -9,11 +9,12 @@ class Register extends Component {
            registration: "",
            country: "",
            airport: "",
-           date: ""
+           date: "",
+           imageFormData: null
         }
-        this.handleChange = this.handleChange.bind(this)
-        this.handleRegister = this.handleRegister.bind(this)
-        this.handleLogin = this.handleLogin.bind(this)
+
+        
+        this.handleChange = this.handleChange.bind(this);
     }
     
     handleChange(event) {
@@ -41,100 +42,67 @@ class Register extends Component {
         })
     }
 
+    componentWillMount() {
+        fetch(`/imageFormData`, {method: 'GET', credentials: 'include'})
+        .then(response => {
+            return response.json()
+        })
+        .then(res => {
+            console.log(`in this.componentDidMount, res is:`);
+            console.log(res.airlines[0]);
+            this.setState({imageFormData: res})
+        })
+        .catch(errMsg => {console.log(errMsg); this.setState({errMsg})})
+    }
 
     render() {
-        window.state = this.state
-
+        window.state = this.state;
 
         return (
-            <main>
-                <form action="users/register" onSubmit={this.handleRegister}>
-                    <input  name="firstName"  value={this.state.newUser.firstName}  onChange={this.handleChange}  placeholder="First Name"  />
-                    <br />
-                    
-                    <input  name="lastName"  value={this.state.newUser.lastName} onChange={this.handleChange}  placeholder="Last Name"  />
-                    <br />
+           !this.state.imageFormData ? <div>Loading...</div> : 
+           <main>
+                <form action="users/register" onSubmit={this.handleSubmit}>
 
-                    <input  name="email"  value={this.state.newUser.email} onChange={this.handleChange}  placeholder="Email"  />
-                    <br />
-
-                    <input  name="userName"  value={this.state.newUser.userName} onChange={this.handleChange}  placeholder="Username"  />
-                    <br />
-                    
-                    <input type="password" name="password"  value={this.state.newUser.password} onChange={this.handleChange}  placeholder="Password" />
-                    <br />
-
-                    <input type="password" name="password2"  value={this.state.newUser.password2} onChange={this.handleChange}  placeholder="Confirm password" />
-                    <br />
-                    
-                    <label>
-                        <input type="radio" name="gender"value="male"checked={this.state.gender === "male"}onChange={this.handleChange}/> Male
-                    </label>
-                    
-                    <br />
-                    
-                    <label>
-                        <input type="radio" name="gender" value="female" checked={this.state.gender === "female"} onChange={this.handleChange} /> Female
-                    </label>
-                    
-                    <br />
-                    
-                    {/* <select value={this.state.newUser.yearOfBirth} name="yearOfBirth" onChange={this.handleChange}>
-                        <option value="">-- Year --</option>
-                        
-                        {years.map(el => {
-                            return ( 
-                                <option key={el} value={el}>{el}</option>
-                            );
-                        })}
+                    <select value={this.state.airline} name="airline" onChange={this.handleChange}>
+                        <option value="">-Choose Airline-</option>
+                        {this.state.imageFormData.airlines.map(el => el.name)}
                     </select>
-                    <select value={this.state.newUser.monthOfBirth} name="monthOfBirth" onChange={this.handleChange}>
-                        <option value="">-- Month --</option>
-                        {months.map(el => {
-                            return ( 
-                                <option key={el} value={el}>{el}</option>
-                            );
-                        })}
+
+                    <select value={this.state.airplaneModel} name="airplaneModel" onChange={this.handleChange}>
+                        <option value="">-Choose Airplane Model-</option>
+                        {this.state.imageFormData.aircrafts.map(el => el.name)}
                     </select>
-                    <select value={this.state.newUser.dayOfBirth} name="dayOfBirth" onChange={this.handleChange}>
-                        <option value="">-- Day --</option>
-                        {days.map(el => {
-                            return ( 
-                                <option key={el} value={el}>{el}</option>
-                            );
-                        })}
-
-                    </select> */}
                     
-                    <br />
-                    
-                    <button type="button" onClick={this.handleRegister}>Register</button>
-                </form>
-                <hr />
+                    <select value={this.state.country} name="country" onChange={this.handleChange}>
+                        <option value="">-Country-</option>
+                        {this.state.imageFormData.countries.map(el => el.name)}
+                    </select>
 
-                <form onSubmit={this.handleLogin}>
-                    <input  name="regUserName"  value={this.state.registeredUser.userName} onChange={this.handleChange}  placeholder="Username"  />
-                    <br />
-                    <input type="password" name="regPassword"  value={this.state.registeredUser.password} onChange={this.handleChange}  placeholder="Password" />
-                    <br />
-                    <div style={{color:"red"}}>{this.state.errMsg}</div>
-                    <button type="submit">Log In</button>
+                    <select value={this.state.city} name="city" onChange={this.handleChange}>
+                        <option value="">-City-</option>
+                        {this.state.imageFormData.cities.map(el => {console.log(el.name); return el.name})}
+                    </select>
+
+                    <select value={this.state.airport} name="airport" onChange={this.handleChange}>
+                        <option value="">-Airport-</option>
+                        {this.state.imageFormData.airports.map(el => el.name)}
+                    </select>
+                    <input  name="registration"  value={this.state.registration}  onChange={this.handleChange}  placeholder="Registration"  />
+
+                    <button type="button" onClick={this.handleSubmit}>Upload</button>
                 </form>
+
                 <hr />
                 <h2>Entered information:</h2>
-                <p>Your name: {this.state.newUser.firstName} {this.state.newUser.lastName}</p>
-                <p>Your User Name: {this.state.newUser.userName}</p>
-                <p>Your age: {this.state.newUser.age}</p>
-                <p>Your gender: {this.state.newUser.gender}</p>
-                <p>Your destination:{this.state.newUser.dayOfBirth}.{this.state.newUser.monthOfBirth}.{this.state.newUser.yearOfBirth}</p>
-                <hr />
-                <p>registeredUser name: {this.state.registeredUser.regUserName}</p>
-                <p>registeredUser password: {this.state.registeredUser.regPassword}</p>
-                
-
+                <p>Airline: {this.state.airline}</p>
+                <p>Airplane Model: {this.state.airplaneModel}</p>
+                <p>Country: {this.state.country}</p>
+                <p>City: {this.state.city}</p>
+                <p>Airport:{this.state.airport}</p>
             </main>
-        )
+        ) // End of return
+       
     }
 }
 
-export default Register
+export default ImageForm
