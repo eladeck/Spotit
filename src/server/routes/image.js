@@ -15,18 +15,25 @@ router.post('/upload', (req, res, next) => {console.log('in image upload!'); nex
 upload.single("image" /* name attribute of <file> element in your form */),
  (req, res) => {
 
-    const desiredFileName = "picppicpicpic.jpg"
+    const desiredFileName = `${req.file.filename}.jpg`
 
     const tempPath = req.file.path;
+    const userName = req.cookies.userName;
+
     console.log(`temPath is ${tempPath}`)
+    const userDirectory = path.join(__dirname, `../images/${userName}`);
+    const newImagePath = path.join(__dirname, `../images/${userName}/${desiredFileName}`);
+    console.log(`userDirectory is ${userDirectory}`)
 
-    const targetPath = path.join(__dirname, `../images/${desiredFileName}`);
-    console.log(`targetPath is ${targetPath}`)
+    if (!fs.existsSync(userDirectory)) {
+        fs.mkdirSync(userDirectory)
+        console.log(`created directory successfully`)
+    }
 
-    fs.rename(tempPath, targetPath, function (err) {
-        if (err) throw err;
-        console.log('renamed complete');
-      });
+    fs.rename(tempPath, newImagePath, function (err) {
+      if (err) throw err;
+      console.log('renamed complete');
+    });
 
 
 
@@ -37,59 +44,29 @@ upload.single("image" /* name attribute of <file> element in your form */),
     console.log(req.file)
 
     const objectToInsert = {
-        user:'',
-        date:'',
-        url:desiredFileName,
-        brand:'',
-        model:'',
-        company:'',
-        country:'',
-        city:'',
-        airport:'',
-        code:'',
+        user: userName,
+        date: new Date(),
+        url: desiredFileName,
+        airplaeModel: req.body.airplaneModel,
+        airline: req.body.airline,
+        country: req.body.country,
+        city: req.body.city,
+        airport: req.body.airport,
+        code: req.body.registration
     };
-
-    // const imagesCollection = req.app.locals.imagesCollection;
-    // imagesCollection.insertOne(objectToInsert, (err, res) => {
-    //     if(err) {
-    //     res.send(401, {errMsg:`Error occured while uploading image to database.`});
-    //     } else {
-    //         res.send({msg:"successfully uploaded image"})
-    //     }
-    // });
+    
+    console.log(`objet to insert is :`)
+    console.log(objectToInsert);
+    const imagesCollection = req.app.locals.imgCollection;
+    imagesCollection.insertOne(objectToInsert, (err, result) => {
+        if(err) {
+          console.log("in imagesCollection.insertOne(): ERROR occured.")
+          res.send(401, {errMsg:`Error occured while uploading image to database.`});
+        } else {
+          console.log("in imagesCollection.insertOne(): Object successfully inserted.")
+          res.send({msg:"successfully uploaded image"})
+        }
+    });
 });
 
 module.exports = router;
-
-/*
-user
-:
-"Elad Eckstein"
-date
-:
-2019-09-05T21:00:00.000+00:00
-url
-:
-"BAA380.jpg"
-brand
-:
-"Airbus"
-model
-:
-"A380-300"
-company
-:
-"British Airways"
-country
-:
-"United Kingdom"
-city
-:
-"London"
-airport
-:
-"Heathrow"
-code
-:
-"LHR"
- */
