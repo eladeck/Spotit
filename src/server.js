@@ -3,6 +3,7 @@ const path = require('path');
 const app = express();
 const MongoClient = require('mongodb').MongoClient;
 const user = require('./server/routes/user');
+const image = require('./server/routes/image');
 const cookieParser = require('cookie-parser');
 const password = '1234';
 const mongoUrl = `mongodb+srv://DorBenLulu:${password}@spotit-bx5gf.mongodb.net/test?retryWrites=true`;
@@ -54,7 +55,8 @@ app.get('/imageFormData', async (req, res) => {
     
     const collectionPromise = (collection) => {
         return new Promise((resolve, reject) => {
-            collection.find({}).toArray((err, result) => {
+            // limit to only 10 records find({}).limit(1000)
+            collection.find({}).limit(10).toArray((err, result) => {
                 err ? reject(err) : resolve(result);
             })});
     }
@@ -79,6 +81,9 @@ app.get('/imageFormData', async (req, res) => {
 });
 
 app.use('/user', user);
+app.use('/image', image);
+
+
 const port = 3002;
 app.listen(port, () => console.log(`started listening to port ${port}!`))
 module.exports = MongoClient;

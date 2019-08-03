@@ -6,10 +6,8 @@ import Container from "./Container";
 
 const App = () => (
     <Router>
-        <div>
             <Header />
             <Container />
-        </div>
     </Router>
    );
 

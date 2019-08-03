@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import Loader from 'react-loader-spinner';
-import { Switch, Route, withRouter } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import { Link } from "react-router-dom";
+import {Switch, BrowserRouter, withRouter, Link,Route} from "react-router-dom";
 import { PropsRoute, PublicRoute, PrivateRoute } from 'react-router-with-props';
-
 import Main from "./Main";
 import Register from "./Register"
+import ImageForm from "./ImageForm"
+
+let Router = BrowserRouter;
+
 class Container extends Component {
 
     constructor(props) {
@@ -33,24 +35,13 @@ class Container extends Component {
     componentDidMount() {
       console.log(`---- in Contariner component DID mount ----`)
       fetch('/home', {method: "GET", credentials: "include"})
-      .then(response => {
-        console.log("response: ")
-        console.log(response)
-        //console.log(response.json());
-        return response.json()})
+      .then(response => response.json())
       .then(obj => {
-        console.log("obj is-------------------")
-        console.log(obj)
         if(obj.notLoggedInMessage) {
+          // this.setState()
           // Render Register.js
-          this.setState({
-            screenToRender: "Register"
-          })
+          // this.props.router.push('/register')
         } else {
-          this.setState({
-            loggedInUser: obj,
-            screenToRender: "Main"
-          });
           this.handleSuccessfulLogin(obj);
         }
       })
@@ -195,25 +186,38 @@ class Container extends Component {
       
 
       render() {
-        console.log(`in Container render. screenToRender is ${this.state.screenToRender}`)
+        return (
+          <Router>
+{this.state.isLoggedIn ? <Link to="/main">you are logged in. go to main</Link> :
+                    <Link to="/register"><div>you aren't logged in. go to register</div></Link>}
 
-        switch(this.state.screenToRender) {
-          case "Main":
-            return (
-              <Main
-                allFollowingImages={this.state.allFollowingImages}
-              />
-            )
-          case "Register":
-            return <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />;
-          case null:
-              return  <Loader type="TailSpin" color="green" height={80} width={80} />
-          default:
-            return <div>{this.state.screenToRender}  is not a screen in the application.</div>;
-        }
-      }
-  
-}
+<Link to="/imageForm">Add Picture</Link>
+            
+
+            <Route path="/imageForm" component={() => <ImageForm />} />
+            <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages}/>} />
+            <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin}/>} />
+          </Router>
+        );
+        // switch(this.state.screenToRender) {
+        //   case "Main":
+        //     return (
+        //       <Main
+        //         allFollowingImages={this.state.allFollowingImages}
+        //       />
+        //     )
+        //   case "Register":
+        //     return <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />;
+        //   case "ImageForm":
+        //     return <ImageForm />;
+        //   case null:
+        //       return  <Loader type="TailSpin" color="green" height={80} width={80} />
+        //   default:
+        //     return <div>{this.state.screenToRender}  is not a screen in the application.</div>;
+        // } // switch-case
+      } // render
+} // component Container
+
 const Wrapper = styled.div`
     .fade-enter {
         opacity: 0.01;

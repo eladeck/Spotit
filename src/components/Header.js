@@ -73,20 +73,19 @@ class Header extends Component {
 
         
         return (
+
+            
             <Router>
                 <nav>
-
-                
                     <div style={titleStyle}>Spotit</div>
                     <input placeholder="Search..." style={inputStyle} type="textbox"></input>
                     {/* <Link to="/register"><div style={registerStyle}>Register</div></Link> */}
                     <div style={aboutStyle}>About</div>
                     <div onClick={this.handleLogout} style={airplaneLogo}>log out</div>
-                    <div style={airplaneLogo}><Link to="/imageForm">Add Picture</Link></div>
-                    <img onClick={() => alert("--you won profile--")} style={airplaneLogo} src={"./img/airplane.png"} alt="not working" />
-                    <img onClick={() => alert("--you won profile--")} style={pilotLogoStyle} src={"./img/pilot-logo.jpg"} alt="not working" />
+                    <img style={airplaneLogo} src={"./img/airplane.png"} alt="not working" />
+                    <img onClick={() => alert("--your won profile--")} style={pilotLogoStyle} src={"./img/pilot-logo.jpg"} alt="not working" />
 
-                    <Route path="/imageForm" component={() => <ImageForm />} />
+                    {/* <Route path="/imageForm" component={() => <ImageForm />} /> */}
                 </nav>
             </Router>
         );

@@ -30,8 +30,6 @@ router.get('/register', (req, res) => {
 
 router.get('/getUser', (req, res) => {
     const userName = req.query.userName;
-    console.log(userName)
-    console.log(typeof userName)
     const usersCollection = req.app.locals.usersCollection;
     router.getUserFromDb(userName, usersCollection, res);
 });
@@ -54,8 +52,6 @@ router.get('/getImage', (req, res) => {
 router.get('/getImages', (req, res) => {
 
     const userName = req.query.userName;
-    console.log(`userName is: `);
-    console.log(userName);
     const imgCollection = req.app.locals.imgCollection;
     const usersCollection = req.app.locals.usersCollection;
 
@@ -65,21 +61,15 @@ router.get('/getImages', (req, res) => {
             res.send(401, {errMsg:`no userName ${userName}.`});
         } else {
             const user = result[0];
-            console.log("found user");
-            console.log(user);
 
             user.images.forEach(imgId => {
                 imgCollection.find({"_id": ObjectId(imgId)}).toArray(function(err, result) {
                     if (err || result.length === 0) {
                         res.send(401, {errMsg:`no such img with ${imgId} id`});
                     } else {
-                        console.log("the image returned is:");
-                        console.log(result[0]);
                         images.push(result[0]);
 
                         if(images.length === user.images.length) {
-                            console.log("images array is: ")
-                            console.log(images);
                             res.send(images);
                         }
 
@@ -122,8 +112,6 @@ router.get('/login', (req, res) => {
 
 router.post('/addNewUser', (req, res) => {
 
-    console.log("in users/post method: name is ");
-    console.log(req.body);
     const newUser = JSON.parse(req.body)
 
     // completing the db schema:
@@ -134,7 +122,6 @@ router.post('/addNewUser', (req, res) => {
     delete newUser.password2
     
     res.cookie('userName', newUser.userName, {expires: new Date(2020, 1, 1)});
-    console.log(newUser)
 
     // const name = newUser.name;
     // const email = newUser.email;
