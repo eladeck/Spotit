@@ -25,72 +25,21 @@ class Header extends Component {
 
 
     render() {
-        var titleStyle = {
-            display:"inline-block",
-            top:"3%",
-            position:"sticky",
-            marginBottom:"8px",
-            marginLeft:"25px",
-            color:"#f5fff6",
-        };
-        var inputStyle = {
-            display:"inline-block",
-             marginLeft:"15px",
-             height:"28px",
-             borderRadius:"5px",
-            };
-
-            var aboutStyle = {
-                display:"inline-block",
-                top:"3%",
-                position:"sticky",
-                marginBottom:"8px",
-                marginLeft:"1000px",
-                color:"#f5fff6",
-                textAlign:"right",
-                
-            }
-
-            var pilotLogoStyle ={
-                maxWidth:"71%",
-                maxHeight:"90%",
-                borderRadius:"50%",
-                display:"inline-block",
-                marginLeft:"1444px",
-                position:"relative",
-                top: "-223px",
-            }
-            var airplaneLogo ={
-                maxWidth:"71%",
-                maxHeight:"179%",
-                borderRadius:"50%",
-                display:"inline-block",
-                marginLeft:"700px",
-                position:"relative",
-                top: "-69px",
-            }
-
-
         
         return (
-
-            
-            <Router>
-                <nav>
-                    <div style={titleStyle}>Spotit</div>
-                    <input placeholder="Search..." style={inputStyle} type="textbox"></input>
-                    {/* <Link to="/register"><div style={registerStyle}>Register</div></Link> */}
-                    <div style={aboutStyle}>About</div>
-                    <div onClick={this.handleLogout} style={airplaneLogo}>log out</div>
-                    <img style={airplaneLogo} src={"./img/airplane.png"} alt="not working" />
-                    <img onClick={() => alert("--your won profile--")} style={pilotLogoStyle} src={"./img/pilot-logo.jpg"} alt="not working" />
-
-                    {/* <Route path="/imageForm" component={() => <ImageForm />} /> */}
-                </nav>
-            </Router>
+                   <header>
+      <div class="logo"><img src={"logo.png"} alt="Spotit"/></div>
+      {/* <input placeholder="Search..." className="input-style" type="textbox"></input> */}
+      <nav>
+          <ul>
+              <li><a href="#home">home</a></li>
+              <li><a href="#forum">forum</a></li>
+              <li><a href="#about">about</a></li>
+          </ul>
+      </nav>
+      <div class="profile-logo"><a href="#profile">PROFILE</a></div>
+   </header>
         );
-    }
-
-
+    } // render
 } // Header Component
 export default Header
