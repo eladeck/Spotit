@@ -9,12 +9,40 @@ let dbo = require('../../server');
 router.getUserFromDb = (userName, usersCollection, res) => {
     usersCollection.find({userName}).toArray(function(err, result) {
         if (err || result.length === 0) {
-            res.send(401, {errMsg:'no such user name'});
+            console.log(`result is`)
+            console.log(result)
+            res.status(401).send({errMsg:`no such user name as ${userName}`});
         } else {
             res.send(result[0])
         }
     })
 }
+
+router.get('/profile/:userName', (req, res) => {
+    const userName = req.params.userName;
+    console.log(`in profile of ${userName}`)
+    res.send({msg: `in ${userName} profile`})
+});
+
+router.post(`/follow`, (req, res) => {
+    // console.log(req.query)
+    const loggedInUserName = req.cookies.userName;
+    const {userNameToFollow} = req.query;
+    const usersCollection = req.app.locals.usersCollection;
+    console.log(`${loggedInUserName} wanna follow ${userNameToFollow}`)
+
+    usersCollection.updateOne(
+        { userName: loggedInUserName },
+        { $addToSet: { following: userNameToFollow } }
+     );
+
+     usersCollection.updateOne(
+        { userName: userNameToFollow },
+        { $addToSet: { followedBy: loggedInUserName } }
+     );
+
+     res.status(200).send({msg: `ok! ${loggedInUserName} now follows ${userNameToFollow}`});
+});
 
 // Register form
 router.get('/register', (req, res) => {
@@ -63,6 +91,9 @@ router.get('/getImages', (req, res) => {
             const user = result[0];
 
             user.images.forEach(imgId => {
+                console.log('--------------------')
+                console.log(images)
+                console.log(imgId)
                 imgCollection.find({"_id": ObjectId(imgId)}).toArray(function(err, result) {
                     if (err || result.length === 0) {
                         res.send(401, {errMsg:`no such img with ${imgId} id`});

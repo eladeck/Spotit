@@ -15,38 +15,41 @@ router.post('/upload', (req, res, next) => {console.log('in image upload!'); nex
 upload.single("image" /* name attribute of <file> element in your form */),
  (req, res) => {
 
-    const desiredFileName = `${req.file.filename}.jpg`
+  if(!req.file) {
+    res.send({msg: "no file uploaded! please select file and then press upload"})
+  }
+
+    const desiredFileName = req.file.originalname//`${req.file.filename}.jpg`
 
     const tempPath = req.file.path;
     const userName = req.cookies.userName;
 
-    console.log(`temPath is ${tempPath}`)
     const userDirectory = path.join(__dirname, `../images/${userName}`);
     const newImagePath = path.join(__dirname, `../images/${userName}/${desiredFileName}`);
-    console.log(`userDirectory is ${userDirectory}`)
 
     if (!fs.existsSync(userDirectory)) {
         fs.mkdirSync(userDirectory)
-        console.log(`created directory successfully`)
     }
 
     fs.rename(tempPath, newImagePath, function (err) {
       if (err) throw err;
       console.log('renamed complete');
+      console.log(`tempPath is ${tempPath}`);
+      console.log(`newImagePath is ${newImagePath}`);
     });
 
 
 
     // const imageObject = JSON.parse(req.body);
-    console.log(`--- inside upload. req.body is`)
-    console.log(req.body)
-    console.log(`---. req.file is`)
-    console.log(req.file)
+    // console.log(`--- inside upload. req.body is`)
+    // console.log(req.body)
+    // console.log(`---. req.file is`)
+    // console.log(req.file)
 
     const objectToInsert = {
         user: userName,
         date: new Date(),
-        url: desiredFileName,
+        url: desiredFileName, // this is like "llbg3.jpg". desiredFileName was not good here since it was "4das9r31uoijdas.jpg"
         airplaeModel: req.body.airplaneModel,
         airline: req.body.airline,
         country: req.body.country,
@@ -55,8 +58,6 @@ upload.single("image" /* name attribute of <file> element in your form */),
         code: req.body.registration
     };
     
-    console.log(`objet to insert is :`)
-    console.log(objectToInsert);
     const imagesCollection = req.app.locals.imgCollection;
     imagesCollection.insertOne(objectToInsert, (err, result) => {
         if(err) {
@@ -66,6 +67,16 @@ upload.single("image" /* name attribute of <file> element in your form */),
           console.log("in imagesCollection.insertOne(): Object successfully inserted.")
           res.send({msg:"successfully uploaded image"})
         }
+
+        // adding the fresh image id to the user's images list
+        let _id = result.ops[0]._id;
+        // _id = ObjectId.valueOf(_id);
+        // console.log(_id);
+
+        req.app.locals.usersCollection.updateOne(
+          { userName }, /*query*/
+          { $addToSet: { images: ObjectId(_id) } }
+       );
     });
 });
 
