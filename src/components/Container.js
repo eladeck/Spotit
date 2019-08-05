@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Loader from 'react-loader-spinner';
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import {Switch, BrowserRouter, withRouter, Link,Route} from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom'
+
 import { PropsRoute, PublicRoute, PrivateRoute } from 'react-router-with-props';
 import Main from "./Main";
 import Register from "./Register"
 import ImageForm from "./ImageForm"
+import PlaneReportForm from "./PlaneReportForm";
 
-let Router = BrowserRouter;
+//let Router = BrowserRouter;
 
 class Container extends Component {
 
@@ -19,9 +21,9 @@ class Container extends Component {
           isLoggedIn: false,
           screenToRender: null,
           loggedInUser:null,
-          allFollowingImages:null
+          allFollowingImages:null,
+          formData: null
       }
-
       this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
       this.handleLogout = this.handleLogout.bind(this);
       this.switchScreen = this.switchScreen.bind(this);
@@ -30,6 +32,16 @@ class Container extends Component {
     }
 
     componentWillUnmount() {
+      fetch(`/imageFormData`, {method: 'GET', credentials: 'include'})
+      .then(response => {
+          return response.json()
+      })
+      .then(res => {
+          console.log(`in this.componentDidMount, res is:`);
+          console.log(res.airlines[0]);
+          this.setState({formData: res})
+      })
+      .catch(errMsg => {console.log(errMsg); this.setState({errMsg})})
     } // componentWillUnmount
     
     componentDidMount() {
@@ -157,6 +169,7 @@ class Container extends Component {
         loggedInUser: userToLogin,
       }, this.extratAllFollowing);
 
+      //browserHistory.push('/main');
     } // handleSuccessfulLogin
 
     switchScreen(nextScreen) {
@@ -188,15 +201,22 @@ class Container extends Component {
       render() {
         return (
           <Router>
-{this.state.isLoggedIn ? <Link to="/main">you are logged in. go to main</Link> :
-                    <Link to="/register"><div>you aren't logged in. go to register</div></Link>}
-
-<Link to="/imageForm">Add Picture</Link>
-            
-
+            {
+              this.state.isLoggedIn ?  
+                <Redirect push to="/main">
+                  <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages}/>} />
+                </Redirect>
+              : 
+                <Redirect push to="/register">
+                  <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
+                </Redirect>
+            }
+            {(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/ReportSpecials">Report Special Arrival/Departure</Link> : <></>}
+            <Link to="/imageForm">Add Picture</Link>
             <Route path="/imageForm" component={() => <ImageForm />} />
+            <Route path="/ReportSpecials" component={() => <PlaneReportForm />} />
             <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages}/>} />
-            <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin}/>} />
+            <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
           </Router>
         );
         // switch(this.state.screenToRender) {

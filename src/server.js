@@ -29,6 +29,7 @@ MongoClient.connect(mongoUrl, { useNewUrlParser: true }, (err, db) => {
     app.locals.cities = dbo.collection('cities');
     app.locals.airports = dbo.collection('airports');
     app.locals.cities = dbo.collection('cities');
+    app.locals.specialReport = dbo.collection('specialReports');
 });
 
 app.get('/home', (req, res) => {

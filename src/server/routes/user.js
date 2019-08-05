@@ -150,4 +150,39 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
+router.post('/specialReport', (req, res) => {
+
+    let newReport = JSON.parse(req.body);
+    const reportCollection = req.app.locals.specialReport;
+    const airportsCollection = req.app.locals.airports;
+    //const newReport =req.body;
+
+    console.log("user.js: router.post('/specialReport'):: req.body is: ")
+    console.log(req.body);
+    console.log(typeof req.body);
+    console.log(typeof newReport);
+
+    //newReport.sourceAirport = findAirportCode(airportsCollection, newReport.sourceAirport);
+    //newReport.destinationAirport = findAirportCode(airportsCollection, newReport.destinationAirport);
+
+    reportCollection.insertOne(newReport, (err, res) => {
+        if (err) throw err;
+        console.log("1 document inserted");
+        
+      });
+
+    res.send(newReport) // automatically send status 200
+});
+
+const findAirportCode = (airportsCollection, currentAirport) => {
+    
+    airportsCollection.findOne({name: currentAirport}, (err, result) => {
+        if(err) throw err;
+
+        console.log("user.js: findAirportCode(): inside findOne, result is:");
+        console.log(result);
+        return result.code;
+    });
+}
+
 module.exports = router;

@@ -1,7 +1,7 @@
 
 import React, { Component } from "react"
 import Loader from 'react-loader-spinner'
-
+import {Switch, BrowserRouter, withRouter, Link,Route} from "react-router-dom";
 
 
 class Feed extends Component {
@@ -20,15 +20,6 @@ class Feed extends Component {
     } // c'tor
 
     importImages() {
-        
-        // 1. Import images from the Database.
-        // this.setState(prevState => {
-        //     return {
-        //         images: this.getImgesFromDB()
-        //     }
-        // });
-
-        // 2. Create array of components (images) that will be displayed in the news feed.
         if(!this.props.allFollowingImages) {
 
             console.log(`in Feed, allFollowingImages is null`)
@@ -38,13 +29,13 @@ class Feed extends Component {
             const imageWrappers = this.props.allFollowingImages.map(el => {
                 return(
                     <div key={el.url + el.user} className="image-wrapper">
-                    <h2>{el.user}</h2>
+                    <h2><Link to="/main">{el.user}</Link></h2>
                     <div className='img-grade'>&#9733; &#9733; &#9733; &#9734; &#9734;</div>
                     <img src={el.url} alt="not working" />
                 </div>
                 )
             });
-        
+            
             return imageWrappers;
           } // else
     } // importImages
