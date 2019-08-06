@@ -19,6 +19,7 @@ class ImageForm extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleBrowse = this.handleBrowse.bind(this);
+        this.dataFormMap = this.dataFormMap.bind(this);
     }
 
     handleBrowse(e) {
@@ -74,6 +75,10 @@ class ImageForm extends Component {
         .catch(errMsg => {console.log(errMsg); this.setState({errMsg})})
     }
 
+    dataFormMap(collectionArray) {
+        return collectionArray.map(el => <option key={el._id}>{el.name}</option>)
+    }
+
     render() {
         console.log(`in imageForm render`)
         window.state = this.state;
@@ -84,27 +89,27 @@ class ImageForm extends Component {
                 <form action="image/upload" method="post" encType="multipart/form-data" /*onSubmit={this.handleSubmit}*/>
                     <select value={this.state.airline} name="airline" onChange={this.handleChange}>
                         <option value="">-Choose Airline-</option>
-                        {this.state.imageFormData.airlines.map(el => <option>{el.name}</option>)}
+                        {this.dataFormMap(this.state.imageFormData.airlines)}
                     </select>
 
                     <select value={this.state.airplaneModel} name="airplaneModel" onChange={this.handleChange}>
                         <option value="">-Choose Airplane Model-</option>
-                        {this.state.imageFormData.aircrafts.map(el => <option>{el.name}</option>)}
+                        {this.dataFormMap(this.state.imageFormData.aircrafts)}
                     </select>
                     
                     <select value={this.state.country} name="country" onChange={this.handleChange}>
                         <option value="">-Country-</option>
-                        {this.state.imageFormData.countries.map(el => <option>{el.name}</option>)}
+                        {this.dataFormMap(this.state.imageFormData.countries)}
                     </select>
 
                     <select value={this.state.city} name="city" onChange={this.handleChange}>
                         <option value="">-City-</option>
-                        {this.state.imageFormData.cities.map(el => <option>{el.name}</option>)}
+                        {this.dataFormMap(this.state.imageFormData.cities)}
                     </select>
 
                     <select value={this.state.airport} name="airport" onChange={this.handleChange}>
                         <option value="">-Airport-</option>
-                        {this.state.imageFormData.airports.map(el => <option>{el.name}</option>)}
+                        {this.dataFormMap(this.state.imageFormData.airports)}
                     </select>
                     <input  name="registration"  value={this.state.registration}  onChange={this.handleChange}  placeholder="Registration"  />
 

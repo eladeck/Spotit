@@ -1,8 +1,12 @@
 
 import React, { Component } from "react"
 import Loader from 'react-loader-spinner'
+<<<<<<< HEAD
+import {Switch, BrowserRouter, withRouter, Link,Route} from "react-router-dom";
+=======
 import { Link } from 'react-router-dom'
 
+>>>>>>> 58ec82f58eb7d08d961a28db05943a65e2cb7860
 
 
 class Feed extends Component {
@@ -36,15 +40,6 @@ class Feed extends Component {
     } // handleGoToProfile
 
     importImages() {
-        
-        // 1. Import images from the Database.
-        // this.setState(prevState => {
-        //     return {
-        //         images: this.getImgesFromDB()
-        //     }
-        // });
-
-        // 2. Create array of components (images) that will be displayed in the news feed.
         if(!this.props.allFollowingImages) {
 
             console.log(`in Feed, allFollowingImages is null`)
@@ -56,6 +51,9 @@ class Feed extends Component {
                 // console.log(el)
                 return(
                     <div key={el.url + el.user} className="image-wrapper">
+<<<<<<< HEAD
+                    <h2><Link to="/main">{el.user}</Link></h2>
+=======
                     {/* <h2><a style={{textDecoration:"none"}} href={`/user/profile/${el.userName}`}>{el.user}</a></h2> */}
                     <h2 onClick={() => this.handleGoToProfile(el.userName)}>{el.user}</h2>
                     {/* <Link to={`/profile`}></Link> */}
@@ -65,12 +63,13 @@ class Feed extends Component {
                         {/* <h2 onClick={() => this.handleGoToProfile(el.userName)}>{el.user}</h2> */}
                     {/* </Link> */}
 
+>>>>>>> 58ec82f58eb7d08d961a28db05943a65e2cb7860
                     <div className='img-grade'>&#9733; &#9733; &#9733; &#9734; &#9734;</div>
                     <img src={el.url} alt="not working" />
                 </div>
                 )
             });
-        
+            
             return imageWrappers;
           } // else
     } // importImages

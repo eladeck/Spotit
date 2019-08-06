@@ -94,6 +94,18 @@ class Header extends Component {
         this.props.handleLogout();
     }
 
+    componentWillUnmount() {
+        fetch(`/imageFormData`, {method: 'GET', credentials: 'include'})
+        .then(response => {
+            return response.json()
+        })
+        .then(res => {
+            console.log(`in this.componentDidMount, res is:`);
+            console.log(res.airlines[0]);
+            this.setState({formData: res})
+        })
+        .catch(errMsg => {console.log(errMsg); this.setState({errMsg})})
+      } // componentWillUnmount
 
     render() {
         
