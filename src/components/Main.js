@@ -23,6 +23,7 @@ class Main extends Component {
         <div className='container'>
             <TopSpotIts />    
             <Feed
+                loggedInUser={this.props.loggedInUser}
                 allFollowingImages={this.props.allFollowingImages}
             />
             <GoSpotit />

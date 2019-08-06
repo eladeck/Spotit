@@ -8,7 +8,11 @@ import { PropsRoute, PublicRoute, PrivateRoute } from 'react-router-with-props';
 import Main from "./Main";
 import Register from "./Register"
 import ImageForm from "./ImageForm"
+<<<<<<< HEAD
 import PlaneReportForm from "./PlaneReportForm";
+=======
+import Profile from "./Profile"
+>>>>>>> 58ec82f58eb7d08d961a28db05943a65e2cb7860
 
 //let Router = BrowserRouter;
 
@@ -50,9 +54,6 @@ class Container extends Component {
       .then(response => response.json())
       .then(obj => {
         if(obj.notLoggedInMessage) {
-          // this.setState()
-          // Render Register.js
-          // this.props.router.push('/register')
         } else {
           this.handleSuccessfulLogin(obj);
         }
@@ -105,29 +106,31 @@ class Container extends Component {
 
     extractAllImagesOfFollowings(allFollowing) { // MODIFIED "extractAllImagesOfFollowings" method.
 
-      console.log(`in extract All Images Of following, allFollowing is`)
-      console.log(allFollowing)
-
       const loggedInUser = this.state.loggedInUser
       let allFollowingImages = []
 
       let realAmountOfAllImages = 0
-      allFollowing.forEach(followerObj => realAmountOfAllImages += followerObj.images.length)
 
-      console.log(`real amount of all images is ${realAmountOfAllImages}`)
+      console.log(`allFollowing is`)
+      console.log(allFollowing)
+      
+      allFollowing.forEach(followerObj => {
+        console.log(`followerObj is`)
+        console.log(followerObj)
+        realAmountOfAllImages += followerObj.images.length
+      })
+
       
 
       allFollowing.forEach(followerObj => {
         fetch(`user/getImages?userName=${followerObj.userName}`, {method: 'GET', credentials: 'include'})
         .then(response => response.json())
-        .then(imgObj => {
-          console.log(`imgObj is`);
-          console.log(imgObj);
-          allFollowingImages = allFollowingImages.concat(imgObj);
-          console.log(`allFollowingImages length is ${allFollowingImages.length}.`)
+        .then(allImagesOfSpecificUser => {
+
+          allImagesOfSpecificUser.forEach(img => {img.userName = followerObj.userName}); // so the client will have the userName in order to click on the name and to move to the userName profile page
+
+          allFollowingImages = allFollowingImages.concat(allImagesOfSpecificUser);
           if(allFollowingImages.length === realAmountOfAllImages) {
-            console.log(`allFollowingImages is`)
-            console.log(allFollowingImages)
             this.setState({allFollowingImages})
           } // if
         }); // last then
@@ -140,6 +143,9 @@ class Container extends Component {
       if(!loggedInUser) {
         console.log(`loggedInUser is null`)
       } else {
+        console.log(`loggedInUser is`)
+        console.log(loggedInUser)
+
 
         const loggedInUser = this.state.loggedInUser;
         console.log(`in extract all following, loggedInUser is:`)
@@ -201,6 +207,7 @@ class Container extends Component {
       render() {
         return (
           <Router>
+<<<<<<< HEAD
             {
               this.state.isLoggedIn ?  
                 <Redirect push to="/main">
@@ -217,6 +224,18 @@ class Container extends Component {
             <Route path="/ReportSpecials" component={() => <PlaneReportForm />} />
             <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages}/>} />
             <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
+=======
+            {this.state.isLoggedIn ?
+              <Link to="/main">you are logged in. go to main</Link> :
+              <Link to="/register"><div>you aren't logged in. go to register</div></Link>}
+
+            <Link to="/imageForm">Add Picture</Link>
+            
+
+            <Route path="/imageForm" component={() => <ImageForm />} />
+            <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages} loggedInUser={this.state.loggedInUser}/>} />
+            <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin}/>} />
+>>>>>>> 58ec82f58eb7d08d961a28db05943a65e2cb7860
           </Router>
         );
         // switch(this.state.screenToRender) {
