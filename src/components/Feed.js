@@ -1,12 +1,8 @@
 
 import React, { Component } from "react"
 import Loader from 'react-loader-spinner'
-<<<<<<< HEAD
 import {Switch, BrowserRouter, withRouter, Link,Route} from "react-router-dom";
-=======
-import { Link } from 'react-router-dom'
 
->>>>>>> 58ec82f58eb7d08d961a28db05943a65e2cb7860
 
 
 class Feed extends Component {
@@ -51,19 +47,9 @@ class Feed extends Component {
                 // console.log(el)
                 return(
                     <div key={el.url + el.user} className="image-wrapper">
-<<<<<<< HEAD
-                    <h2><Link to="/main">{el.user}</Link></h2>
-=======
-                    {/* <h2><a style={{textDecoration:"none"}} href={`/user/profile/${el.userName}`}>{el.user}</a></h2> */}
+                        
+                    {/* ---- dor code: <h2><Link to="/main">{el.user}</Link></h2>*/}
                     <h2 onClick={() => this.handleGoToProfile(el.userName)}>{el.user}</h2>
-                    {/* <Link to={`/profile`}></Link> */}
-                    {/* <Link to="/profile">{el.user}</Link> */}
-                    {/* <Link to={{pathName:`/profile`, userName:el.userName, loggedInUser:this.props.loggedInUser}}> */}
-                        {/* <h2>{el.user}</h2> */}
-                        {/* <h2 onClick={() => this.handleGoToProfile(el.userName)}>{el.user}</h2> */}
-                    {/* </Link> */}
-
->>>>>>> 58ec82f58eb7d08d961a28db05943a65e2cb7860
                     <div className='img-grade'>&#9733; &#9733; &#9733; &#9734; &#9734;</div>
                     <img src={el.url} alt="not working" />
                 </div>

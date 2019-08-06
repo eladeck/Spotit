@@ -57,17 +57,25 @@ class Header extends Component {
     } // renderAllUsersUnderInput
 
     handleUsersInputClick(e) {
-        fetch('user/all', {method:"GET", credentials:"include"})
-        .then(res => res.json())
-        .then(users => {
-            // TODO: error handling
+        if(!this.state.allUsers) {
+            fetch('user/all', {method:"GET", credentials:"include"})
+            .then(res => res.json())
+            .then(users => {
+                // TODO: error handling
+                this.setState(prevState => {
+                    return {
+                        allUsers:users,
+                        showAllUsers: !prevState.showAllUsers
+                    }
+                }) //setState
+            })// .then
+        } else {
             this.setState(prevState => {
                 return {
-                    allUsers:users,
                     showAllUsers: !prevState.showAllUsers
                 }
-            }) //setState
-        })// .then
+            })
+        } // else
     } // handleUsersInputClick
 
     mouseEnterProfile(e) {

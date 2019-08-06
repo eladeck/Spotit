@@ -221,8 +221,8 @@ class Container extends Component {
                   <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
                 </Redirect>
             }
-            {(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/ReportSpecials">Report Special Arrival/Departure</Link> : <></>}
-            <Link to="/imageForm">Add Picture</Link>
+            {(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/ReportSpecials"><div className="side-button">Report Special Arrival/Departure</div></Link> : null}
+            {this.state.isLoggedIn ? <Link to="/imageForm"><div className="side-button">Add Image</div></Link> : null}
             <Route path="/imageForm" component={() => <ImageForm />} />
             <Route path="/ReportSpecials" component={() => <PlaneReportForm />} />
             <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages}/>} />

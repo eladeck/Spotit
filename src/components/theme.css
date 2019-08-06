@@ -9,6 +9,18 @@ nav {
     
   }
 
+  .side-button {
+    color: cadetblue;
+    font-family: 'Bowlby One SC', cursive;
+    background-color: antiquewhite;
+    width: fit-content;
+    box-shadow: lawngreen;
+    padding: 7px;
+    border-radius: 8%;
+    text-decoration: none;
+    margin-bottom: 5px;
+  }
+
   header{
     padding: 0;
     margin: 0;
