@@ -68,13 +68,13 @@ upload.single("image" /* name attribute of <file> element in your form */),
           res.send({msg:"successfully uploaded image"})
         }
 
-        // adding the fresh image id to the user's images list
+        // adding the fresh image id to the user's images list (but maybe to delete the image list from user record?)
         let _id = result.ops[0]._id;
         // _id = ObjectId.valueOf(_id);
         // console.log(_id);
 
         req.app.locals.usersCollection.updateOne(
-          { userName }, /*query*/
+          { userName }, /*query: what record to update*/
           { $addToSet: { images: ObjectId(_id) } }
        );
     });

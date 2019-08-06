@@ -7,8 +7,10 @@ const image = require('./server/routes/image');
 const cookieParser = require('cookie-parser');
 const password = '1234';
 const mongoUrl = `mongodb+srv://DorBenLulu:${password}@spotit-bx5gf.mongodb.net/test?retryWrites=true`;
-
 const bodyParser = require('body-parser');
+
+let isConnectedToMongoDb = false;
+
 app.use(bodyParser.text());
 app.use(cookieParser());
 app.use(express.static("../public")) 
@@ -19,6 +21,7 @@ let dbo;
 MongoClient.connect(mongoUrl, { useNewUrlParser: true }, (err, db) => {
     if (err) {console.log(`----------------${err}----------`); throw err};
     console.log('Connected successfully to database!');
+    isConnectedToMongoDb = true;
     dbo = db.db("SpotItCollection");
     
     app.locals.usersCollection = dbo.collection('users');
@@ -33,13 +36,10 @@ MongoClient.connect(mongoUrl, { useNewUrlParser: true }, (err, db) => {
 
 app.get('/home', (req, res) => {
     const userName = req.cookies.userName;
-    console.log(`in server.js: app.get('/home'):`);
     if(userName) {
         // Load user from database.
-        console.log(`in server.js: app.get('/home'): inside if`);
         user.getUserFromDb(userName, app.locals.usersCollection, res); // No need to add "res.send()" as getUsersFromDb does it already.
     } else {
-        console.log(`in server.js: app.get('/home'): inside else`);
         res.send({notLoggedInMessage:"No user logged in."})
     }
 });

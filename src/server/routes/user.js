@@ -18,6 +18,20 @@ router.getUserFromDb = (userName, usersCollection, res) => {
     })
 }
 
+// resposnes with all users in db
+router.get('/all', (req, res) => {
+    const usersCollection = req.app.locals.usersCollection;
+    usersCollection.find({}).toArray(function(err, result) {
+        if (err || result.length === 0) {
+            res.send(401, {errMsg:`error fetching all users`});
+        } else {
+            res.send(result) 
+        }
+    });
+
+
+});
+
 router.get('/profile/:userName', (req, res) => {
     const userName = req.params.userName;
     console.log(`in profile of ${userName}`)
@@ -88,12 +102,9 @@ router.get('/getImages', (req, res) => {
         if (err || result.length === 0) {
             res.send(401, {errMsg:`no userName ${userName}.`});
         } else {
-            const user = result[0];
+            const user = result[0]; 
 
             user.images.forEach(imgId => {
-                console.log('--------------------')
-                console.log(images)
-                console.log(imgId)
                 imgCollection.find({"_id": ObjectId(imgId)}).toArray(function(err, result) {
                     if (err || result.length === 0) {
                         res.send(401, {errMsg:`no such img with ${imgId} id`});
@@ -103,7 +114,6 @@ router.get('/getImages', (req, res) => {
                         if(images.length === user.images.length) {
                             res.send(images);
                         }
-
                     }
                 });
             });

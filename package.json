@@ -37,6 +37,7 @@
     "passport-local": "^1.0.0",
     "react-loader-spinner": "^2.3.0",
     "react-router-with-props": "^1.0.0",
+    "react-tooltip": "^3.10.0",
     "reactjs-popup": "^1.4.1"
   },
   "scripts": {

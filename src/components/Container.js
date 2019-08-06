@@ -91,7 +91,6 @@ class Container extends Component {
 
     extractAllImagesOfFollowings(allFollowing) { // MODIFIED "extractAllImagesOfFollowings" method.
 
-      const loggedInUser = this.state.loggedInUser
       let allFollowingImages = []
 
       let realAmountOfAllImages = 0
@@ -102,7 +101,8 @@ class Container extends Component {
       allFollowing.forEach(followerObj => {
         console.log(`followerObj is`)
         console.log(followerObj)
-        realAmountOfAllImages += followerObj.images.length
+        if(followerObj)
+          realAmountOfAllImages += followerObj.images.length
       })
 
       
@@ -130,11 +130,7 @@ class Container extends Component {
       } else {
         console.log(`loggedInUser is`)
         console.log(loggedInUser)
-
-
-        const loggedInUser = this.state.loggedInUser;
-        console.log(`in extract all following, loggedInUser is:`)
-        console.log(loggedInUser)
+        console.log(this.state.isLoggedIn ? 'isLoggedIn!' : 'NOT LOGGED IN')
 
         const allFollowing = [];
 
@@ -154,9 +150,10 @@ class Container extends Component {
     
 
     handleSuccessfulLogin(userToLogin) {
+      this.props.updateLoggedInUser(userToLogin)
       this.setState({
         isLoggedIn: true,
-        screenToRender: "Main",
+        // screenToRender: "Main",
         loggedInUser: userToLogin,
       }, this.extratAllFollowing);
 
@@ -186,14 +183,24 @@ class Container extends Component {
       );
       }
       */
+     componentWillReceiveProps(nextProps) {
+      // You don't have to do this check first, but it can help prevent an unneeded render
+      if (nextProps.userWantsToLogout) {
+        console.log(`USER WANTS TO LOGOUT!!`)
+        this.setState({ 
+          loggedInUser: null,
+          isLoggedIn:false,
+         });
+      } // if
+    } // willRecieveProps
       
 
       render() {
         return (
           <Router>
             {this.state.isLoggedIn ?
-              <Link to="/main">you are logged in. go to main</Link> :
-              <Link to="/register"><div>you aren't logged in. go to register</div></Link>}
+              <Link to="/main">hello {this.state.loggedInUser.firstName} :) enter the website!</Link> :
+              <Link to="/register"><div>you are NOT logged in. go to register</div></Link>}
 
             <Link to="/imageForm">Add Picture</Link>
             
