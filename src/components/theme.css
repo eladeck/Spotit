@@ -169,6 +169,7 @@ ul > li > a:hover {
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     display:block;
     margin-bottom:15px;
+    position: relative;
   }
 
   .image-wrapper:hover {
@@ -194,12 +195,12 @@ ul > li > a:hover {
   .img-grade {
     position: absolute;
     width: fit-content;
-    margin-top:270px;
-    padding:5px;
+    bottom: 5px;
     font-size: 2em;
   }
   
   .image-wrapper > h2 {
+      top:0;
       position: absolute;
       width: fit-content;
       text-align: left;

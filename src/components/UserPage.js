@@ -7,7 +7,11 @@ class UserPage extends Component {
         super(props);
 
         this.state = {
-            usersPage: props.usersPage,
+            // did you mean this.props.usersPage?
+            // I don't think it's recmmonded to assign state with props. 
+            // we can just use it along the way as this.props!
+            // it's confusing assinging the state with props, you then never know which is more actual.
+            usersPage: props.usersPage, 
             usersPostImages: null,
             currentLoggedInUser: props.loggedInUser,
             isFollowedByCurrentUser: props.loggedInUser.following.contains(props.usersPage.userName)
