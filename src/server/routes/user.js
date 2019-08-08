@@ -49,15 +49,15 @@ router.post(`/follow`, (req, res) => {
     const usersCollection = req.app.locals.usersCollection;
     console.log(`${loggedInUserName} wanna follow ${userNameToFollow}`)
 
-    // usersCollection.updateOne(
-    //     { userName: loggedInUserName },
-    //     { $addToSet: { following: userNameToFollow } }
-    //  );
+    usersCollection.updateOne(
+        { userName: loggedInUserName },
+        { $addToSet: { following: userNameToFollow } }
+     );
 
-    //  usersCollection.updateOne(
-    //     { userName: userNameToFollow },
-    //     { $addToSet: { followedBy: loggedInUserName } }
-    //  );
+     usersCollection.updateOne(
+        { userName: userNameToFollow },
+        { $addToSet: { followedBy: loggedInUserName } }
+     );
 
      res.status(200).send({msg: `ok! ${loggedInUserName} now follows ${userNameToFollow}`});
 });
