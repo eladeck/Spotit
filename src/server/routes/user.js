@@ -41,19 +41,23 @@ router.get('/profile/:userName', (req, res) => {
 router.post(`/follow`, (req, res) => {
     // console.log(req.query)
     const loggedInUserName = req.cookies.userName;
-    const {userNameToFollow} = req.query;
+    
+    console.log("user.js: in router.post(/follow): req.query is:")
+    console.log(req.query);
+    
+    const userNameToFollow = req.query.userNameToFollow;
     const usersCollection = req.app.locals.usersCollection;
     console.log(`${loggedInUserName} wanna follow ${userNameToFollow}`)
 
-    usersCollection.updateOne(
-        { userName: loggedInUserName },
-        { $addToSet: { following: userNameToFollow } }
-     );
+    // usersCollection.updateOne(
+    //     { userName: loggedInUserName },
+    //     { $addToSet: { following: userNameToFollow } }
+    //  );
 
-     usersCollection.updateOne(
-        { userName: userNameToFollow },
-        { $addToSet: { followedBy: loggedInUserName } }
-     );
+    //  usersCollection.updateOne(
+    //     { userName: userNameToFollow },
+    //     { $addToSet: { followedBy: loggedInUserName } }
+    //  );
 
      res.status(200).send({msg: `ok! ${loggedInUserName} now follows ${userNameToFollow}`});
 });
@@ -191,6 +195,21 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
+router.get('/profile', (req, res) => {
+    const userName = req.query.userName;
+    var query = {userName}
+
+    const usersCollection = req.app.locals.usersCollection;
+    usersCollection.find(query).toArray((err, result) => {
+        if (err || result.length === 0) {
+            res.send(401, {errMsg:'wrong username'});
+        } else {
+            res.send(result[0])
+        }
+    })
+});
+
+
 router.post('/specialReport', (req, res) => {
 
     let newReport = JSON.parse(req.body);
@@ -225,5 +244,6 @@ const findAirportCode = (airportsCollection, currentAirport) => {
         return result.code;
     });
 }
+
 
 module.exports = router;

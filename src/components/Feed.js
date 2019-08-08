@@ -1,7 +1,7 @@
 
 import React, { Component } from "react"
 import Loader from 'react-loader-spinner'
-import {Switch, BrowserRouter, withRouter, Link,Route} from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom'
 
 
 
@@ -16,23 +16,19 @@ class Feed extends Component {
         this.importImages = this.importImages.bind(this);
         this.getImgesFromDB = this.getImgesFromDB.bind(this);
         this.handleGoToProfile = this.handleGoToProfile.bind(this);
-
-
-
     } // c'tor
 
     handleGoToProfile(userName) {
-
-        fetch(`/user/profile/${userName}`, {method:'GET', credentials: "include"})
+        fetch(`/user/profile?userName=${userName}`, {method:'GET', credentials: "include"})
         .then(res => res.json())
-        .then(realObj => {
-
+        .then(user => {
+            console.log(`Feed.js: handleGoToProfile: inside second then. user is `);
+            console.log(user);
+            this.props.setDesiredUser(user);
+        }).catch(err => {
+            console.log("Feed.js: handleGoToProfile(): inside catch. error is: ");
+            console.log(err);
         })
-
-
-
-
-
     } // handleGoToProfile
 
     importImages() {
@@ -49,7 +45,8 @@ class Feed extends Component {
                     <div key={el.url + el.user} className="image-wrapper">
                         
                     {/* ---- dor code: <h2><Link to="/main">{el.user}</Link></h2>*/}
-                    <h2 onClick={() => this.handleGoToProfile(el.userName)}>{el.user}</h2>
+                    
+                    <h2 onClick={() => this.handleGoToProfile(el.userName)}><Link to="/profile">{el.user}</Link></h2>
                     <div className='img-grade'>&#9733; &#9733; &#9733; &#9734; &#9734;</div>
                     <img src={el.url} alt="not working" />
                 </div>

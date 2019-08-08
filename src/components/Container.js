@@ -23,13 +23,17 @@ class Container extends Component {
           screenToRender: null,
           loggedInUser:null,
           allFollowingImages:null,
-          formData: null
+          formData: null,
+          displayUser: false,
+          desiredUserProfile: null // Will contain the user we want to view it's profile.
       }
+
       this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
       this.handleLogout = this.handleLogout.bind(this);
       this.switchScreen = this.switchScreen.bind(this);
       this.extractAllImagesOfFollowings = this.extractAllImagesOfFollowings.bind(this);
       this.extratAllFollowing = this.extratAllFollowing.bind(this)
+      this.setDesiredUser = this.setDesiredUser.bind(this)
     }
 
     componentWillUnmount() {
@@ -207,7 +211,15 @@ class Container extends Component {
       } // if
     } // willRecieveProps
       
+    setDesiredUser(desiredUser) {
 
+      console.log("Container.js: sedDesiredUser: desired user is: ");
+      console.log(desiredUser);
+
+      this.setState({
+        desiredUserProfile: desiredUser
+      });
+    }
       render() {
         return (
           <Router>
@@ -225,8 +237,9 @@ class Container extends Component {
             {this.state.isLoggedIn ? <Link to="/imageForm"><div className="side-button">Add Image</div></Link> : null}
             <Route path="/imageForm" component={() => <ImageForm />} />
             <Route path="/ReportSpecials" component={() => <PlaneReportForm />} />
-            <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages}/>} />
+            <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser}/>} />
             <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
+            <Route path="/profile" component={() => <Profile loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
 
             
             {/* elad's code that stays behind after merge conflict:

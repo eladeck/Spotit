@@ -25,6 +25,7 @@ class Main extends Component {
             <Feed
                 loggedInUser={this.props.loggedInUser}
                 allFollowingImages={this.props.allFollowingImages}
+                setDesiredUser={this.props.setDesiredUser}
             />
             <GoSpotit />
         </div>
