@@ -14,7 +14,6 @@ class Feed extends Component {
         } // Feed state
 
         this.importImages = this.importImages.bind(this);
-        this.getImgesFromDB = this.getImgesFromDB.bind(this);
         this.handleGoToProfile = this.handleGoToProfile.bind(this);
     } // c'tor
 
@@ -57,53 +56,11 @@ class Feed extends Component {
           } // else
     } // importImages
 
-    getImgesFromDB() {
-        const jsonImages = [
-            {
-                "id": "123",
-                "user": "Dor Ben Lulu",
-                "date": "",
-                "url": "/img/LYB737.jpg",
-                "brand": "Boeing",
-                "model": "737-800",
-                "company": "EL-AL",
-                "country": "Israel",
-                "city":"Tel-Aviv",
-                "airport":"Ben Gurion",
-                "code": "TLV"
-            },
-            {
-                "id": "124",
-                "user": "Elad Eckstein",
-                "date": "",
-                "url": "/img/BAA380.jpg",
-                "brand": "Airbus", 
-                "model": "A380-300",
-                "company": "British Airways",
-                "country": "United Kingdom",
-                "city":"London",
-                "airport":"Heathrow",
-                "code": "LHR"
-            },
-            {
-                "id": "124",
-                "user": "Dar Paran",
-                "date": "",
-                "url": "/img/LYB737.jpg",
-                "brand": "Boeing", 
-                "model": "787-800",
-                "company": "TUI",
-                "country": "Israel",
-                "city":"Tel-Aviv",
-                "airport":"Ben Gurion",
-                "code": "TLV"
-            }
-
-        ];
-        return  jsonImages;
-    }
     render() {
         const images = this.importImages();
+        console.log(`images to show in feed are:`)
+        console.log(images)
+        
         return (
             <div className="feed">
                 <h1 className="title">Spotit Feed</h1>

@@ -106,7 +106,11 @@ router.get('/getImages', (req, res) => {
         if (err || result.length === 0) {
             res.send(401, {errMsg:`no userName ${userName}.`});
         } else {
-            const user = result[0]; 
+            const user = result[0];
+            
+            console.log(`this is user and then user images`)
+            console.log(user)
+            console.log(user.images)
 
             user.images.forEach(imgId => {
                 imgCollection.find({"_id": ObjectId(imgId)}).toArray(function(err, result) {
