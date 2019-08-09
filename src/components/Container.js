@@ -68,7 +68,7 @@ class Container extends Component {
         screenToRender: "Register"
       });
       console.log(`in Container\'s handle Logout!, screenToRender is ${this.state.screenToRender}`)
-    
+      fetch('/user/logout', {method:"POST", credentials:"include"})
     }
 
    /* extractAllImagesOfFollowings(allFollowing) {

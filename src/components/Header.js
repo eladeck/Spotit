@@ -137,9 +137,9 @@ class Header extends Component {
           </ul>
       </nav>
       {this.props.loggedInUser ?
-      <div onMouseEnter={this.mouseEnterProfile} className="profile-logo"><a href="#profile">{this.props.loggedInUser.userName}</a></div> :
-      null}
-      <p style={{cursor:"pointer",fontSize:"0.35em"}} onClick={this.handleLogout}>log out</p>
+      <div onMouseEnter={this.mouseEnterProfile} className="profile-logo"><a href="#profile">{this.props.loggedInUser.userName}</a></div> : null}
+      {this.props.loggedInUser ?
+      <p className="logout" onClick={this.handleLogout}>log out</p> : null}
       {/* <p data-tip="hello world">Tooltip</p>
       <ReactTooltip/> */}
    </header>

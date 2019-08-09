@@ -21,12 +21,12 @@ nav {
     margin-bottom: 5px;
   }
 
-  header{
+  /* header{
     padding: 0;
     margin: 0;
     font-family: Roboto;
     text-transform: uppercase;
-}
+} */
 
 header{
   font-size:40px;
@@ -41,7 +41,7 @@ background: linear-gradient(6deg, rgba(105,122,102,1) 9%, rgba(105,122,102,0.821
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 50px
+    /* margin-top: 50px */
 }
 
 .logo{
@@ -49,6 +49,7 @@ background: linear-gradient(6deg, rgba(105,122,102,1) 9%, rgba(105,122,102,0.821
     margin-left: 50px;
     font-size: 1.5em;
     cursor: pointer;
+    margin-top:17px;
     transition: color .4s ease-in-out
 }
 
@@ -145,12 +146,18 @@ ul > li > a:hover {
 
     background-color: rgb(182, 200, 194);
     color:rgb(35, 39, 42);
-    transition: 1s
+    transition: 1s;
+
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
   }
 
   .clickable-title {
     margin-bottom: 0px;
     margin-top: 80px;
+
   }
 
   .clickable-title:hover {
@@ -161,6 +168,17 @@ ul > li > a:hover {
   
   .go-spotit {
     text-align:center;
+  }
+
+  .logout {
+    cursor:pointer;
+    font-size:0.35em;
+    margin-right:20px
+  }
+
+  .logout:hover {
+    color:gray;
+    box-shadow: bisque;
   }
 
 /* imageWRAPPER!*/

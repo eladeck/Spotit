@@ -19,6 +19,7 @@ class App extends React.Component {
                 this.setState({
                         userWantsToLogout:true,
                         loggedInUser:null})
+              fetch('/user/logout', {method:"GET", credentials:"include"})
         } // handleLogout
         
         updateLoggedInUser(loggedInUser) {

@@ -134,6 +134,7 @@ router.get('/getImages', (req, res) => {
 }); // getImage
 
 router.get('/login', (req, res) => {
+    console.log(`in get. /login!`)
     const userName = req.query.userName;
     const password = req.query.password;
 
@@ -156,6 +157,15 @@ router.get('/login', (req, res) => {
         }
     })
 }); // login
+
+
+router.get('/logout', (req, res) => {
+    const userNameToLougOut = req.cookies.userName;
+    res.clearCookie('userName');
+    console.log(`just clearedCookie of ${userNameToLougOut}, and req.cookies.userName is:`)
+    console.log(req.cookies.userName)
+    return res.status(200).redirect('/login');
+}); // logout
 
 
 
