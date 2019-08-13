@@ -68,7 +68,6 @@ class Container extends Component {
         screenToRender: "Register"
       });
       console.log(`in Container\'s handle Logout!, screenToRender is ${this.state.screenToRender}`)
-      fetch('/user/logout', {method:"POST", credentials:"include"})
     }
 
    /* extractAllImagesOfFollowings(allFollowing) {
@@ -233,10 +232,10 @@ class Container extends Component {
                   <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
                 </Redirect>
             }
-            {(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/ReportSpecials"><div className="side-button">Report Special Arrival/Departure</div></Link> : null}
+            {(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/reportSpecials"><div className="side-button">Report Special Arrival/Departure</div></Link> : null}
             {this.state.isLoggedIn ? <Link to="/imageForm"><div className="side-button">Add Image</div></Link> : null}
             <Route path="/imageForm" component={() => <ImageForm />} />
-            <Route path="/ReportSpecials" component={() => <PlaneReportForm />} />
+            <Route path="/reportSpecials" component={() => <PlaneReportForm />} />
             <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser}/>} />
             <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
             <Route path="/profile" component={() => <Profile loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />

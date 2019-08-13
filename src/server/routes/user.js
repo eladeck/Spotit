@@ -32,11 +32,11 @@ router.get('/all', (req, res) => {
 
 });
 
-router.get('/profile/:userName', (req, res) => {
-    const userName = req.params.userName;
-    console.log(`in profile of ${userName}`)
-    res.send({msg: `in ${userName} profile`})
-});
+// router.get('/profile/:userName', (req, res) => {
+//     const userName = req.params.userName;
+//     console.log(`in profile of ${userName}`)
+//     res.send({msg: `in ${userName} profile`})
+// });
 
 router.post(`/follow`, (req, res) => {
     // console.log(req.query)
@@ -209,10 +209,9 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
-router.get('/profile', (req, res) => {
-    const userName = req.query.userName;
-    var query = {userName}
-
+router.get('/profile/:userName', (req, res) => {
+    const userName = req.params.userName;
+    const query = {userName}
     const usersCollection = req.app.locals.usersCollection;
     usersCollection.find(query).toArray((err, result) => {
         if (err || result.length === 0) {

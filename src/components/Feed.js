@@ -18,7 +18,7 @@ class Feed extends Component {
     } // c'tor
 
     handleGoToProfile(userName) {
-        fetch(`/user/profile?userName=${userName}`, {method:'GET', credentials: "include"})
+        fetch(`/user/profile/${userName}`, {method:'GET', credentials: "include"})
         .then(res => res.json())
         .then(user => {
             console.log(`Feed.js: handleGoToProfile: inside second then. user is `);
@@ -45,7 +45,9 @@ class Feed extends Component {
                         
                     {/* ---- dor code: <h2><Link to="/main">{el.user}</Link></h2>*/}
                     
-                    <h2 onClick={() => this.handleGoToProfile(el.userName)}><Link to="/profile">{el.user}</Link></h2>
+                    <h2 onClick={() => this.handleGoToProfile(el.userName)}>
+                        <Link to={`/profile/${el.userName}`}>{el.user}</Link>
+                    </h2>
                     <div className='img-grade'>&#9733; &#9733; &#9733; &#9734; &#9734;</div>
                     <img src={el.url} alt="not working" />
                 </div>
@@ -75,8 +77,7 @@ class Feed extends Component {
         return (
             <div className="feed">
                 <h1 className="title">Spotit Feed</h1>
-                {images ? images : <Loader type="TailSpin" color="green" height={80} width={80} />}
-
+                {images ? images : <Loader type="TailSpin" color="lightgreen" height={80} width={80} />}
             </div>
         ); 
     } // render

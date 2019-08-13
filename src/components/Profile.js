@@ -1,13 +1,14 @@
 import React, { Component } from "react"
 import Loader from 'react-loader-spinner'
+import ProfileMaterialUI from './ProfileMaterialUI'
 
 
 class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentLoggedInUser: this.props.loggedInUser,
-            userProfile: this.props.desiredUserProfile
+            // currentLoggedInUser: this.props.loggedInUser,
+            // userProfile: this.props.desiredUserProfile
         }
 
         this.handleFollow = this.handleFollow.bind(this);
@@ -28,17 +29,6 @@ class Profile extends Component {
 
     componentDidMount() {
 
-        console.log(`in componoetDidMount ofProfile, props are userName and loggedInUser:`)
-        console.log(this.props.loggedInUser)
-        console.log(this.props.desiredUserProfile)
-
-
-        fetch(`user/profile/${this.props.userName}`, {method:'GET', credentials:'include'})
-        .then(res => res.json())
-        .then(user => {
-            if(user.errorMsg) throw user.errorMsg;
-            this.setState({user})
-        })
     } // didMount
 
     
@@ -46,22 +36,16 @@ class Profile extends Component {
 
         const currentProfileUser = this.props.desiredUserProfile;
         const loggedInUser = this.props.loggedInUser;
-
-        if(!currentProfileUser) return <div>no currentProfileUser to show</div>
+        console.log(`in render of Profile`)
+        console.log(this.props.desiredUserProfile)
 
         return (
-            !this.state.currentLoggedInUser ? <Loader type="TailSpin" color="blue" height={120} width={120} /> :
-
+            !currentProfileUser ? <Loader type="TailSpin" color="blue" height={120} width={120} /> :
             <>
-                <div>
-                    In profile of:
-                    <br />
-                    first Name: {currentProfileUser.firstName}
-                    <br />
-                    last name: {currentProfileUser.lastName}
-                    {loggedInUser.following.includes(currentProfileUser.userName) ?  <button onClick={this.handleUnfollow}>following...</button> : <button onClick={this.handleFollow}>follow</button>}
-
-                </div>
+                <ProfileMaterialUI
+                    currentProfileUser={currentProfileUser}
+                    loggedInUser={loggedInUser}
+                />
             </>
         );
     } // render
