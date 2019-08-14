@@ -7,6 +7,7 @@ class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            images:null,
             // currentLoggedInUser: this.props.loggedInUser,
             // userProfile: this.props.desiredUserProfile
         }
@@ -28,7 +29,11 @@ class Profile extends Component {
 
 
     componentDidMount() {
-
+        if(!this.props.desiredUserProfile) {console.log(`I was render without props user ----`);return;}
+        console.log(`i was renders WITH props`)
+        fetch(`http://localhost:3002/user/getImages?userName=${this.props.desiredUserProfile.userName}`, {method: 'GET', credentials: 'include'})
+        .then(response => response.json())
+        .then(images => this.setState({images}));
     } // didMount
 
     
@@ -45,6 +50,7 @@ class Profile extends Component {
                 <ProfileMaterialUI
                     currentProfileUser={currentProfileUser}
                     loggedInUser={loggedInUser}
+                    images={this.state.images}
                 />
             </>
         );

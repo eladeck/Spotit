@@ -61,12 +61,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const images = this.state.images;
 
 export default function Album(props) {
   const classes = useStyles();
 
   const currentProfileUser = props.currentProfileUser;
+  const images = props.images;
   console.log(`in mateiralUI, currentProfileUser is`);
   console.log(currentProfileUser);
 
@@ -103,14 +103,16 @@ export default function Album(props) {
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {images.map((image, index) => ( // to render loader until the images are here!
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {!images ? "Loading..." :
+            images.map((imageObj, index) => ( // to render loader until the images are here!
+              <Grid item key={index} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
-                  <CardMedia
+                  <img src={imageObj.url} />
+                  {/* <CardMedia
                     className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
+                    image={imageObj.url}
                     title="Image title"
-                  />
+                  /> */}
                   {/* <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                       Heading
