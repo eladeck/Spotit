@@ -39,12 +39,14 @@ MongoClient.connect(mongoUrl, { useNewUrlParser: true }, (err, db) => {
 // but I noticed when browser gets the pictures, it ask the path of /profile
 // rather than user/profile.
 // or maybe we should just create a route here 'profile'?
-app.get('/profile/:url', (req, res) => { 
-    const url = req.params.url;
-    console.log(`client has request profile/${url}`)
+app.get('/profile/:someUserName/:someImageUrl', (req, res) => { 
+    const imgUrl = req.params.someImageUrl;
+    const userName = req.params.someUserName;
+
     // in the future we should get all these pics from the user folder
     // res.sendfile( __dirname + `/server/images/${req.cookies.userName}/${url}`);
-    res.sendfile( __dirname + `/server/images/${url}`);
+    console.log(__dirname + `/server/images/${userName}/${imgUrl}`);
+    res.sendfile( __dirname + `/server/images/${userName}/${imgUrl}`);
 });
 
 app.get('/home', (req, res) => {
@@ -68,8 +70,7 @@ app.get('/imageFormData', async (req, res) => {
     
     const collectionPromise = (collection) => {
         return new Promise((resolve, reject) => {
-            // limit to only 10 records find({}).limit(1000)
-            collection.find({}).limit(10).toArray((err, result) => {
+            collection.find({}).limit(10).toArray((err, result) => { // limit to only 10
                 err ? reject(err) : resolve(result);
             })});
     }

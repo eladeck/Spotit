@@ -127,7 +127,7 @@ class Container extends Component {
         .then(response => response.json())
         .then(allImagesOfSpecificUser => {
 
-          allImagesOfSpecificUser.forEach(img => {img.userName = followerObj.userName}); // so the client will have the userName in order to click on the name and to move to the userName profile page
+          // allImagesOfSpecificUser.forEach(img => {img.userName = followerObj.userName}); // so the client will have the userName in order to click on the name and to move to the userName profile page
 
           allFollowingImages = allFollowingImages.concat(allImagesOfSpecificUser);
           if(allFollowingImages.length === realAmountOfAllImages) {
@@ -239,6 +239,7 @@ class Container extends Component {
             <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser}/>} />
             <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
             <Route path="/profile" component={() => <Profile loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
+            <Route path="/airport" component={() => <Airport loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} />
 
             
             {/* elad's code that stays behind after merge conflict:

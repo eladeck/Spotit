@@ -106,11 +106,19 @@ export default function Album(props) {
             {!images ? "Loading..." :
             images.map((imageObj, index) => ( // to render loader until the images are here!
               <Grid item key={index} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <img src={imageObj.url} />
+                  <Card className={classes.card}>
+                    <div className="hoverable-image-container">
+                      <img className="hoverable-image" src={`${imageObj.userName}/${imageObj.url}`} />
+                      {console.log(imageObj)}
+                      {console.log(`-----------------------------------------------`)}
+                      <div className="hoverable-overlay">
+                        Airport:<Link to={`/airport`}>{imageObj.airport}</Link>
+                      </div>
+                    </div>
+                  {/* <img src={imageObj.url}  style={{height:"170px", width:"auto", maxWidth:"500px"}} /> */}
                   {/* <CardMedia
                     className={classes.cardMedia}
-                    image={imageObj.url}
+                    src={imageObj.url} // for some reasons only web urls worked not local pics
                     title="Image title"
                   /> */}
                   {/* <CardContent className={classes.cardContent}>

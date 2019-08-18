@@ -38,19 +38,19 @@ class Feed extends Component {
             return null;
         } else {
 
-            const imageWrappers = this.props.allFollowingImages.map(el => {
+            const imageWrappers = this.props.allFollowingImages.map(image => {
                 // console.log(`el is`)
                 // console.log(el)
                 return(
-                    <div key={el.url + el.user} className="image-wrapper">
+                <div key={image.url + image.user} className="image-wrapper">
                         
                     {/* ---- dor code: <h2><Link to="/main">{el.user}</Link></h2>*/}
                     
-                    <h2 onClick={() => this.handleGoToProfile(el.userName)}>
-                        <Link to={`/profile/${el.userName}`}>{el.user}</Link>
+                    <h2 onClick={() => this.handleGoToProfile(image.userName)}>
+                        <Link to={`/profile/${image.userName}`}>{image.userName}</Link>
                     </h2>
                     <div className='img-grade'>&#9733; &#9733; &#9733; &#9734; &#9734;</div>
-                    <img src={el.url} alt="not working" />
+                    <img src={`${image.userName}/${image.url}`} alt="not working" />
                 </div>
                 )
             });

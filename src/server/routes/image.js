@@ -47,7 +47,7 @@ upload.single("image" /* name attribute of <file> element in your form */),
     // console.log(req.file)
 
     const objectToInsert = {
-        user: userName,
+        userName,
         date: new Date(),
         url: desiredFileName, // this is like "llbg3.jpg". desiredFileName was not good here since it was "4das9r31uoijdas.jpg"
         airplaeModel: req.body.airplaneModel,
@@ -65,7 +65,7 @@ upload.single("image" /* name attribute of <file> element in your form */),
           res.send(401, {errMsg:`Error occured while uploading image to database.`});
         } else {
           console.log("in imagesCollection.insertOne(): Object successfully inserted.")
-          res.send({msg:"successfully uploaded image"})
+          res.status(200).send(200, {msg:"successfully uploaded image"})
         }
 
         // adding the fresh image id to the user's images list (but maybe to delete the image list from user record?)

@@ -33,7 +33,7 @@ class Profile extends Component {
         console.log(`i was renders WITH props`)
         fetch(`http://localhost:3002/user/getImages?userName=${this.props.desiredUserProfile.userName}`, {method: 'GET', credentials: 'include'})
         .then(response => response.json())
-        .then(images => this.setState({images}));
+        .then(images => {console.log(`!!!!!!!!!!!!!!!!!!`); console.log(images); this.setState({images})});
     } // didMount
 
     

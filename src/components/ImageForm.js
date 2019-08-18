@@ -45,9 +45,9 @@ class ImageForm extends Component {
             credentials:"include"
          })
          .then(res => res.json())
-         .then(uploadedImage => {
+         .then(realResObj => {
              this.setState({
-                 uploadedImage,
+                //  realResObj,
                  uploading:false
              })
          })
