@@ -27,7 +27,7 @@ class Main extends Component {
                 allFollowingImages={this.props.allFollowingImages}
                 setDesiredUser={this.props.setDesiredUser}
             />
-            <GoSpotit />
+            <GoSpotit flightInfo={this.props.flightInfo}/>
         </div>
       </>
     ) // return render

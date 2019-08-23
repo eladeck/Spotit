@@ -1,10 +1,10 @@
 const express = require("express");
-const ObjectId = require('mongodb').ObjectId; 
+//const ObjectId = require('mongodb').ObjectId; 
 const router = express.Router();
-const bycrypt = require('bcryptjs');
+//const bycrypt = require('bcryptjs');
 //Bring in User Model
-let userSchema = require('../models/userSchema');
-let dbo = require('../../server');
+// let userSchema = require('../models/userSchema');
+// let dbo = require('../../server');
 
 // resposnes with all users in db
 router.get('/all', (req, res) => {

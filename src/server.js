@@ -4,6 +4,7 @@ const app = express();
 const MongoClient = require('mongodb').MongoClient;
 const user = require('./server/routes/user');
 const image = require('./server/routes/image');
+const data = require('./server/routes/data');
 const cookieParser = require('cookie-parser');
 const password = '1234';
 const mongoUrl = `mongodb+srv://DorBenLulu:${password}@spotit-bx5gf.mongodb.net/test?retryWrites=true`;
@@ -33,6 +34,10 @@ MongoClient.connect(mongoUrl, { useNewUrlParser: true }, (err, db) => {
     app.locals.airports = dbo.collection('airports');
     app.locals.cities = dbo.collection('cities');
     app.locals.specialReport = dbo.collection('specialReports');
+    app.locals.goSpotItInfo = dbo.collection('goSpotItInfo');
+
+    // console.log("in server.js: MongoClient.connect: app.locals.goSpotItInfo is ")
+    // console.log(app.locals.goSpotItInfo);
 });
 
 // should fix it, it is not good practice, just wanted to work it
@@ -96,6 +101,7 @@ app.get('/imageFormData', async (req, res) => {
 
 app.use('/user', user);
 app.use('/image', image);
+app.use('/data', data);
 
 
 const port = 3002;
@@ -119,3 +125,16 @@ app.get('/logout', function (req, res) {
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + "/../public/index.html"))
 })
+
+// app.get('/flights', (req, res) => {
+
+//     console.log("in app.get(flights):");
+//     const goSpotItInfo = req.app.locals.goSpotItInfo;
+//     goSpotItInfo.find({}).toArray(function(err, result) {
+//         if (err || result.length === 0) {
+//             res.send(401, {errMsg:`error fetching all flight data`});
+//         } else {
+//             res.send(result) 
+//         }
+//     });
+// });

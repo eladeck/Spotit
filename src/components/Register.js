@@ -105,20 +105,6 @@ class Register extends Component {
 
     render() {
         window.state = this.state
-        
-        // let years = [], days = [], months  = [] ;
-
-        // for ( let i = 1920 ; i <= 2019 ; i++) {
-        //     years.push(i);
-        // }
-
-        // for ( let i = 1 ; i <= 12 ; i++) {
-        //     months.push(i);
-        // }
-
-        // for ( let i = 1 ; i <= 31 ; i++) {
-        //     days.push(i);
-        // }
 
         return (
             <main>

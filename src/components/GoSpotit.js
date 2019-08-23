@@ -1,21 +1,33 @@
 
 import React, { Component } from "react"
 import Popup from 'reactjs-popup'
-import { SSL_OP_NO_TLSv1 } from "constants";
 import FlightInfo from "./FlightInfo";
-
+import Loader from 'react-loader-spinner'
 
 class GoSpotit extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-
+            flightInfo: null
         } // state
 
     this.createListItems = this.createListItems.bind(this);    
-
+    //this.fetchFlightInfo = this.fetchFlightInfo.bind(this);
     } // c'tor
+
+    // fetchFlightInfo() {
+    //   fetch(`/data/flights`, {method: 'GET', credentials: 'include'})
+    //   .then(response => {
+    //       return response.json()
+    //   })
+    //   .then(res => {
+    //       console.log(`in GoSpotIt:this.componentDidMount, res is:`);
+    //       console.log(res);
+    //       return res;
+    //   })
+    //   .catch(errMsg => {console.log("in GoSpotIt:this.componentDidMount in catch err is");console.log(errMsg); return null;})
+    // }
 
     createListItems() {
         const listLength = 10;
@@ -46,7 +58,7 @@ class GoSpotit extends Component {
                       <div className="header"> Modal Title </div>
                       <div className="content">
                           <ul style={{overflow:"auto"}}>
-                              {this.createListItems().map(flightInfoObject => 
+                              {this.state.flightInfo.map(flightInfoObject => 
                                 <FlightInfo 
                                     key={flightInfoObject.id}
                                     number={flightInfoObject.number}
@@ -87,14 +99,16 @@ class GoSpotit extends Component {
 
 
     render() {
-
-
-        return (
+      const flightInfo = this.props.flightInfo;
+        if (flightInfo == null){
+          return (<Loader type="TailSpin" color="lightgreen" height={30} width={30} />)
+        } else {
+          return (
             <div className="go-spotit box">
                 {this.PopupExample()}
                  <div className='scroll-container'>
                     <ul className='scorll-ul'>
-                      {this.createListItems().map((flightInfoObject, index) =>
+                      {flightInfo.map((flightInfoObject, index) =>
                         <li key={index}>
                             <FlightInfo 
                                 number={flightInfoObject.number}
@@ -108,8 +122,9 @@ class GoSpotit extends Component {
                       )}
                     </ul>  
                 </div>
-        </div>
-        );
+            </div>
+                      );
+        }
     }
 
 

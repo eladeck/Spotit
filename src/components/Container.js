@@ -24,6 +24,7 @@ class Container extends Component {
           loggedInUser:null,
           allFollowingImages:null,
           formData: null,
+          flightInfo: null,
           displayUser: false,
           desiredUserProfile: null // Will contain the user we want to view it's profile.
       }
@@ -60,6 +61,18 @@ class Container extends Component {
         }
       })
       .catch(err => console.log(err));
+
+      
+      fetch(`/data/flights`, {method: 'GET', credentials: 'include'})
+      .then(response => {
+          return response.json()
+      })
+      .then(res => {
+          console.log(`in Container:this.componentDidMount, res is:`);
+          console.log(res);
+          this.setState({flightInfo: res})
+      })
+      .catch(errMsg => {console.log("in Container:this.componentDidMount in catch err is");console.log(errMsg);})
     } // componentDidMount
 
     handleLogout() {
@@ -236,7 +249,7 @@ class Container extends Component {
             {this.state.isLoggedIn ? <Link to="/imageForm"><div className="side-button">Add Image</div></Link> : null}
             <Route path="/imageForm" component={() => <ImageForm />} />
             <Route path="/reportSpecials" component={() => <PlaneReportForm />} />
-            <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser}/>} />
+            <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser} flightInfo={this.state.flightInfo}/>} />
             <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
             <Route path="/profile" component={() => <Profile loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
             <Route path="/airport" component={() => <Airport loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} />
