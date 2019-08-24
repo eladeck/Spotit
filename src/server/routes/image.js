@@ -80,4 +80,18 @@ upload.single("image" /* name attribute of <file> element in your form */),
     });
 });
 
+router.get('/recentImages', (req, res) => {
+
+  const imageCollection = req.app.locals.imgCollection;
+
+  imageCollection.find().limit(12).toArray(function(err, result) {
+    if (err || result.length === 0) {
+        res.send(401, {errMsg:'No images were found'});
+    } else {
+        res.send(result)
+    }
+})
+
+})
+
 module.exports = router;
