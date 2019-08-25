@@ -12,7 +12,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom'
+// import { BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom'
+
+
 
 function Copyright() {
   return (
@@ -117,8 +121,8 @@ export default function Album(props) {
                       <img className="hoverable-image" src={`${imageObj.userName}/${imageObj.url}`} />
                       {console.log(imageObj)}
                       {console.log(`-----------------------------------------------`)}
-                      <div className="hoverable-overlay" onClick={handleGoToAirport}>
-                        Airport: <Link href={`/airport/${imageObj.airport}`}>{imageObj.airport}</Link>
+                      <div className="hoverable-overlay">
+                        Airport:<Link to={`/airport/${imageObj.airport}`}>{imageObj.airport}</Link>
                       </div>
                     </div>
                   {/* <img src={imageObj.url}  style={{height:"170px", width:"auto", maxWidth:"500px"}} /> */}

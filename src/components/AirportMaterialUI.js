@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function Album(props) {
+export default function AirportMaterialUI(props) {
   const classes = useStyles();
 
   const currentProfileUser = props.currentProfileUser;

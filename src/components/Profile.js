@@ -29,9 +29,12 @@ class Profile extends Component {
 
 
     componentDidMount() {
+        console.log(`444444444444444444444`)
+        console.log(this.props)
+        console.log(`44444444444444444444`)
         if(!this.props.desiredUserProfile) {console.log(`I was render without props user ----`);return;}
         console.log(`i was renders WITH props`)
-        fetch(`http://localhost:3002/user/getImages?userName=${this.props.desiredUserProfile.userName}`, {method: 'GET', credentials: 'include'})
+        fetch(`/user/getImages?userName=${this.props.match.params.userName}`, {method: 'GET', credentials: 'include'})
         .then(response => response.json())
         .then(images => {console.log(`!!!!!!!!!!!!!!!!!!`); console.log(images); this.setState({images})});
     } // didMount
