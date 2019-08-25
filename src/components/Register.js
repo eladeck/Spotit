@@ -1,4 +1,5 @@
 import React, {Component} from "react"
+import Form from "./Form"
 
 class Register extends Component {
     constructor() {
@@ -104,21 +105,12 @@ class Register extends Component {
     } // handleLogin
 
     render() {
-        window.state = this.state
-        
-        // let years = [], days = [], months  = [] ;
 
-        // for ( let i = 1920 ; i <= 2019 ; i++) {
-        //     years.push(i);
-        // }
-
-        // for ( let i = 1 ; i <= 12 ; i++) {
-        //     months.push(i);
-        // }
-
-        // for ( let i = 1 ; i <= 31 ; i++) {
-        //     days.push(i);
-        // }
+        // return (
+        //     <div className="form">
+        //         <Form />
+        //     </div>
+        // )
 
         return (
             <main>
@@ -150,36 +142,6 @@ class Register extends Component {
                     <label>
                         <input type="radio" name="gender" value="female" checked={this.state.gender === "female"} onChange={this.handleChange} /> Female
                     </label>
-                    
-                    <br />
-                    
-                    {/* <select value={this.state.newUser.yearOfBirth} name="yearOfBirth" onChange={this.handleChange}>
-                        <option value="">-- Year --</option>
-                        
-                        {years.map(el => {
-                            return ( 
-                                <option key={el} value={el}>{el}</option>
-                            );
-                        })}
-                    </select>
-                    <select value={this.state.newUser.monthOfBirth} name="monthOfBirth" onChange={this.handleChange}>
-                        <option value="">-- Month --</option>
-                        {months.map(el => {
-                            return ( 
-                                <option key={el} value={el}>{el}</option>
-                            );
-                        })}
-                    </select>
-                    <select value={this.state.newUser.dayOfBirth} name="dayOfBirth" onChange={this.handleChange}>
-                        <option value="">-- Day --</option>
-                        {days.map(el => {
-                            return ( 
-                                <option key={el} value={el}>{el}</option>
-                            );
-                        })}
-
-                    </select> */}
-                    
                     <br />
                     
                     <button type="button" onClick={this.handleRegister}>Register</button>
@@ -204,8 +166,6 @@ class Register extends Component {
                 <hr />
                 <p>registeredUser name: {this.state.registeredUser.regUserName}</p>
                 <p>registeredUser password: {this.state.registeredUser.regPassword}</p>
-                
-
             </main>
         )
     }

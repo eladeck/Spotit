@@ -10,6 +10,7 @@ import Register from "./Register"
 import ImageForm from "./ImageForm"
 import PlaneReportForm from "./PlaneReportForm";
 import Profile from "./Profile"
+import Airport from "./Airport"
 
 //let Router = BrowserRouter;
 
@@ -239,7 +240,7 @@ class Container extends Component {
             <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser}/>} />
             <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
             <Route path="/profile" component={() => <Profile loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
-            <Route path="/airport" component={() => <Airport loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} />
+            <Route path="/profile/airport" component={() => <Airport loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} />
 
             
             {/* elad's code that stays behind after merge conflict:

@@ -364,4 +364,67 @@ ul > li > a:hover {
     font-size:2em;
 
   }
+
+  /*form form form form form form form form*/
+  .form {
+    margin-top: 20px;
+    margin-right: auto;
+    margin-left: 40px;
+    max-width: 320px;
+  }
+  .form fieldset {
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+  .form fieldset + fieldset {
+    margin-top: 24px;
+  }
+  .form label {
+    margin-bottom: 8px;
+    display: block;
+    color: #2b2e4a;
+  }
+  .form input:not([type=checkbox]):not([type=radio]), select, textarea {
+    padding: 8px;
+    width: 100%;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 1px solid #bdc3c7;
+    border-left: 0;
+    transition: border-bottom-color 0.15s ease-in;
+  }
+  .form input:not([type=checkbox]):not([type=radio]):focus, select:focus, textarea:focus {
+    outline: 0;
+    border-bottom-color: #3fc1c9;
+  }
+  .form input[type=checkbox], input[type=radio] {
+    margin-right: 8px;
+  }
+  .form textarea {
+    resize: vertical;
+  }
+  .form .button {
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    padding: 8px 16px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #3fc1c9;
+    border: 0;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in;
+  }
+  .form button:focus:active {
+    background-color: #31a7ae;
+  }
+  .form button:focus {
+    outline: 0;
+  }
+  .form button:hover {
+    background-color: #7bd4da;
+  }
+  /*form form form form formformform form*/
   

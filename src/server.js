@@ -4,6 +4,7 @@ const app = express();
 const MongoClient = require('mongodb').MongoClient;
 const user = require('./server/routes/user');
 const image = require('./server/routes/image');
+const airport = require('./server/routes/airport');
 const cookieParser = require('cookie-parser');
 const password = '1234';
 const mongoUrl = `mongodb+srv://DorBenLulu:${password}@spotit-bx5gf.mongodb.net/test?retryWrites=true`;
@@ -96,6 +97,7 @@ app.get('/imageFormData', async (req, res) => {
 
 app.use('/user', user);
 app.use('/image', image);
+app.use('/airport', airport);
 
 
 const port = 3002;
@@ -117,5 +119,8 @@ app.get('/logout', function (req, res) {
 */
 
 app.get('*', (req, res) => {
+    console.log(`------`)
+    console.log(`iv'e got a route for ${req.protocol + '://' + req.get('host') + req.originalUrl} but don't have it`)
+    console.log(`------`)
     res.sendFile(path.join(__dirname + "/../public/index.html"))
 })

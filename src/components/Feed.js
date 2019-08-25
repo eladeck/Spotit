@@ -78,6 +78,8 @@ class Feed extends Component {
         return (
             <div className="feed">
                 <h1 className="title">Spotit Feed</h1>
+                {console.log('0000000000000000000000000000000')}
+                {console.log(images)}
                 {images ? images : <Loader type="TailSpin" color="lightgreen" height={80} width={80} />}
             </div>
         ); 

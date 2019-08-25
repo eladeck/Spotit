@@ -61,6 +61,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+function handleGoToAirport(e) {
+  console.log(`in handleGoToAirport, e is `)
+  console.log(e)
+  console.log(e.target)
+}
+
 
 export default function Album(props) {
   const classes = useStyles();
@@ -111,8 +117,8 @@ export default function Album(props) {
                       <img className="hoverable-image" src={`${imageObj.userName}/${imageObj.url}`} />
                       {console.log(imageObj)}
                       {console.log(`-----------------------------------------------`)}
-                      <div className="hoverable-overlay">
-                        Airport:<Link to={`/airport`}>{imageObj.airport}</Link>
+                      <div className="hoverable-overlay" onClick={handleGoToAirport}>
+                        Airport: <Link href={`/airport/${imageObj.airport}`}>{imageObj.airport}</Link>
                       </div>
                     </div>
                   {/* <img src={imageObj.url}  style={{height:"170px", width:"auto", maxWidth:"500px"}} /> */}
