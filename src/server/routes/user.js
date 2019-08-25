@@ -108,10 +108,6 @@ router.get('/getImages', (req, res) => {
         } else {
             const user = result[0];
             
-            console.log(`this is user and then user images`)
-            console.log(user)
-            console.log(user.images)
-
             user.images.forEach(imgId => {
                 imgCollection.find({"_id": ObjectId(imgId)}).toArray(function(err, result) {
                     if (err || result.length === 0) {

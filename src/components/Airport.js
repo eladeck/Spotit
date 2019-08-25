@@ -16,6 +16,17 @@ class Airport extends Component {
     } // c'tor
 
     // methods:
+    componentDidMount() {
+        const fetchString = `/airport/${this.props.match.params.airportName}`
+        console.log(`in Airport coopmonent did mount, gonna fetch ${fetchString}`)
+        fetch(fetchString, {method: 'GET', credentials: 'include'})
+        .then(res => res.json())
+        .then(realObj => {
+            console.log(realObj)
+        })
+    } // componentDidMount
+
+
     handleFollow() {
 
         console.log("Profile.js: handleFollow(): desiredUserProfile.userName is:")
@@ -40,17 +51,14 @@ class Airport extends Component {
     
     render() {
 
-        const currentProfileUser = this.props.desiredUserProfile;
-        const loggedInUser = this.props.loggedInUser;
-        console.log(`in render of Profile`)
-        console.log(this.props.desiredUserProfile)
+        console.log(`in render of Airport`)
 
         return (
-            !currentProfileUser ? <Loader type="TailSpin" color="blue" height={120} width={120} /> :
+            // !airportInfo ? <Loader type="TailSpin" color="blue" height={120} width={120} /> :
             <>
                 <AirportMaterialUI
                     airportName={"El Arish International Airport"}
-                    loggedInUser={loggedInUser}
+                    loggedInUser={this.props.loggedInUser}
                     images={this.state.images}
                 />
             </>
@@ -95,7 +103,7 @@ class Profile extends Component {
         console.log(this.props.userName)
 
 
-        fetch(`user/profile/${this.props.userName}`, {method:'GET', credentials:'include'})
+        fetch(`/user/profile/${this.props.userName}`, {method:'GET', credentials:'include'})
         .then(res => res.json())
         .then(user => {
             if(user.errorMsg) throw user.errorMsg;

@@ -10,6 +10,7 @@ import Register from "./Register"
 import ImageForm from "./ImageForm"
 import PlaneReportForm from "./PlaneReportForm";
 import Profile from "./Profile"
+import Airport from "./Airport"
 
 //let Router = BrowserRouter;
 
@@ -123,7 +124,7 @@ class Container extends Component {
       
 
       allFollowing.forEach(followerObj => {
-        fetch(`user/getImages?userName=${followerObj.userName}`, {method: 'GET', credentials: 'include'})
+        fetch(`/user/getImages?userName=${followerObj.userName}`, {method: 'GET', credentials: 'include'})
         .then(response => response.json())
         .then(allImagesOfSpecificUser => {
 
@@ -150,7 +151,7 @@ class Container extends Component {
         const allFollowing = [];
 
         loggedInUser.following.forEach(followerUserName => {
-          fetch(`user/getUser?userName=${followerUserName}`, {method:'GET', credentials:'include'})
+          fetch(`/user/getUser?userName=${followerUserName}`, {method:'GET', credentials:'include'})
           .then(response => response.json())
           .then(followerObj => {
             allFollowing.push(followerObj);
@@ -220,6 +221,12 @@ class Container extends Component {
       });
     }
       render() {
+        console.log(`in container`)
+
+        // const path = window.location.pathname;
+        // const path = window.location.pathname;
+        // return dict[path];
+
         return (
           <Router>
             {
@@ -238,8 +245,8 @@ class Container extends Component {
             <Route path="/reportSpecials" component={() => <PlaneReportForm />} />
             <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser}/>} />
             <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
-            <Route path="/profile" component={() => <Profile loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
-            <Route path="/airport" component={() => <Airport loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} />
+            <Route path="/profile/:userName" component={(props) => <Profile {...props} loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
+            <Route path="/airport/:airportName" component={props => <Airport  {...props} loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} />
 
             
             {/* elad's code that stays behind after merge conflict:
