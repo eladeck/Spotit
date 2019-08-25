@@ -3,8 +3,9 @@ import ReactTooltip from 'react-tooltip'
 // import pilotLogo from "./img/pilot-logo.jpg"
 import Container from './Container';
 import ImageForm from './ImageForm';
-import {BrowserRouter, Link,Route} from "react-router-dom";
-let Router = BrowserRouter;
+//import {BrowserRouter, Link,Route} from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom'
+//let Router = BrowserRouter;
 //let {BrowserRouter, Link,Route} = ReactRouterDOM;
 class Header extends Component {
     constructor(props) {
@@ -22,6 +23,7 @@ class Header extends Component {
         this.mouseEnterProfile = this.mouseEnterProfile.bind(this)
         this.handleUsersInputClick = this.handleUsersInputClick.bind(this)
         this.renderAllUsersUnderInput = this.renderAllUsersUnderInput.bind(this)
+        this.handleUrlChanged = this.handleUrlChanged.bind(this);
 
     } // c'tor
 
@@ -115,6 +117,9 @@ class Header extends Component {
         .catch(errMsg => {console.log(errMsg); this.setState({errMsg})})
       } // componentWillUnmount
 
+    handleUrlChanged() {
+        this.props.handleUrlChanged();
+    }
     render() {
         
         return (
@@ -126,14 +131,15 @@ class Header extends Component {
               <li><a>follow:</a></li>
               <li>
                   <form onSubmit={this.handleFollow}>
-                      <input name='userNameToFollow' type='textbox' onChange={this.handleChange} onClick={this.handleUsersInputClick} autoComplete="off"/>
+                      <input name='userNameToFollow' type='textbox' onChange={this.handleChange}  autoComplete="off"/>
                       {this.state.showAllUsers ? this.renderAllUsersUnderInput() : null}
                       <button type='submit'>go!</button>
                   </form>
               </li>
-              <li><a href="#home">home</a></li>
-              <li><a href="#forum">forum</a></li>
-              <li><a href="#about">about</a></li>
+              
+              {this.props.loggedInUser ? <li><Link to="/home">home</Link></li> : <li onClick={this.handleUrlChanged}><Link to="/register">Register</Link></li>}
+              <li><a href="#forum">Forum</a></li>
+              <li><a href="#about">About</a></li>
           </ul>
       </nav>
       {this.props.loggedInUser ?

@@ -10,9 +10,11 @@ class App extends React.Component {
                 this.state = {
                         loggedInUser:null,
                         userWantsToLogout:false,
+                        
                 }
         this.updateLoggedInUser = this.updateLoggedInUser.bind(this)
         this.handleLogout = this.handleLogout.bind(this)
+        this.handleUrlChange = this.handleUrlChange.bind(this)
         } //
 
         handleLogout() {
@@ -26,12 +28,19 @@ class App extends React.Component {
                 this.setState({loggedInUser, userWantsToLogout:false})
         } // updateLoggedInUser
 
+        handleUrlChange() { // This method is used in order to make the Container rendered after the Header has changed the URL.
+                console.log(`App.js: In handleUrlChange().`);
+                this.setState(prevState => {prevState});
+
+        }
         render() {
+                
                 return (
                 <Router>
                         <Header
                                 loggedInUser={this.state.loggedInUser}
                                 handleLogout={this.handleLogout}
+                                handleUrlChanged={this.handleUrlChange}
                          />
                         <Container
                          updateLoggedInUser={this.updateLoggedInUser}

@@ -28,8 +28,6 @@ router.get('/all', (req, res) => {
             res.send(result) 
         }
     });
-
-
 });
 
 // router.get('/profile/:userName', (req, res) => {

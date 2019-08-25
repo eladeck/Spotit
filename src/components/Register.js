@@ -105,13 +105,12 @@ class Register extends Component {
     } // handleLogin
 
     render() {
-
+        
         // return (
         //     <div className="form">
         //         <Form />
         //     </div>
         // )
-
         return (
             <main>
                 <form action="users/register" onSubmit={this.handleRegister}>

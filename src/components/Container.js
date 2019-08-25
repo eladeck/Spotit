@@ -11,6 +11,7 @@ import ImageForm from "./ImageForm"
 import PlaneReportForm from "./PlaneReportForm";
 import Profile from "./Profile"
 import Airport from "./Airport"
+import LandingPage from "./LandingPage"
 
 //let Router = BrowserRouter;
 
@@ -25,7 +26,9 @@ class Container extends Component {
           loggedInUser:null,
           allFollowingImages:null,
           formData: null,
+          flightInfo: null,
           displayUser: false,
+          generalImages: null,
           desiredUserProfile: null // Will contain the user we want to view it's profile.
       }
 
@@ -35,6 +38,7 @@ class Container extends Component {
       this.extractAllImagesOfFollowings = this.extractAllImagesOfFollowings.bind(this);
       this.extratAllFollowing = this.extratAllFollowing.bind(this)
       this.setDesiredUser = this.setDesiredUser.bind(this)
+      this.renderContainer = this.renderContainer.bind(this);
     }
 
     componentWillUnmount() {
@@ -61,6 +65,34 @@ class Container extends Component {
         }
       })
       .catch(err => console.log(err));
+
+      
+      fetch(`/data/flights`, {method: 'GET', credentials: 'include'})
+      .then(response => {
+          return response.json()
+      })
+      .then(res => {
+          console.log(`in Container:this.componentDidMount, res is:`);
+          console.log(res);
+          this.setState({flightInfo: res})
+      })
+      .catch(errMsg => {console.log("in Container:this.componentDidMount in catch err is");console.log(errMsg);})
+
+      fetch(`/image/recentImages`, {method: 'GET', credentials: 'include'})
+      .then(response => {
+          return response.json()
+      })
+      .then(res => {
+          if(res.errMsg) {
+              throw res.errMsg
+          } else {
+              console.log(`Container.js: componentDidMount: inside second then: res is: `);
+              console.log(res);
+              this.setState({generalImages: res})
+          }
+      })
+      .catch(errMsg => {console.log(errMsg);})
+
     } // componentDidMount
 
     handleLogout() {
@@ -121,8 +153,6 @@ class Container extends Component {
           realAmountOfAllImages += followerObj.images.length
       })
 
-      
-
       allFollowing.forEach(followerObj => {
         fetch(`user/getImages?userName=${followerObj.userName}`, {method: 'GET', credentials: 'include'})
         .then(response => response.json())
@@ -164,7 +194,9 @@ class Container extends Component {
 
     } // extratAllFollowing
     
-
+  renderContainer() {
+    this.setState(prevState=>{prevState});
+  }
     handleSuccessfulLogin(userToLogin) {
       this.props.updateLoggedInUser(userToLogin)
       this.setState({
@@ -225,20 +257,22 @@ class Container extends Component {
           <Router>
             {
               this.state.isLoggedIn ?  
-                <Redirect push to="/main">
-                  <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages}/>} />
+                <Redirect push to="/home">
+                  <Route path="/home" component={() => <Main allFollowingImages={this.state.allFollowingImages}/>} />
                 </Redirect>
               : 
-                <Redirect push to="/register">
-                  <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
+                <Redirect push to="/">
+                  <Route path="/" component={() => <LandingPage />} />
                 </Redirect>
             }
             {(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/reportSpecials"><div className="side-button">Report Special Arrival/Departure</div></Link> : null}
             {this.state.isLoggedIn ? <Link to="/imageForm"><div className="side-button">Add Image</div></Link> : null}
+            
             <Route path="/imageForm" component={() => <ImageForm />} />
             <Route path="/reportSpecials" component={() => <PlaneReportForm />} />
-            <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser}/>} />
-            <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
+            <Route path="/home" component={() => <Main allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser} flightInfo={this.state.flightInfo}/>} />
+            {<Route path="/" component={() => <LandingPage flightInfo={this.state.flightInfo} imagesToDisplay={this.state.generalImages}/>} />}
+            <Route path="/register" component={() => <Register />} />
             <Route path="/profile" component={() => <Profile loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
             <Route path="/profile/airport" component={() => <Airport loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} />
 
