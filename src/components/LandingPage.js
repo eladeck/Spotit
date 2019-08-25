@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
+import TopSpotIts from "./TopSpotIts"
+import GoSpotit from "./GoSpotit"
 
 function Copyright() {
   return (
@@ -134,12 +136,21 @@ export default class LandingPage extends Component {
             <main>
               {/* Hero unit */}
               <div className={classes.heroContent}>
+
               <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              <img src="www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwjt4I2lqZzkAhXDJFAKHaxPBaEQjRx6BAgBEAQ&url=https%3A%2F%2Fbaydrach.com%2F&psig=AOvVaw1JeKlRxJXLdWtHtHFx2wMe&ust=1566764083129550" alt="Not working.." />
+              <img src="https://baydrach.com/wp-content/uploads/2016/10/airplane.jpg" alt="Not working.." />
+            </Typography>
+            <Typography variant="h5" align="center" color="textSecondary" paragraph>
+              Welcome to SpotIt!
+              The first social media for airplane spotters.
+              Here, you can find the latest updates about special flight arrivals, and share your latest shots with other spotters.
+              Let's go SpotIt!
             </Typography>
               </div>
               <Container className={classes.cardGrid} maxWidth="md">
                 {/* End hero unit */}
+                <GoSpotit flightInfo={this.props.flightInfo} />
+                
                 <Grid container spacing={4}>
                   {!images ? "Loading..." :
                   images.map((imageObj, index) => ( // to render loader until the images are here!
@@ -180,6 +191,7 @@ export default class LandingPage extends Component {
                   ))}
                 </Grid>
               </Container>
+              <TopSpotIts />
             </main>
             {/* Footer */}
             <footer className={classes.footer}>

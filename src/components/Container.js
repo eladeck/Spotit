@@ -37,6 +37,7 @@ class Container extends Component {
       this.extractAllImagesOfFollowings = this.extractAllImagesOfFollowings.bind(this);
       this.extratAllFollowing = this.extratAllFollowing.bind(this)
       this.setDesiredUser = this.setDesiredUser.bind(this)
+      this.renderContainer = this.renderContainer.bind(this);
     }
 
     componentWillUnmount() {
@@ -151,8 +152,6 @@ class Container extends Component {
           realAmountOfAllImages += followerObj.images.length
       })
 
-      
-
       allFollowing.forEach(followerObj => {
         fetch(`user/getImages?userName=${followerObj.userName}`, {method: 'GET', credentials: 'include'})
         .then(response => response.json())
@@ -194,7 +193,9 @@ class Container extends Component {
 
     } // extratAllFollowing
     
-
+  renderContainer() {
+    this.setState(prevState=>{prevState});
+  }
     handleSuccessfulLogin(userToLogin) {
       this.props.updateLoggedInUser(userToLogin)
       this.setState({
@@ -255,12 +256,12 @@ class Container extends Component {
           <Router>
             {
               this.state.isLoggedIn ?  
-                <Redirect push to="/main">
-                  <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages}/>} />
+                <Redirect push to="/home">
+                  <Route path="/home" component={() => <Main allFollowingImages={this.state.allFollowingImages}/>} />
                 </Redirect>
               : 
-                <Redirect push to="/register">
-                  <Route path="/register" component={() => <LandingPage />} />
+                <Redirect push to="/">
+                  <Route path="/" component={() => <LandingPage />} />
                 </Redirect>
             }
             {(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/reportSpecials"><div className="side-button">Report Special Arrival/Departure</div></Link> : null}
@@ -268,8 +269,9 @@ class Container extends Component {
             
             <Route path="/imageForm" component={() => <ImageForm />} />
             <Route path="/reportSpecials" component={() => <PlaneReportForm />} />
-            <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser} flightInfo={this.state.flightInfo}/>} />
-            <Route path="/register" component={() => <LandingPage imagesToDisplay={this.state.generalImages}/>} />
+            <Route path="/home" component={() => <Main allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser} flightInfo={this.state.flightInfo}/>} />
+            {<Route path="/" component={() => <LandingPage flightInfo={this.state.flightInfo} imagesToDisplay={this.state.generalImages}/>} />}
+            <Route path="/register" component={() => <Register />} />
             <Route path="/profile" component={() => <Profile loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
             <Route path="/airport" component={() => <Airport loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} />
 
