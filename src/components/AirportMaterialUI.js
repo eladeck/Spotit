@@ -12,23 +12,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'. Built with '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Material-UI.
-      </Link>
-    </Typography>
-  );
-}
+
 const useStyles = makeStyles(theme => ({
   icon: {
     marginRight: theme.spacing(2),
@@ -67,7 +52,7 @@ export default function AirportMaterialUI(props) {
 
   const currentProfileUser = props.currentProfileUser;
   const images = props.images;
-  console.log(`in mateiralUI, currentProfileUser is`);
+  console.log(`in mateiralUI, AirportMaterialUI is`);
   console.log(currentProfileUser);
 
   return (
@@ -78,72 +63,14 @@ export default function AirportMaterialUI(props) {
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              {currentProfileUser.firstName} {currentProfileUser.lastName}
+              Aiport Name
             </Typography>
-            <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              <div><h2>{currentProfileUser.followedBy.length}</h2> Followers</div>
-              <div><h2>{currentProfileUser.following.length}</h2> Following</div>
-            </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                  <Button variant="contained" color="primary">
-                    Main call to action
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Secondary action
-                  </Button>
-                </Grid>
-              </Grid>
-            </div>
+            {/*Add data about airport */}
+            
+          
           </Container>
         </div>
-        <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {!images ? "Loading..." :
-            images.map((imageObj, index) => ( // to render loader until the images are here!
-              <Grid item key={index} xs={12} sm={6} md={4}>
-                  <Card className={classes.card}>
-                    <div className="hoverable-image-container">
-                      <img className="hoverable-image" src={`${imageObj.userName}/${imageObj.url}`} />
-                      {console.log(imageObj)}
-                      {console.log(`-----------------------------------------------`)}
-                      <div className="hoverable-overlay">
-                        Airport:<h2 onClick={() => this.handleGoToProfile(image.userName)}>
-                                  <Link to={`/airport/${imageObj.airport}`}>{imageObj.airport}</Link>
-                                </h2>
-                      </div>
-                    </div>
-                  {/* <img src={imageObj.url}  style={{height:"170px", width:"auto", maxWidth:"500px"}} /> */}
-                  {/* <CardMedia
-                    className={classes.cardMedia}
-                    src={imageObj.url} // for some reasons only web urls worked not local pics
-                    title="Image title"
-                  /> */}
-                  {/* <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe the content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions> */}
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+      
       </main>
       {/* Footer */}
       <footer className={classes.footer}>
@@ -153,7 +80,7 @@ export default function AirportMaterialUI(props) {
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
           Something here to give the footer a purpose!
         </Typography>
-        <Copyright />
+       
       </footer>
       {/* End footer */}
     </React.Fragment>

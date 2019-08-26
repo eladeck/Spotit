@@ -82,7 +82,7 @@ async function startServer() {
     app.locals.airports = dbo.collection('airports');
     app.locals.cities = dbo.collection('cities');
     app.locals.specialReport = dbo.collection('specialReports');
-
+    app.locals.goSpotItInfo = dbo.collection('goSpotItInfo');
     // all server code goes here and it'll happen only when db is up
     app.get('/profile/:someUserName/:someImageUrl', (req, res) => { 
         const imgUrl = req.params.someImageUrl;

@@ -29,7 +29,8 @@ class Container extends Component {
           flightInfo: null,
           displayUser: false,
           generalImages: null,
-          desiredUserProfile: null // Will contain the user we want to view it's profile.
+          desiredUserProfile: null, // Will contain the user we want to view it's profile.
+          desiredAirport: 'Heathrow'
       }
 
       this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
@@ -276,7 +277,7 @@ class Container extends Component {
             <Route path="/imageForm" component={() => <ImageForm />} />
             <Route path="/reportSpecials" component={() => <PlaneReportForm />} />
             <Route path="/home" component={() => <Main allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser} flightInfo={this.state.flightInfo}/>} />
-            {<Route path="/" component={() => <LandingPage flightInfo={this.state.flightInfo} imagesToDisplay={this.state.generalImages}/>} />}
+            {<Route exact path="/" component={() => <LandingPage flightInfo={this.state.flightInfo} imagesToDisplay={this.state.generalImages}/>} />}
             {/* <Route path="/register" component={() => <Register />} /> */}
             {/* <Route path="/profile" component={() => <Profile loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} /> */}
             {/* <Route path="/profile/airport" component={() => <Airport loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} /> */}

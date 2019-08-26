@@ -1,54 +1,69 @@
 import React, { Component } from "react"
 import Loader from 'react-loader-spinner'
 import AirportMaterialUI from './AirportMaterialUI'
-
+import axios from 'axios';
 
 class Airport extends Component {
     constructor(props) {
         super(props);
         this.state = {
             images:null,
+            airportData: ''
             // currentLoggedInUser: this.props.loggedInUser,
             // userProfile: this.props.desiredUserProfile
         }
 
-        this.handleFollow = this.handleFollow.bind(this);
+        
     } // c'tor
 
     // methods:
-    componentDidMount() {
-        const fetchString = `/airport/${this.props.match.params.airportName}`
-        console.log(`in Airport coopmonent did mount, gonna fetch ${fetchString}`)
-        fetch(fetchString, {method: 'GET', credentials: 'include'})
-        .then(res => res.json())
-        .then(realObj => {
-            console.log(realObj)
-        })
+    // componentDidMount() {
+    //     const fetchString = `/airport/${this.props.match.params.airportName}`
+    //     console.log(`in Airport coopmonent did mount, gonna fetch ${fetchString}`)
+    //     fetch(fetchString, {method: 'GET', credentials: 'include'})
+    //     .then(res => res.json())
+    //     .then(realObj => {
+    //         console.log(realObj)
+    //     })
+    // } // componentDidMount
+
+
+
+    // componentDidMount() {
+    //     if(!this.props.desiredUserProfile) {console.log(`I was render without props user ----`);return;}
+    //     console.log(`i was renders WITH props`)
+    //     // fetch(`http://localhost:3002/airport/getImages?name=${this.props.airportName}`, {method: 'GET', credentials: 'include'})
+    //     fetch(`http://localhost:3002/airport/getImages?name=El Arish International Airport`, {method: 'GET', credentials: 'include'})
+    //     .then(response => response.json())
+    //     .then(images => {console.log(`!!!!!!!!!!!!!!!!!!`); console.log(images); this.setState({images})});
+    // } // didMount
+
+   async componentDidMount() {
+        try{
+            const result = await axios(`https://cors-anywhere.herokuapp.com/en.wikipedia.org/w/api.php?action=opensearch&search=heathrow`);
+            console.log("in Airport.js: componentDidMount():  Wikipedia result is:")
+            console.log(result)
+            console.log("in Airport.js: componentDidMount():  desired airport is:")
+            console.log(this.props.desiredAirport);
+            console.log(result.data[2]);
+            this.setState({airportData: result.data[2]});
+            result.data[2].forEach(el => console.log(el));
+        } catch(err) {
+            console.log("in Airport.js: componentDidMount(): in catch section. Error is:"); 
+            console.log(err) ;
+        }
+
+        
+        
+        // const fetchString = `/airport/${this.props.match.params.airportName}`
+        // console.log(`in Airport coopmonent did mount, gonna fetch ${fetchString}`)
+        // fetch(`https://cors-anywhere.herokuapp.com/en.wikipedia.org/w/api.php?action=opensearch&search=heathrow`, {method: 'GET', credentials: 'include'})
+        // .then(res => res.json())
+        // .then(realObj => {
+        //     console.log("in Airport.js: componentDidMount(): second then. Wikipedia result is:")
+        //     console.log(realObj)
+        // }).catch(err => { console.log("in Airport.js: componentDidMount(): in catch section. Error is:"); console.log(err) })
     } // componentDidMount
-
-
-    handleFollow() {
-
-        console.log("Profile.js: handleFollow(): desiredUserProfile.userName is:")
-        console.log(this.props.desiredUserProfile.userName);
-        fetch(`/user/follow?userNameToFollow=${this.props.desiredUserProfile.userName}`, {method:'POST', credentials:"include"})
-        .then(res => res.json())
-        // .then(newListOfFollowings => this.setState({newListOfFollowings}))
-
-
-    } // handleFollow
-
-
-    componentDidMount() {
-        if(!this.props.desiredUserProfile) {console.log(`I was render without props user ----`);return;}
-        console.log(`i was renders WITH props`)
-        // fetch(`http://localhost:3002/airport/getImages?name=${this.props.airportName}`, {method: 'GET', credentials: 'include'})
-        fetch(`http://localhost:3002/airport/getImages?name=El Arish International Airport`, {method: 'GET', credentials: 'include'})
-        .then(response => response.json())
-        .then(images => {console.log(`!!!!!!!!!!!!!!!!!!`); console.log(images); this.setState({images})});
-    } // didMount
-
-    
     render() {
 
         console.log(`in render of Airport`)
@@ -56,11 +71,12 @@ class Airport extends Component {
         return (
             // !airportInfo ? <Loader type="TailSpin" color="blue" height={120} width={120} /> :
             <>
-                <AirportMaterialUI
-                    airportName={"El Arish International Airport"}
+            <h1>Airport Page</h1>
+                {<AirportMaterialUI
+                    airportData={this.state.airportData}
                     loggedInUser={this.props.loggedInUser}
                     images={this.state.images}
-                />
+                />}
             </>
         );
     } // render
