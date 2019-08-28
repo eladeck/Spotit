@@ -80,6 +80,23 @@ upload.single("image" /* name attribute of <file> element in your form */),
     });
 });
 
+router.get('/like', (req, res) => {
+  const id = req.query.id;
+
+  console.log("user wants to like " + id)
+  console.log(ObjectId(id))
+
+  req.app.locals.imgCollection.updateOne(
+    { _id: ObjectId(id) },
+    { $inc: { likes: 1 } }, function (err, result) {
+      if (err) throw err;
+      console.log(result);}
+ )
+
+ res.status(200).send({"yay":"yay"});
+});
+
+
 router.get('/recentImages', (req, res) => {
 
   const imageCollection = req.app.locals.imgCollection;

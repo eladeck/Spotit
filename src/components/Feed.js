@@ -16,7 +16,14 @@ class Feed extends Component {
 
         this.importImages = this.importImages.bind(this);
         this.handleGoToProfile = this.handleGoToProfile.bind(this);
+        this.handleLike = this.handleLike.bind(this);
     } // c'tor
+
+    handleLike(imgId) {
+        fetch("/image/like?id="+imgId, {method:"GET", credentials:"include"})
+        .then(res => res.json)
+        .then(res => alert("ok! liked this image! refresh!"))
+    } // handleLike
 
     handleGoToProfile(userName) {
         fetch(`/user/profile/${userName}`, {method:'GET', credentials: "include"})
@@ -39,13 +46,16 @@ class Feed extends Component {
         } else {
 
             const imageWrappers = this.props.allFollowingImages.map(image => {
-                // console.log(`el is`)
-                // console.log(el)
+                console.log("123456)")
+                console.log(image)
                 return(
                 <div key={image.url + image.user} className="image-wrapper">
                         
                     {/* ---- dor code: <h2><Link to="/main">{el.user}</Link></h2>*/}
                     
+                    {/* <label className="like-count">{image.likes > 0 ? image.likes : null}</label> */}
+                    <label className="like-count">{image.likes}</label>
+                    <i onClick={() => this.handleLike(image._id)} class="fas fa-thumbs-up like"></i>
                     <h2 onClick={() => this.handleGoToProfile(image.userName)}>
                         <Link to={`/profile/${image.userName}`}>{image.userName}</Link>
                     </h2>

@@ -261,16 +261,7 @@ class Container extends Component {
 
         return (
           <Router>
-            {
-              this.state.isLoggedIn ?  
-                <Redirect push to="/home">
-                  <Route path="/home" component={() => <Main allFollowingImages={this.state.allFollowingImages}/>} />
-                </Redirect>
-              : 
-                <Redirect push to="/">
-                  <Route path="/" component={() => <LandingPage />} />
-                </Redirect>
-            }
+
             {(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/reportSpecials"><div className="side-button">Report Special Arrival/Departure</div></Link> : null}
             {this.state.isLoggedIn ? <Link to="/imageForm"><div className="side-button">Add Image</div></Link> : null}
             
@@ -282,10 +273,20 @@ class Container extends Component {
             {/* <Route path="/profile" component={() => <Profile loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} /> */}
             {/* <Route path="/profile/airport" component={() => <Airport loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} /> */}
             <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser}/>} />
-            <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
+            <Route path="/register/" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
             <Route path="/profile/:userName" component={(props) => <Profile {...props} loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
             <Route path="/info/:fieldName/:fieldValue" component={props => <Airport  {...props} loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} />
 
+            {
+              this.state.isLoggedIn ?  
+                <Redirect push to="/home">
+                  <Route path="/home" component={() => <Main allFollowingImages={this.state.allFollowingImages}/>} />
+                </Redirect>
+              : 
+                <Redirect push to="/">
+                  <Route path="/" component={() => <LandingPage />} />
+                </Redirect>
+            }
             
             {/* elad's code that stays behind after merge conflict:
             {this.state.isLoggedIn ?

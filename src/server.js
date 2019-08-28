@@ -47,10 +47,7 @@ app.listen(port, () => console.log(`started listening to port ${port}!`))
 // rather than user/profile.
 // or maybe we should just create a route here 'profile'?
 
-app.use('/user', user);
-app.use('/image', image);
-app.use('/airport', airport);
-app.use('/data', data);
+
 
 
 
@@ -83,6 +80,12 @@ async function startServer() {
     app.locals.cities = dbo.collection('cities');
     app.locals.specialReport = dbo.collection('specialReports');
     app.locals.goSpotItInfo = dbo.collection('goSpotItInfo');
+
+    app.use('/user', user);
+    app.use('/image', image);
+    app.use('/airport', airport);
+    app.use('/data', data);
+
     // all server code goes here and it'll happen only when db is up
     app.get('/profile/:someUserName/:someImageUrl', (req, res) => { 
         const imgUrl = req.params.someImageUrl;

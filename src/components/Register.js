@@ -105,7 +105,7 @@ class Register extends Component {
     } // handleLogin
 
     render() {
-        
+        console.log("01010 in register)")        
         // return (
         //     <div className="form">
         //         <Form />

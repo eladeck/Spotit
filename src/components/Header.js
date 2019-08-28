@@ -15,6 +15,7 @@ class Header extends Component {
             userNameToFollow:null,
             allUsers:null,
             showAllUsers:false,
+            searchWord:"",
         }
 
         this.handleLogout = this.handleLogout.bind(this)
@@ -28,6 +29,7 @@ class Header extends Component {
     } // c'tor
 
     renderAllUsersUnderInput(e) {
+        console.log("in renderallUser")
         const divStyle = {
             width: "fit-content",
             height: "fit-content",
@@ -41,13 +43,13 @@ class Header extends Component {
 
         return (
             <div style={divStyle}>
-                {this.state.allUsers.map(user => {
+                {this.state.allUsers.filter(user => user.userName.includes(this.state.searchWord)).map(user => {
                     console.log(user)
                     return (
                         <>
-                        <div key={user.userName} style={{float:"left"}}>
-                            <span style={{fontSize:"0.37em"}}>{user.userName}</span>
-                            <span onClick={() => this.handleFollow(user.userName)}style={{cursor:"pointer",fontSize:"0.3em", color:"red"}}>follow</span>
+                        <div key={user.userName} style={{maxWidth:"130px", width:"130px",float:"left"}}>
+                            <span style={{position: "absolute", left:"0px",fontSize:"0.37em"}}>{user.userName}</span>
+                            <span onClick={() => this.handleFollow(user.userName)}style={{cursor:"pointer",fontSize:"0.3em", color:"red", right:"0px", position:"absolute"}}>follow</span>
                         </div>
                         <br />
                         </>
@@ -74,7 +76,7 @@ class Header extends Component {
         } else {
             this.setState(prevState => {
                 return {
-                    showAllUsers: !prevState.showAllUsers
+                    showAllUsers: (!prevState.showAllUsers || this.state.searchWord)
                 }
             })
         } // else
@@ -87,7 +89,8 @@ class Header extends Component {
 
     handleChange(e) {
         const {name, value} = e.target;
-        this.setState({[name]:value});
+        const showAllUsersBool = value;
+        this.setState({searchWord:value, showAllUsers:showAllUsersBool});
     } // handleChange
 
     handleFollow(userNameToFollow) {
@@ -130,14 +133,15 @@ class Header extends Component {
           <ul>
               <li><a>follow:</a></li>
               <li>
-                  <form onSubmit={this.handleFollow}>
-                      <input name='userNameToFollow' type='textbox' onChange={this.handleChange}  autoComplete="off"/>
+                  <form>
+                      <input name='userNameToFollow' type='textbox' onChange={this.handleChange} onClick={this.handleUsersInputClick} autoComplete="off"/>
                       {this.state.showAllUsers ? this.renderAllUsersUnderInput() : null}
-                      <button type='submit'>go!</button>
                   </form>
               </li>
               
-              {this.props.loggedInUser ? <li><Link to="/home">home</Link></li> : <li onClick={this.handleUrlChanged}><Link to="/register">Register</Link></li>}
+              {this.props.loggedInUser ? <li><Link to="/home">home</Link></li> :
+               <li><Link to="/register">Register</Link></li>}
+               {/* <li onClick={this.handleUrlChanged}><Link to="/register">Register</Link></li>} */}
               <li><a href="#forum">Forum</a></li>
               <li><a href="#about">About</a></li>
           </ul>

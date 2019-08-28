@@ -55,10 +55,10 @@ class GoSpotit extends Component {
                       <a className="close" onClick={close}>
                         &times;
                       </a>
-                      <div className="header"> Modal Title </div>
+                      <div className="header" style={{color:"pink"}}> What are you waiting for? Go Spotit </div>
                       <div className="content">
                           <ul style={{overflow:"auto"}}>
-                              {this.state.flightInfo.map(flightInfoObject => 
+                              {this.props.flightInfo.map(flightInfoObject => 
                                 <FlightInfo 
                                     key={flightInfoObject.id}
                                     number={flightInfoObject.number}

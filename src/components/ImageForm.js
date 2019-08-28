@@ -34,6 +34,7 @@ class ImageForm extends Component {
             country: this.state.country,
             airport: this.state.airport,
             image,
+            likes:0
         };
 
         console.log('gonna post this:----------------')
