@@ -1,7 +1,40 @@
 const express = require("express");
 const router = express.Router();
 
+const getCollection = (collectionName, req) => {
+    switch (collectionName) {
+        case 'users':
+            return req.app.locals.usersCollection;
+            break;
+        case 'images':
+            return req.app.locals.imgCollection;
+            break;
+        case 'airlines':
+            return req.app.locals.airlines;
+            break;
 
+        case 'aircrafts':
+            return req.app.locals.aircrafts;
+            break;
+        case 'countries':
+            return req.app.locals.countries;
+            break;
+        case 'cities':
+                return req.app.locals.cities;
+                break;
+        case 'airports':
+            return req.app.locals.airports;
+            break;
+        case 'specialReports':
+                return req.app.locals.specialReports;
+                break;
+        case 'goSpotItInfo':
+            return req.app.locals.goSpotItInfo;
+            break;
+        default:
+            return null;
+    }
+}
 router.get('/flights', (req, res) => {
 
     console.log("in router.get(flights):");
@@ -26,4 +59,24 @@ router.get('/all', (req, res) => {
         }
     });
 });
+
+// Try to make the request fit general requests.
+// It should handle requests for: airports, aircrafts, airlines etc.
+router.get('/general/:collectionName/:itemName', (req, res) => { // (26.08.2019): NOT COMPLETED YET!
+    
+    const fieldName = req.params.collectionName;
+    const itemName = req.params.itemName;
+    const collection = getCollection(collectionName, req)
+    
+    query = {name: itemName}
+
+    collection.find(query).toArray(function(err, result) {
+        if (err || result.length === 0) {
+            res.send(401, {errMsg:`error fetching all users`});
+        } else {
+            res.send(result) 
+        }
+    });
+});
+
 module.exports = router;

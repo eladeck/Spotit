@@ -50,10 +50,18 @@ const useStyles = makeStyles(theme => ({
 export default function AirportMaterialUI(props) {
   const classes = useStyles();
 
-  const currentProfileUser = props.currentProfileUser;
+  
   const images = props.images;
-  console.log(`in mateiralUI, AirportMaterialUI is`);
-  console.log(currentProfileUser);
+  const airportName = props.airport.airportName;
+  const airportData = props.airport.airportData;
+  console.log(`in AirportMaterialUI, airportData is`);
+  console.log(airportData);
+
+
+  let dataToDisplay = '';
+  airportData.forEach(element => {
+    dataToDisplay += element;
+  });
 
   return (
     <React.Fragment>
@@ -63,14 +71,35 @@ export default function AirportMaterialUI(props) {
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Aiport Name
+              {airportName}
             </Typography>
-            {/*Add data about airport */}
+            <Typography paragraph="true" >
+              {dataToDisplay}
+            </Typography>
             
           
           </Container>
         </div>
-      
+        <Container className={classes.cardGrid} maxWidth="md">
+          {/* End hero unit */}
+          <Grid container spacing={4}>
+            {!images ? "Loading..." :
+            images.map((imageObj, index) => ( // to render loader until the images are here!
+              <Grid item key={index} xs={12} sm={6} md={4}>
+                  <Card className={classes.card}>
+                    <div className="hoverable-image-container">
+                      <img className="hoverable-image" src={`${imageObj.userName}/${imageObj.url}`} />
+                      {console.log(imageObj)}
+                      {console.log(`-----------------------------------------------`)}
+                      <div className="hoverable-overlay">
+                        Airport:<Link to={`/airport/${imageObj.airport}`}>{imageObj.airport}</Link>
+                      </div>
+                    </div>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
       </main>
       {/* Footer */}
       <footer className={classes.footer}>

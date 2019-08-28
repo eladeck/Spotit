@@ -30,7 +30,7 @@ class Container extends Component {
           displayUser: false,
           generalImages: null,
           desiredUserProfile: null, // Will contain the user we want to view it's profile.
-          desiredAirport: 'Heathrow'
+          desiredAirport: ''
       }
 
       this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
