@@ -52,8 +52,8 @@ export default function AirportMaterialUI(props) {
 
   
   const images = props.images;
-  const airportName = props.airport.airportName;
-  const airportData = props.airport.airportData;
+  const airportName = props.airport.headline;
+  const airportData = props.airport.detailedInfo;
   console.log(`in AirportMaterialUI, airportData is`);
   console.log(airportData);
 

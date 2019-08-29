@@ -284,7 +284,7 @@ class Container extends Component {
             <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser}/>} />
             <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
             <Route path="/profile/:userName" component={(props) => <Profile {...props} loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
-            <Route path="/airport/:airportName" component={props => <Airport  {...props} loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} />
+            <Route path="/info/:fieldName/:fieldValue" component={props => <Airport  {...props} loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} />
 
             
             {/* elad's code that stays behind after merge conflict:

@@ -122,7 +122,8 @@ export default function Album(props) {
                       {console.log(imageObj)}
                       {console.log(`-----------------------------------------------`)}
                       <div className="hoverable-overlay">
-                        Airport:<Link to={`/airport/${imageObj.airport}`}>{imageObj.airport}</Link>
+                        Airport:<Link to={`/info/airport/${imageObj.airport}`}>{imageObj.airport}</Link>
+                        Aircraft:<Link to={`/info/aircraft/${imageObj.airplaeModel}`}>{imageObj.airplaeModel}</Link>
                       </div>
                     </div>
                   {/* <img src={imageObj.url}  style={{height:"170px", width:"auto", maxWidth:"500px"}} /> */}

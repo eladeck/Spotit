@@ -42,27 +42,28 @@ class Airport extends Component {
         try{
             const result = await axios(`https://cors-anywhere.herokuapp.com/en.wikipedia.org/w/api.php?action=opensearch&search=heathrow`);
             console.log("in Airport.js: componentDidMount():  Wikipedia result is:")
-            console.log(result)
+            //console.log(result)
             console.log("in Airport.js: componentDidMount():  desired airport is:")
-            console.log(`${this.props.match.params.airportName}`);
+            console.log(`${this.props.match.params.fieldName}`);
+            console.log(`${this.props.match.params.fieldValue}`);
             console.log(`&&&&&`);
 
-            console.log(this.props.desiredAirport);
-            console.log(result.data[2]);
-            this.setState({airport: {airportName: result.data[1][0], airportData: result.data[2]}});
-            console.log("in Airport.js: componentDidMount():  state.airportData is:")
-            console.log(this.state.airportData);
-            console.log(result.data[1][0]);
-            result.data[2].forEach(el => console.log(el));
+            //console.log(this.props.desiredAirport);
+            //console.log(result.data[2]);
+            this.setState({data: {headline: result.data[1][0], detailedInfo: result.data[2]}});
+            //console.log("in Airport.js: componentDidMount():  state.airportData is:")
+           // console.log(this.state.airport.airportData);
+           // console.log(result.data[1][0]);
+            //result.data[2].forEach(el => console.log(el));
 
             //Try to imlement a general request from the server, so we wont have to implement requests for every case..
-            
-            // fetch(`/general/airport?airportName?=${this.state.airportData}`, {method: 'GET', credentials: 'include'})
-            // .then(res => res.json())
-            // .then(realObj => {
-            //     console.log(realObj);
-            //     this.setState({images: realObj});
-            // }).catch(err => {console.log("in Airport.js: componentDidMount(): in fetch->catch. errr is: "); console.log(err);})
+
+            fetch(`/data/general/?fieldName=${this.props.match.params.fieldName}&fieldValue=${this.props.match.params.fieldValue}`, {method: 'GET', credentials: 'include'})
+            .then(res => res.json())
+            .then(realObj => {
+                console.log(realObj);
+                this.setState({images: realObj});
+            }).catch(err => {console.log("in Airport.js: componentDidMount(): in fetch->catch. errr is: "); console.log(err);})
 
         } catch(err) {
             console.log("in Airport.js: componentDidMount(): in catch section. Error is:"); 
@@ -88,8 +89,8 @@ class Airport extends Component {
             // !airportInfo ? <Loader type="TailSpin" color="blue" height={120} width={120} /> :
             <>
             <h1>Airport Page</h1>
-                {this.state.airport ? <AirportMaterialUI
-                    airport={this.state.airport}
+                {this.state.data ? <AirportMaterialUI
+                    airport={this.state.data}
                     loggedInUser={this.props.loggedInUser}
                     images={this.state.images}
                 /> 

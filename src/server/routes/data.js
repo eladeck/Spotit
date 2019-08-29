@@ -62,10 +62,10 @@ router.get('/all', (req, res) => {
 
 // Try to make the request fit general requests.
 // It should handle requests for: airports, aircrafts, airlines etc.
-router.get('/general/:collectionName/:itemName', (req, res) => { // (26.08.2019): NOT COMPLETED YET!
+router.get('/general/:fieldName/:fieldValue', (req, res) => { // (26.08.2019): NOT COMPLETED YET!
     
-    const fieldName = req.params.collectionName;
-    const itemName = req.params.itemName;
+    const fieldName = req.params.fieldName;
+    const itemName = req.params.fieldValue;
     const collection = getCollection(collectionName, req)
     
     query = {name: itemName}
