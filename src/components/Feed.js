@@ -11,6 +11,7 @@ class Feed extends Component {
         super(props);
 
         this.state = {
+            likedImages:[],
             // images:[],
         } // Feed state
 
@@ -19,11 +20,33 @@ class Feed extends Component {
         this.handleLike = this.handleLike.bind(this);
     } // c'tor
 
-    handleLike(imgId) {
+    removeImageFromArray(imgId) {
+        this.setState(prevState => {
+            let likedImages = prevState.likedImages;
+            let indexToRemove = likedImages.indexOf(imgId);
+            if (indexToRemove !== -1) likedImages.splice(indexToRemove, 1);
+            return {likedImages};
+        })
+    }
+
+    handleLike(imgId,imageObj, e) {
+        e.preventDefault();
+        if(this.state.likedImages.includes(imgId) || imageObj.likes.includes(this.props.loggedInUser.userName)) {
+            console.log("trying to like a liked image! in future we will support revert like (unlike)")
+            return;
+        }
+
+        // adding imgId to the likedImage Array for the immdeiate render to the client 
+        this.setState(prevState => ({
+            likedImages: [...prevState.likedImages, imgId]
+          }))
+
+          // and then making net call
         fetch("/image/like?id="+imgId, {method:"GET", credentials:"include"})
         .then(res => res.json)
-        .then(res => alert("ok! liked this image! refresh!"))
-    } // handleLike
+        .then(res => {if(res.errMsg) removeImageFromArray(imgId); })
+        .catch(err => removeImageFromArray(imgId))
+        } // handleLike
 
     handleGoToProfile(userName) {
         fetch(`/user/profile/${userName}`, {method:'GET', credentials: "include"})
@@ -45,17 +68,31 @@ class Feed extends Component {
             return null;
         } else {
 
-            const imageWrappers = this.props.allFollowingImages.map(image => {
-                console.log("123456)")
+            const imageWrappers = this.props.allFollowingImages.map((image, i) => {
+                let loggedInUserLikedThisImage;
+                if(this.props.loggedInUser) {
+                    console.log(this.props.loggedInUser.userName)
+                    loggedInUserLikedThisImage = image.likes.includes(this.props.loggedInUser.userName)
+                }
                 console.log(image)
-                return(
-                <div key={image.url + image.user} className="image-wrapper">
+
+                let likeClassName = "fas fa-thumbs-up like";
+                if(loggedInUserLikedThisImage || this.state.likedImages.includes(image._id)) {
+                    likeClassName = "fas fa-thumbs-up liked";
+                } 
+
+                const maybeAddOneToLikes = this.state.likedImages.includes(image._id) ? 1 : 0;
+
+                return (
+                <div key={i} className="image-wrapper">
+
                         
                     {/* ---- dor code: <h2><Link to="/main">{el.user}</Link></h2>*/}
                     
                     {/* <label className="like-count">{image.likes > 0 ? image.likes : null}</label> */}
-                    <label className="like-count">{image.likes}</label>
-                    <i onClick={() => this.handleLike(image._id)} class="fas fa-thumbs-up like"></i>
+                    <label className="like-count">{image.likes.length + maybeAddOneToLikes}</label>
+                    
+                    <i onClick={(e) => this.handleLike(image._id, image, e)} class={likeClassName}></i>
                     <h2 onClick={() => this.handleGoToProfile(image.userName)}>
                         <Link to={`/profile/${image.userName}`}>{image.userName}</Link>
                     </h2>
@@ -64,8 +101,12 @@ class Feed extends Component {
                 </div>
                 )
             });
+
+            const shuffledImageWrappers = this.shuffleArray(imageWrappers);
             
-            return this.shuffleArray(imageWrappers);
+            // if we already liked image, i dont want to shuffle again the array
+            // return this.state.likedImages.length > 0 ? imageWrappers : shuffledImageWrappers;
+            return imageWrappers;
           } // else
     } // importImages
 
@@ -82,14 +123,10 @@ class Feed extends Component {
 
     render() {
         const images = this.importImages();
-        console.log(`images to show in feed are:`)
-        console.log(images)
         
         return (
             <div className="feed">
                 <h1 className="title">Spotit Feed</h1>
-                {console.log('0000000000000000000000000000000')}
-                {console.log(images)}
                 {images ? images : <Loader type="TailSpin" color="lightgreen" height={80} width={80} />}
             </div>
         ); 

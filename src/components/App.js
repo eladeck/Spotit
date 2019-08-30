@@ -14,7 +14,7 @@ class App extends React.Component {
                 }
         this.updateLoggedInUser = this.updateLoggedInUser.bind(this)
         this.handleLogout = this.handleLogout.bind(this)
-        this.handleUrlChange = this.handleUrlChange.bind(this)
+        // this.handleUrlChange = this.handleUrlChange.bind(this)
         } //
 
         handleLogout() {
@@ -28,11 +28,11 @@ class App extends React.Component {
                 this.setState({loggedInUser, userWantsToLogout:false})
         } // updateLoggedInUser
 
-        handleUrlChange() { // This method is used in order to make the Container rendered after the Header has changed the URL.
-                console.log(`App.js: In handleUrlChange().`);
-                this.setState(prevState => {prevState});
+        // handleUrlChange() { // This method is used in order to make the Container rendered after the Header has changed the URL.
+        //         console.log(`App.js: In handleUrlChange().`);
+        //         this.setState(prevState => {prevState});
+        // }
 
-        }
         render() {
                 
                 return (
@@ -43,6 +43,7 @@ class App extends React.Component {
                                 handleUrlChanged={this.handleUrlChange}
                          />
                         <Container
+                         loggedInUser={this.state.loggedInUser}
                          updateLoggedInUser={this.updateLoggedInUser}
                          userWantsToLogout={this.state.userWantsToLogout}
                          />

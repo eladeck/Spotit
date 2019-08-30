@@ -100,15 +100,13 @@ class GoSpotit extends Component {
 
     render() {
       const flightInfo = this.props.flightInfo;
-        if (flightInfo == null){
-          return (<Loader type="TailSpin" color="lightgreen" height={30} width={30} />)
-        } else {
           return (
             <div className="go-spotit box">
                 {this.PopupExample()}
                  <div className='scroll-container'>
                     <ul className='scorll-ul'>
-                      {flightInfo.map((flightInfoObject, index) =>
+                      {!flightInfo ? <Loader type="TailSpin" color="lightgreen" height={30} width={30} /> : 
+                      flightInfo.map((flightInfoObject, index) =>
                         <li key={index}>
                             <FlightInfo 
                                 number={flightInfoObject.number}
@@ -123,11 +121,8 @@ class GoSpotit extends Component {
                     </ul>  
                 </div>
             </div>
-                      );
-        }
-    }
-
-
+                ); // return render
+        } // render
 } // GoSpotit Component
 
 

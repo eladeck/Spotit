@@ -269,6 +269,22 @@ ul > li > a:hover {
     color:azure;
   }
 
+  .like:hover {
+    color:rgb(79, 216, 216);
+
+  }
+
+  .liked {
+    top:0;
+    position: absolute;
+    right:2px;
+    margin:auto;
+    padding:5px;
+    font-size: 2em;
+    display:none;
+    color:rgba(9, 47, 218, 0.986);
+  }
+
   .like-count {
     top:0;
     position: absolute;
@@ -280,10 +296,19 @@ ul > li > a:hover {
     display:none;
   }
 
-  .image-wrapper:hover > .like-count, .like {
+  .image-wrapper:hover .liked {
     display:block;
    }
+
    
+   .image-wrapper:hover .like{
+    display:block;
+   }
+
+   .image-wrapper:hover .like-count{
+    display:block;
+   }
+
 
 /*IMAGE WRAPPER END*/
   

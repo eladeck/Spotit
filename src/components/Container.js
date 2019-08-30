@@ -39,7 +39,7 @@ class Container extends Component {
       this.extractAllImagesOfFollowings = this.extractAllImagesOfFollowings.bind(this);
       this.extratAllFollowing = this.extratAllFollowing.bind(this)
       this.setDesiredUser = this.setDesiredUser.bind(this)
-      this.renderContainer = this.renderContainer.bind(this);
+      // this.renderContainer = this.renderContainer.bind(this);
     }
 
     componentWillUnmount() {
@@ -195,9 +195,10 @@ class Container extends Component {
 
     } // extratAllFollowing
     
-  renderContainer() {
-    this.setState(prevState=>{prevState});
-  }
+  // renderContainer() {
+  //   this.setState(prevState=>{prevState});
+  // }
+
     handleSuccessfulLogin(userToLogin) {
       this.props.updateLoggedInUser(userToLogin)
       this.setState({
@@ -255,6 +256,7 @@ class Container extends Component {
     }
       render() {
 
+
         // const path = window.location.pathname;
         // const path = window.location.pathname;
         // return dict[path];
@@ -267,12 +269,12 @@ class Container extends Component {
             
             <Route path="/imageForm" component={() => <ImageForm />} />
             <Route path="/reportSpecials" component={() => <PlaneReportForm />} />
-            <Route path="/home" component={() => <Main allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser} flightInfo={this.state.flightInfo}/>} />
+            <Route path="/home" component={() => <Main loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser} flightInfo={this.state.flightInfo}/>} />
+            <Route path="/main" component={() => <Main loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser}/>} />
             {<Route exact path="/" component={() => <LandingPage flightInfo={this.state.flightInfo} imagesToDisplay={this.state.generalImages}/>} />}
             {/* <Route path="/register" component={() => <Register />} /> */}
             {/* <Route path="/profile" component={() => <Profile loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} /> */}
             {/* <Route path="/profile/airport" component={() => <Airport loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} /> */}
-            <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser}/>} />
             <Route path="/register/" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
             <Route path="/profile/:userName" component={(props) => <Profile {...props} loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
             <Route path="/info/:fieldName/:fieldValue" component={props => <Airport  {...props} loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} />
@@ -280,7 +282,7 @@ class Container extends Component {
             {
               this.state.isLoggedIn ?  
                 <Redirect push to="/home">
-                  <Route path="/home" component={() => <Main allFollowingImages={this.state.allFollowingImages}/>} />
+                  <Route path="/home" component={() => <Main loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages}/>} />
                 </Redirect>
               : 
                 <Redirect push to="/">

@@ -82,13 +82,11 @@ upload.single("image" /* name attribute of <file> element in your form */),
 
 router.get('/like', (req, res) => {
   const id = req.query.id;
-
-  console.log("user wants to like " + id)
-  console.log(ObjectId(id))
+  const userNameWhoPressedLike = req.cookies.userName;
 
   req.app.locals.imgCollection.updateOne(
     { _id: ObjectId(id) },
-    { $inc: { likes: 1 } }, function (err, result) {
+    { $addToSet: { likes: userNameWhoPressedLike } }, function (err, result) {
       if (err) throw err;
       console.log(result);}
  )
