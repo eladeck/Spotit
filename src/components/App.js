@@ -14,8 +14,17 @@ class App extends React.Component {
                 }
         this.updateLoggedInUser = this.updateLoggedInUser.bind(this)
         this.handleLogout = this.handleLogout.bind(this)
+        this.handleNewFollow = this.handleNewFollow.bind(this)
         // this.handleUrlChange = this.handleUrlChange.bind(this)
         } //
+
+        handleNewFollow() {
+                console.log("in App handleNewFollow")
+                // Header told the db that we know follow new guy, 
+                // hence I want to re-render container,
+                // cause it'll extract my followings and will show the new images of folloing
+                this.forceUpdate();
+        }
 
         handleLogout() {
                 this.setState({
@@ -34,6 +43,7 @@ class App extends React.Component {
         // }
 
         render() {
+                console.log("in App Render")
                 
                 return (
                 <Router>
@@ -41,6 +51,7 @@ class App extends React.Component {
                                 loggedInUser={this.state.loggedInUser}
                                 handleLogout={this.handleLogout}
                                 handleUrlChanged={this.handleUrlChange}
+                                handleNewFollow={this.handleNewFollow}
                          />
                         <Container
                          loggedInUser={this.state.loggedInUser}

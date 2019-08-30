@@ -62,10 +62,12 @@ class Feed extends Component {
     } // handleGoToProfile
 
     importImages() {
-        if(!this.props.allFollowingImages) {
-
-            console.log(`in Feed, allFollowingImages is null`)
-            return null;
+        if(this.props.allFollowingImages === "NO IMAGES!") {
+            return [];
+        }
+        if(!this.props.allFollowingImages || this.props.allFollowingImages.length === 0) {
+            console.log(`in Feed, allFollowingImages is null or of length zero`)
+            return this.props.allFollowingImagesull;
         } else {
 
             const imageWrappers = this.props.allFollowingImages.map((image, i) => {
@@ -123,11 +125,14 @@ class Feed extends Component {
 
     render() {
         const images = this.importImages();
+        console.log(images)
+        const noImgMsg = <div>No picrutes to display. please click 'follow' above, to follow a spotter with images, or encourage your followings to upload some.</div>;
         
         return (
             <div className="feed">
                 <h1 className="title">Spotit Feed</h1>
-                {images ? images : <Loader type="TailSpin" color="lightgreen" height={80} width={80} />}
+                {images ? (images.length === 0 ? noImgMsg : images) : 
+                    <Loader type="TailSpin" color="lightgreen" height={80} width={80} />}
             </div>
         ); 
     } // render

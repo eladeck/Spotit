@@ -35,10 +35,10 @@ class Container extends Component {
 
       this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
       this.handleLogout = this.handleLogout.bind(this);
-      this.switchScreen = this.switchScreen.bind(this);
       this.extractAllImagesOfFollowings = this.extractAllImagesOfFollowings.bind(this);
       this.extratAllFollowing = this.extratAllFollowing.bind(this)
       this.setDesiredUser = this.setDesiredUser.bind(this)
+      this.postLogin = this.postLogin.bind(this)
       // this.renderContainer = this.renderContainer.bind(this);
     }
 
@@ -54,6 +54,10 @@ class Container extends Component {
       })
       .catch(errMsg => {console.log(errMsg); this.setState({errMsg})})
     } // componentWillUnmount
+
+    componentWillReceiveProps() {
+      console.log(`---- in Contariner componentWillReceiveProps ----`)
+    }
     
     componentDidMount() {
       console.log(`---- in Contariner component DID mount ----`)
@@ -104,42 +108,15 @@ class Container extends Component {
       console.log(`in Container\'s handle Logout!, screenToRender is ${this.state.screenToRender}`)
     }
 
-   /* extractAllImagesOfFollowings(allFollowing) {
+    extractAllImagesOfFollowings(allFollowing) { 
+      console.log("in extractAllImagesOfFollowings")
 
-      console.log(`in extract All Images Of following, allFollowing is`)
-      console.log(allFollowing)
-
-      const loggedInUser = this.state.loggedInUser
-      const allFollowingImages = []
-
-      let realAmountOfAllImages = 0
-      allFollowing.forEach(followerObj => realAmountOfAllImages += followerObj.images.length)
-
-      console.log(`real amount of all images is ${realAmountOfAllImages}`)
-      
-
-      allFollowing.forEach(followerObj => {
-
-        followerObj.images.forEach(imgId => {
-
-          fetch(`user/getImage?imgId=${imgId}`, {method:'GET', credentials:'include'})
-          .then(response => response.json())
-          .then(imgObj => {
-            allFollowingImages.push(imgObj);
-            if(allFollowingImages.length === realAmountOfAllImages) {
-              console.log(`allFollowingImages is`)
-              console.log(allFollowingImages)
-              this.setState({allFollowingImages})
-            } // if
-          }) // last then
-        }); // images forEach
-      }); // allFollowing forEach
-
-    } // extractAllImagesOfFollowings
-*/
-
-    extractAllImagesOfFollowings(allFollowing) { // MODIFIED "extractAllImagesOfFollowings" method.
-
+      if(allFollowing.length === 0) {
+        // loggedInUser does not follow anyone
+        this.setState({allFollowingImages:[]})
+        return;
+      }
+    
       let allFollowingImages = []
 
       let realAmountOfAllImages = 0
@@ -170,6 +147,7 @@ class Container extends Component {
    } // extractAllImagesOfFollowings
 
     extratAllFollowing() {
+      console.log("in extratAllFollowing")
       const loggedInUser = this.state.loggedInUser;
 
       if(!loggedInUser) {
@@ -177,7 +155,12 @@ class Container extends Component {
       } else {
         console.log(`loggedInUser is`)
         console.log(loggedInUser)
-        console.log(this.state.isLoggedIn ? 'isLoggedIn!' : 'NOT LOGGED IN')
+        console.log(loggedInUser.following)
+
+        if(loggedInUser.following.length === 0) {
+          this.setState({allFollowingImages:[]})
+          return;
+        }
 
         const allFollowing = [];
 
@@ -199,41 +182,27 @@ class Container extends Component {
   //   this.setState(prevState=>{prevState});
   // }
 
+  postLogin() {
+    if(this.state.loggedInUser.following.length === 0) {
+      console.log("this.state.loggedInUser.following.length === 0")
+      this.setState({allFollowingImages:"NO IMAGES!"})
+
+    } else {
+      this.extratAllFollowing();
+    }
+  } // postLogin
+
     handleSuccessfulLogin(userToLogin) {
       this.props.updateLoggedInUser(userToLogin)
       this.setState({
         isLoggedIn: true,
         // screenToRender: "Main",
         loggedInUser: userToLogin,
-      }, this.extratAllFollowing);
+      }, this.postLogin);
 
       //browserHistory.push('/main');
     } // handleSuccessfulLogin
 
-    switchScreen(nextScreen) {
-      this.setState({
-        screenToRender: nextScreen
-      });
-    }
-   /* render() {
-      return (
-        <div>
-          <TransitionGroup className="transition-group">
-            <CSSTransition
-              key={this.props.location.key}
-              timeout={{ enter: 300, exit: 300 }}
-              classNames="fade">
-              <section className="route-section">
-                <Switch location={this.props.location}>
-                    <PropsRoute exact path="/" handleSuccessfulLogin={this.handleSuccessfulLogin} component={this.state.isLoggedIn ? Main : Register} />
-                </Switch>
-              </section>
-            </CSSTransition>
-          </TransitionGroup>
-        </div>
-      );
-      }
-      */
      componentWillReceiveProps(nextProps) {
       // You don't have to do this check first, but it can help prevent an unneeded render
       if (nextProps.userWantsToLogout) {
@@ -254,16 +223,16 @@ class Container extends Component {
         desiredUserProfile: desiredUser
       });
     }
-      render() {
 
+      render() {
 
         // const path = window.location.pathname;
         // const path = window.location.pathname;
         // return dict[path];
 
         return (
-          <Router>
 
+          <Router>
             {(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/reportSpecials"><div className="side-button">Report Special Arrival/Departure</div></Link> : null}
             {this.state.isLoggedIn ? <Link to="/imageForm"><div className="side-button">Add Image</div></Link> : null}
             
@@ -272,9 +241,6 @@ class Container extends Component {
             <Route path="/home" component={() => <Main loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser} flightInfo={this.state.flightInfo}/>} />
             <Route path="/main" component={() => <Main loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser}/>} />
             {<Route exact path="/" component={() => <LandingPage flightInfo={this.state.flightInfo} imagesToDisplay={this.state.generalImages}/>} />}
-            {/* <Route path="/register" component={() => <Register />} /> */}
-            {/* <Route path="/profile" component={() => <Profile loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} /> */}
-            {/* <Route path="/profile/airport" component={() => <Airport loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} /> */}
             <Route path="/register/" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
             <Route path="/profile/:userName" component={(props) => <Profile {...props} loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
             <Route path="/info/:fieldName/:fieldValue" component={props => <Airport  {...props} loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} />
@@ -289,66 +255,10 @@ class Container extends Component {
                   <Route path="/" component={() => <LandingPage />} />
                 </Redirect>
             }
-            
-            {/* elad's code that stays behind after merge conflict:
-            {this.state.isLoggedIn ?
-              <Link to="/main">hello {this.state.loggedInUser.firstName} :) enter the website!</Link> :
-              <Link to="/register"><div>you are NOT logged in. go to register</div></Link>}
-
-            <Link to="/imageForm">Add Picture</Link>
-            
-
-            <Route path="/imageForm" component={() => <ImageForm />} />
-            <Route path="/main" component={() => <Main allFollowingImages={this.state.allFollowingImages} loggedInUser={this.state.loggedInUser}/>} />
-            <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin}/>} />*/}
           </Router>
         );
-        // switch(this.state.screenToRender) {
-        //   case "Main":
-        //     return (
-        //       <Main
-        //         allFollowingImages={this.state.allFollowingImages}
-        //       />
-        //     )
-        //   case "Register":
-        //     return <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />;
-        //   case "ImageForm":
-        //     return <ImageForm />;
-        //   case null:
-        //       return  <Loader type="TailSpin" color="green" height={80} width={80} />
-        //   default:
-        //     return <div>{this.state.screenToRender}  is not a screen in the application.</div>;
-        // } // switch-case
       } // render
 } // component Container
-
-const Wrapper = styled.div`
-    .fade-enter {
-        opacity: 0.01;
-    }
-    .fade-enter.fade-enter-active {
-        opacity: 1;
-        transition: opacity 300ms ease-in;
-    }
-    .fade-exit {
-        opacity: 1;
-    }
-      
-    .fade-exit.fade-exit-active {
-        opacity: 0.01;
-        transition: opacity 300ms ease-in;
-    }
-
-    div.transition-group {
-      position: relative;
- }
- section.route-section {
-   position: absolute;
-   width: 100%;
-   top: 0;
-   left: 0;
- }
-`;
 
 // export default withRouter(Container);
 export default Container;

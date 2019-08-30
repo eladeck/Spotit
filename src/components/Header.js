@@ -94,13 +94,11 @@ class Header extends Component {
     } // handleChange
 
     handleFollow(userNameToFollow) {
-        this.setState({showAllUsers:false})
         // e.preventDefault();
         fetch(`/user/follow?userNameToFollow=${userNameToFollow}`, {method:'POST', credentials:"include"})
         .then(res => res.json())
-        .then(_ => alert(`Ok!`))
+        .then(_ => {alert(`Ok!`);  this.setState({showAllUsers:false}); this.props.handleNewFollow()})
         // .then(newListOfFollowings => this.setState({newListOfFollowings}))
-
     } // handleFollow
 
     handleLogout() {
