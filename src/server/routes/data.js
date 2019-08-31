@@ -65,16 +65,19 @@ router.get('/all', (req, res) => {
 router.get('/general/:fieldName/:fieldValue', (req, res) => { // (26.08.2019): NOT COMPLETED YET!
     
     const fieldName = req.params.fieldName;
-    const itemName = req.params.fieldValue;
-    const collection = getCollection(collectionName, req)
+    const fieldValue = req.params.fieldValue;
+    const collection = req.app.locals.imgCollection;
+    console.log("In router.get('/general/:fieldName/:fieldValue'): fieldName and fieldValue are:")
+    console.log(fieldName);
+    console.log(fieldValue);
     
-    query = {name: itemName}
+    query = {"airport": fieldValue};
 
     collection.find(query).toArray(function(err, result) {
         if (err || result.length === 0) {
-            res.send(401, {errMsg:`error fetching all users`});
+            res.send(401, {errMsg:`error fetching all images for info page`});
         } else {
-            res.send(result) 
+            res.status(200).send(result) 
         }
     });
 });

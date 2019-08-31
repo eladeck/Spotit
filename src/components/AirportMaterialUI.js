@@ -12,7 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -52,8 +52,10 @@ export default function AirportMaterialUI(props) {
 
   
   const images = props.images;
-  const airportName = props.airport.headline;
-  const airportData = props.airport.detailedInfo;
+  console.log("In AirportMaterialUI, images is:")
+  console.log(images);
+  const airportName = props.data.headline;
+  const airportData = props.data.detailedInfo;
   console.log(`in AirportMaterialUI, airportData is`);
   console.log(airportData);
 
@@ -76,7 +78,7 @@ export default function AirportMaterialUI(props) {
             <Typography paragraph="true" >
               {dataToDisplay}
             </Typography>
-            
+            <img src={props.data.imageUrl} alt="main info image not found" />
           
           </Container>
         </div>
@@ -90,6 +92,7 @@ export default function AirportMaterialUI(props) {
                     <div className="hoverable-image-container">
                       <img className="hoverable-image" src={`${imageObj.userName}/${imageObj.url}`} />
                       {console.log(imageObj)}
+                      {console.log(`${imageObj.userName}/${imageObj.url}`)}
                       {console.log(`-----------------------------------------------`)}
                       <div className="hoverable-overlay">
                         Airport:<Link to={`/airport/${imageObj.airport}`}>{imageObj.airport}</Link>

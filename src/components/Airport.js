@@ -40,9 +40,10 @@ class Airport extends Component {
 
    async componentDidMount() {
         try{
-            const result = await axios(`https://cors-anywhere.herokuapp.com/en.wikipedia.org/w/api.php?action=opensearch&search=heathrow`);
+            const searchValue = encodeURIComponent(this.props.match.params.fieldValue);
+            const result = await axios(`https://cors-anywhere.herokuapp.com/en.wikipedia.org/w/api.php?action=opensearch&search=${searchValue}`);
             console.log("in Airport.js: componentDidMount():  Wikipedia result is:")
-            //console.log(result)
+            console.log(result)
             console.log("in Airport.js: componentDidMount():  desired airport is:")
             console.log(`${this.props.match.params.fieldName}`);
             console.log(`${this.props.match.params.fieldValue}`);
@@ -58,29 +59,53 @@ class Airport extends Component {
 
             //Try to imlement a general request from the server, so we wont have to implement requests for every case..
 
-            fetch(`/data/general/?fieldName=${this.props.match.params.fieldName}&fieldValue=${this.props.match.params.fieldValue}`, {method: 'GET', credentials: 'include'})
+            fetch(`/data/general/${this.props.match.params.fieldName}/${this.props.match.params.fieldValue}`, {method: 'GET', credentials: 'include'})
             .then(res => res.json())
             .then(realObj => {
                 console.log(realObj);
                 this.setState({images: realObj});
             }).catch(err => {console.log("in Airport.js: componentDidMount(): in fetch->catch. errr is: "); console.log(err);})
 
+        let url = "https://en.wikipedia.org/w/api.php"; 
+
+        // var params = {
+        //     action: "query",
+        //     prop: "images",
+        //     titles: this.state.data.headline,
+        //     format: "json"
+        // };
+
+        // url = url + "?origin=*";
+        // Object.keys(params).forEach(function(key){url += "&" + key + "=" + params[key];});
+
+        // fetch(url)
+        //     .then(response => {return response.json();})
+        //     .then(response => {
+        //         let mainInfoImage = '';
+        //         var pages = response.query.pages;
+        //         for (var page in pages) {
+        //             for (var img of pages[page].images) {
+        //                 mainInfoImage = encodeURIComponent(img.title);
+
+        //                 break;
+        //             }
+
+        //             break;
+        //         }
+
+        //         mainInfoImage = `https://commons.wikimedia.org/wiki/Special:FilePath/${mainInfoImage}`;
+        //         console.log(`main image url is: ${mainInfoImage}`);
+        //         this.state.setState({data: {imageUrl: mainInfoImage}});
+
+        //     })
+        //     .catch(function(error){console.log(error);});
         } catch(err) {
             console.log("in Airport.js: componentDidMount(): in catch section. Error is:"); 
             console.log(err);
         }
 
-        
-        
-        // const fetchString = `/airport/${this.props.match.params.airportName}`
-        // console.log(`in Airport coopmonent did mount, gonna fetch ${fetchString}`)
-        // fetch(`https://cors-anywhere.herokuapp.com/en.wikipedia.org/w/api.php?action=opensearch&search=heathrow`, {method: 'GET', credentials: 'include'})
-        // .then(res => res.json())
-        // .then(realObj => {
-        //     console.log("in Airport.js: componentDidMount(): second then. Wikipedia result is:")
-        //     console.log(realObj)
-        // }).catch(err => { console.log("in Airport.js: componentDidMount(): in catch section. Error is:"); console.log(err) })
     } // componentDidMount
+
     render() {
 
         console.log(`in render of Airport`)
@@ -89,8 +114,9 @@ class Airport extends Component {
             // !airportInfo ? <Loader type="TailSpin" color="blue" height={120} width={120} /> :
             <>
             <h1>Airport Page</h1>
-                {this.state.data ? <AirportMaterialUI
-                    airport={this.state.data}
+                {(this.state.data && this.state.images) ? 
+                <AirportMaterialUI
+                    data={this.state.data}
                     loggedInUser={this.props.loggedInUser}
                     images={this.state.images}
                 /> 
