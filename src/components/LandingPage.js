@@ -157,7 +157,7 @@ export default class LandingPage extends Component {
                     <Grid item key={index} xs={12} sm={6} md={4}>
                         <Card className={classes.card}>
                           <div className="hoverable-image-container">
-                            <img className="hoverable-image" src={`${imageObj.userName}/${imageObj.url}`} />
+                            <img className="hoverable-image" src={`/${imageObj.userName}/${imageObj.url}`} />
                             {console.log(imageObj)}
                             {console.log(`-----------------------------------------------`)}
                             <div className="hoverable-overlay">

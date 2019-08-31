@@ -112,7 +112,8 @@ class Feed extends Component {
           } // else
     } // importImages
 
-    shuffleArray(a) {
+    shuffleArray(b) {
+        let a = new Array(b); 
         var j, x, i;
         for (i = a.length - 1; i > 0; i--) {
             j = Math.floor(Math.random() * (i + 1));

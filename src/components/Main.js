@@ -26,6 +26,7 @@ class Main extends Component {
                 loggedInUser={this.props.loggedInUser}
                 allFollowingImages={this.props.allFollowingImages}
                 setDesiredUser={this.props.setDesiredUser}
+                extratAllFollowing={this.props.extratAllFollowing}
             />
             <GoSpotit flightInfo={this.props.flightInfo}/>
         </div>
