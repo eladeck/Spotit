@@ -191,7 +191,7 @@ export default class LandingPage extends Component {
                   ))}
                 </Grid>
               </Container>
-              <TopSpotIts />
+              {/* <TopSpotIts /> */}
             </main>
             {/* Footer */}
             <footer className={classes.footer}>

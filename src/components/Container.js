@@ -191,8 +191,7 @@ class Container extends Component {
           loggedInUser = user;
           console.log("the updated user with alegadlly new following is")
           console.log(loggedInUser)
-         this.realLogicOfExtractAllFollowings(loggedInUser);
-          this.setState({loggedInUser})
+          this.setState({loggedInUser}, this.realLogicOfExtractAllFollowings(loggedInUser))
         })
       } else {
         this.realLogicOfExtractAllFollowings(loggedInUser)
