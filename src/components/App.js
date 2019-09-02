@@ -10,20 +10,21 @@ class App extends React.Component {
                 this.state = {
                         loggedInUser:null,
                         userWantsToLogout:false,
-                        
+                        refToExtractAllFollowings:null,
                 }
         this.updateLoggedInUser = this.updateLoggedInUser.bind(this)
         this.handleLogout = this.handleLogout.bind(this)
         this.handleNewFollow = this.handleNewFollow.bind(this)
+        this.setRefToExtractAllFollowings = this.setRefToExtractAllFollowings.bind(this)
         // this.handleUrlChange = this.handleUrlChange.bind(this)
         } //
 
         handleNewFollow() {
+                this.setState({thereIsNewFollow:true})
                 console.log("in App handleNewFollow")
                 // Header told the db that we know follow new guy, 
                 // hence I want to re-render container,
                 // cause it'll extract my followings and will show the new images of folloing
-                this.forceUpdate();
         }
 
         handleLogout() {
@@ -42,6 +43,10 @@ class App extends React.Component {
         //         this.setState(prevState => {prevState});
         // }
 
+        setRefToExtractAllFollowings(refToExtractAllFollowings) {
+                this.setState({refToExtractAllFollowings});
+        }
+
         render() {
                 console.log("in App Render")
                 
@@ -52,11 +57,15 @@ class App extends React.Component {
                                 handleLogout={this.handleLogout}
                                 handleUrlChanged={this.handleUrlChange}
                                 handleNewFollow={this.handleNewFollow}
+                                extractAllFollowings={this.state.refToExtractAllFollowings}
                          />
                         <Container
                          loggedInUser={this.state.loggedInUser}
                          updateLoggedInUser={this.updateLoggedInUser}
+
                          userWantsToLogout={this.state.userWantsToLogout}
+                         
+                         setRefToExtractAllFollowings={this.setRefToExtractAllFollowings}
                          />
                 </Router>
            );

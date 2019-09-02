@@ -47,17 +47,22 @@ router.post(`/follow`, (req, res) => {
     const usersCollection = req.app.locals.usersCollection;
     console.log(`${loggedInUserName} wanna follow ${userNameToFollow}`)
 
-    usersCollection.updateOne(
-        { userName: loggedInUserName },
-        { $addToSet: { following: userNameToFollow } }
-     );
+   
 
      usersCollection.updateOne(
         { userName: userNameToFollow },
         { $addToSet: { followedBy: loggedInUserName } }
      );
+     
+     // must know: the code-line 61 reutrns succus to client (browser) maybe before updatOne above occured.
+     // but most most importantly it will occur after updateOne in 59
 
-     res.status(200).send({msg: `ok! ${loggedInUserName} now follows ${userNameToFollow}`});
+     usersCollection.updateOne(
+        { userName: loggedInUserName },
+        { $addToSet: { following: userNameToFollow } },
+        res.status(200).send({msg: `ok! ${loggedInUserName} now follows ${userNameToFollow}`})
+     );
+
 });
 
 // Register form

@@ -81,17 +81,28 @@ upload.single("image" /* name attribute of <file> element in your form */),
 });
 
 router.get('/like', (req, res) => {
-  const id = req.query.id;
-  const userNameWhoPressedLike = req.cookies.userName;
+    const id = req.query.id;
+    const happyUserName = req.query.happyUserName;
+    console.log("happyUserName")
+    console.log(happyUserName)
 
-  req.app.locals.imgCollection.updateOne(
-    { _id: ObjectId(id) },
-    { $addToSet: { likes: userNameWhoPressedLike } }, function (err, result) {
-      if (err) throw err;
-      console.log(result);}
- )
+    const userNameWhoPressedLike = req.cookies.userName;
 
- res.status(200).send({"yay":"yay"});
+    req.app.locals.imgCollection.updateOne(
+      { _id: ObjectId(id) },
+      { $addToSet: { likes: userNameWhoPressedLike } }, function (err, result) {
+        if (err) throw err;
+        }
+     )
+
+     req.app.locals.usersCollection.updateOne(
+      { userName: happyUserName },
+      { $inc: { score: 1 } }, function (err, result) {
+        if (err) throw err;
+        res.status(200).send({"yay":"yay"});
+        console.log(result);}
+     )
+        // res.send is inside updateOne user!
 });
 
 

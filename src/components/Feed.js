@@ -41,10 +41,12 @@ class Feed extends Component {
             likedImages: [...prevState.likedImages, imgId]
           }))
 
+          console.log(imageObj)
+
           // and then making net call
-        fetch("/image/like?id="+imgId, {method:"GET", credentials:"include"})
+        fetch(`/image/like?id=${imgId}&happyUserName=${imageObj.userName}`, {method:"GET", credentials:"include"})
         .then(res => res.json)
-        .then(res => {if(res.errMsg) removeImageFromArray(imgId); })
+        .then(res => {if(res.errMsg) removeImageFromArray(imgId); this.props.spotitsfetchAllUsers()})
         .catch(err => removeImageFromArray(imgId))
         } // handleLike
 
@@ -105,14 +107,17 @@ class Feed extends Component {
             });
 
             const shuffledImageWrappers = this.shuffleArray(imageWrappers);
-            
+            console.log(this.state.likedImages)
+            console.log(this.state.likedImages.length)
+            console.log(imageWrappers)
+            console.log(shuffledImageWrappers)
             // if we already liked image, i dont want to shuffle again the array
-            // return this.state.likedImages.length > 0 ? imageWrappers : shuffledImageWrappers;
-            return imageWrappers;
+            return this.state.likedImages.length > 0 ? imageWrappers : shuffledImageWrappers;
           } // else
     } // importImages
 
-    shuffleArray(a) {
+    shuffleArray(b) {
+        let a = b.slice(0);
         var j, x, i;
         for (i = a.length - 1; i > 0; i--) {
             j = Math.floor(Math.random() * (i + 1));

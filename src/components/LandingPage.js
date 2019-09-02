@@ -137,15 +137,18 @@ export default class LandingPage extends Component {
               {/* Hero unit */}
               <div className={classes.heroContent}>
 
-              <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
               <img src="https://baydrach.com/wp-content/uploads/2016/10/airplane.jpg" alt="Not working.." />
+              <div className="header-main-image-text">
+              <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                Welcome to SpotIt!
+                The first social media for airplane spotters.
+                Here, you can find the latest updates about special flight arrivals, and share your latest shots with other spotters.
+                Let's go SpotIt!
+              </Typography>
+            </div>
             </Typography>
-            <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              Welcome to SpotIt!
-              The first social media for airplane spotters.
-              Here, you can find the latest updates about special flight arrivals, and share your latest shots with other spotters.
-              Let's go SpotIt!
-            </Typography>
+         
               </div>
               <Container className={classes.cardGrid} maxWidth="md">
                 {/* End hero unit */}
@@ -157,7 +160,7 @@ export default class LandingPage extends Component {
                     <Grid item key={index} xs={12} sm={6} md={4}>
                         <Card className={classes.card}>
                           <div className="hoverable-image-container">
-                            <img className="hoverable-image" src={`${imageObj.userName}/${imageObj.url}`} />
+                            <img className="hoverable-image" src={`/${imageObj.userName}/${imageObj.url}`} />
                             {console.log(imageObj)}
                             {console.log(`-----------------------------------------------`)}
                             <div className="hoverable-overlay">
@@ -191,7 +194,7 @@ export default class LandingPage extends Component {
                   ))}
                 </Grid>
               </Container>
-              <TopSpotIts />
+              {/* <TopSpotIts /> */}
             </main>
             {/* Footer */}
             <footer className={classes.footer}>

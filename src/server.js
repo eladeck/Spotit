@@ -81,6 +81,17 @@ async function startServer() {
     app.locals.specialReport = dbo.collection('specialReports');
     app.locals.goSpotItInfo = dbo.collection('goSpotItInfo');
 
+    // WARNING !!!! code to insert field or remove field from all records in a collection!
+    // app.locals.imgCollection.updateMany({},
+    //     {$set : {"likes":[]}},
+    //     {upsert:false,
+    //     multi:true})
+
+    // app.locals.imgCollection.updateMany({},
+    //     {$unset : {"score":1}},
+    //     {upsert:false,
+    //     multi:true})
+
     app.use('/user', user);
     app.use('/image', image);
     app.use('/airport', airport);
@@ -115,6 +126,8 @@ async function startServer() {
         const countries = req.app.locals.countries;
         const cities = req.app.locals.cities;
         const airports = req.app.locals.airports;
+
+        
         
         const collectionPromise = (collection) => {
             return new Promise((resolve, reject) => {

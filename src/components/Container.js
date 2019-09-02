@@ -34,7 +34,7 @@ class Container extends Component {
       }
 
       this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
-      this.handleLogout = this.handleLogout.bind(this);
+      // this.handleLogout = this.handleLogout.bind(this);
       this.extractAllImagesOfFollowings = this.extractAllImagesOfFollowings.bind(this);
       this.extratAllFollowing = this.extratAllFollowing.bind(this)
       this.setDesiredUser = this.setDesiredUser.bind(this)
@@ -98,15 +98,17 @@ class Container extends Component {
       })
       .catch(errMsg => {console.log(errMsg);})
 
+      this.props.setRefToExtractAllFollowings(this.extratAllFollowing)
+
     } // componentDidMount
 
-    handleLogout() {
-      this.setState({
-        isLoggedIn: false,
-        screenToRender: "Register"
-      });
-      console.log(`in Container\'s handle Logout!, screenToRender is ${this.state.screenToRender}`)
-    }
+    // handleLogout() {
+    //   this.setState({
+    //     isLoggedIn: false,
+    //     screenToRender: "Register"
+    //   });
+    //   console.log(`in Container\'s handle Logout!, screenToRender is ${this.state.screenToRender}`)
+    // }
 
     extractAllImagesOfFollowings(allFollowing) { 
       console.log("in extractAllImagesOfFollowings")
@@ -146,36 +148,54 @@ class Container extends Component {
     });// End of forEach
    } // extractAllImagesOfFollowings
 
-    extratAllFollowing() {
+   realLogicOfExtractAllFollowings(loggedInUser) {
+    if(!loggedInUser) {
+      console.log(`loggedInUser is null`)
+    } else {
+      console.log(`loggedInUser is`)
+      console.log(loggedInUser)
+      console.log(loggedInUser.following)
+
+      if(loggedInUser.following.length === 0) {
+        this.setState({allFollowingImages:[]})
+        return;
+      }
+
+      const allFollowing = [];
+
+      loggedInUser.following.forEach(followerUserName => {
+        fetch(`/user/getUser?userName=${followerUserName}`, {method:'GET', credentials:'include'})
+        .then(response => response.json())
+        .then(followerObj => {
+          allFollowing.push(followerObj);
+          if(allFollowing.length === loggedInUser.following.length) {
+            this.extractAllImagesOfFollowings(allFollowing)
+          }
+        })
+      });
+    } // else
+   } // realLogicOfExtractAllFollowings
+
+    extratAllFollowing(shouldFetchLoggedInUserFromDb) {
       console.log("in extratAllFollowing")
-      const loggedInUser = this.state.loggedInUser;
 
-      if(!loggedInUser) {
-        console.log(`loggedInUser is null`)
+      // alert: loggedInUser might change in .then!
+      let loggedInUser = this.state.loggedInUser;
+
+      if(shouldFetchLoggedInUserFromDb) {
+        const fetchString = '/user/getUser?userName=' + this.state.loggedInUser.userName;
+        console.log("shouldFetchLoggedInUserFromDb is TRUE", "fetch string is " + fetchString)
+        fetch('/user/getUser?userName=' + this.state.loggedInUser.userName, {method:"GET", credentials:"include"})
+        .then(res => res.json())
+        .then(user => {
+          loggedInUser = user;
+          console.log("the updated user with alegadlly new following is")
+          console.log(loggedInUser)
+          this.setState({loggedInUser}, this.realLogicOfExtractAllFollowings(loggedInUser))
+        })
       } else {
-        console.log(`loggedInUser is`)
-        console.log(loggedInUser)
-        console.log(loggedInUser.following)
-
-        if(loggedInUser.following.length === 0) {
-          this.setState({allFollowingImages:[]})
-          return;
-        }
-
-        const allFollowing = [];
-
-        loggedInUser.following.forEach(followerUserName => {
-          fetch(`/user/getUser?userName=${followerUserName}`, {method:'GET', credentials:'include'})
-          .then(response => response.json())
-          .then(followerObj => {
-            allFollowing.push(followerObj);
-            if(allFollowing.length === loggedInUser.following.length) {
-              this.extractAllImagesOfFollowings(allFollowing)
-            }
-          })
-        });
-      } // else
-
+        this.realLogicOfExtractAllFollowings(loggedInUser)
+      }
     } // extratAllFollowing
     
   // renderContainer() {
@@ -232,23 +252,24 @@ class Container extends Component {
 
         return (
 
+
           <Router>
             {(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/reportSpecials"><div className="side-button">Report Special Arrival/Departure</div></Link> : null}
             {this.state.isLoggedIn ? <Link to="/imageForm"><div className="side-button">Add Image</div></Link> : null}
             
             <Route path="/imageForm" component={() => <ImageForm />} />
             <Route path="/reportSpecials" component={() => <PlaneReportForm />} />
-            <Route path="/home" component={() => <Main loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser} flightInfo={this.state.flightInfo}/>} />
-            <Route path="/main" component={() => <Main loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser}/>} />
+            <Route path="/home" component={() => <Main extratAllFollowing={this.extratAllFollowing} loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser} flightInfo={this.state.flightInfo}/>} />
+            <Route path="/main" component={() => <Main extratAllFollowing={this.extratAllFollowing} loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser}/>} />
             {<Route exact path="/" component={() => <LandingPage flightInfo={this.state.flightInfo} imagesToDisplay={this.state.generalImages}/>} />}
-            <Route path="/register/" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
+            <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
             <Route path="/profile/:userName" component={(props) => <Profile {...props} loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
             <Route path="/info/:fieldName/:fieldValue" component={props => <Airport  {...props} loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} />
 
             {
               this.state.isLoggedIn ?  
                 <Redirect push to="/home">
-                  <Route path="/home" component={() => <Main loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages}/>} />
+                  <Route path="/home" component={() => <Main extratAllFollowing={this.extratAllFollowing} loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages}/>} />
                 </Redirect>
               : 
                 <Redirect push to="/">
