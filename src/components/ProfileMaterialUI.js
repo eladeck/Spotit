@@ -14,6 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 // import Link from '@material-ui/core/Link';
 import { Link } from 'react-router-dom'
+import ProductHero from './ProductHero'
+import PopupModal from './PopupModal'
 // import { BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom'
 
 
@@ -72,6 +74,8 @@ function handleGoToAirport(e) {
 }
 
 
+
+
 export default function Album(props) {
   const classes = useStyles();
 
@@ -85,27 +89,24 @@ export default function Album(props) {
       <CssBaseline />
       <main>
         {/* Hero unit */}
+        
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
               {currentProfileUser.firstName} {currentProfileUser.lastName}
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              <div><h2>{currentProfileUser.followedBy.length}</h2> Followers</div>
-              <div><h2>{currentProfileUser.following.length}</h2> Following</div>
+              <div> <PopupModal users={currentProfileUser.followedBy} textToDisplay={"Followers" } /></div>
+              <div> <PopupModal users={currentProfileUser.following} textToDisplay={"Following" } /> </div>
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
                   <Button variant="contained" color="primary">
-                    Main call to action
+                    Follow
                   </Button>
                 </Grid>
-                <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Secondary action
-                  </Button>
-                </Grid>
+              
               </Grid>
             </div>
           </Container>

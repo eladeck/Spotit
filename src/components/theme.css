@@ -87,12 +87,12 @@ nav > ul{
 
 nav > ul > li {
     display: inline-block;
-    padding: 20px 10px;
+    padding: 10px 5px;
 }
 
 ul > li > a {
     color: #fff;
-    font-size: .5em;
+    font-size: .65em;
     font-weight: 200;
     text-decoration: none;
     transition: all .5s ease;
@@ -200,6 +200,9 @@ ul > li > a:hover {
     margin-right:20px
   }
 
+  .followers-following {
+    cursor: pointer;
+  }
   
 
   .logout:hover {
