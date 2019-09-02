@@ -124,10 +124,11 @@ export default function Album(props) {
                       <div className="hoverable-overlay">
                         <ul className="text-in-overlay">
                           <li>Airport:<Link to={`/info/airport/${imageObj.airport}`}>{imageObj.airport}</Link></li>
-                          <li>Aircraft:<Link to={`/info/aircraft/${imageObj.airplaeModel}`}>{imageObj.airplaeModel}</Link></li>
+                          <li>Aircraft:<Link to={`/info/airplaneModel/${imageObj.airplaneModel}`}>{imageObj.airplaneModel}</Link></li>
+                          <li>City:<Link to={`/info/city/${imageObj.city}`}>{imageObj.city}</Link></li>
+                          <li>Country:<Link to={`/info/country/${imageObj.country}`}>{imageObj.country}</Link></li>
+                          <li>Code: {imageObj.code}</li>
                         </ul>
-                        
-                        
                       </div>
                     </div>
                   {/* <img src={imageObj.url}  style={{height:"170px", width:"auto", maxWidth:"500px"}} /> */}

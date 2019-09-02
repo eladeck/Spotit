@@ -40,14 +40,21 @@ class Airport extends Component {
 
    async componentDidMount() {
         try{
-            const searchValue = encodeURIComponent(this.props.match.params.fieldValue);
+            console.log("in Airport.js: componentDidMount():  desired airport is:")
+            let fieldValue = this.props.match.params.fieldValue;
+            let fieldName = this.props.match.params.fieldName;
+
+            console.log(`${this.props.match.params.fieldName}`);
+            console.log(`${this.props.match.params.fieldValue}`);
+            if (fieldName ==="airport" && !fieldValue.includes("Airport")) {
+                fieldValue = fieldValue.concat("Airport");
+            }
+            
+            const searchValue = encodeURIComponent(fieldValue);
+            console.log(`&&&&&`);
             const result = await axios(`https://cors-anywhere.herokuapp.com/en.wikipedia.org/w/api.php?action=opensearch&search=${searchValue}`);
             console.log("in Airport.js: componentDidMount():  Wikipedia result is:")
             console.log(result)
-            console.log("in Airport.js: componentDidMount():  desired airport is:")
-            console.log(`${this.props.match.params.fieldName}`);
-            console.log(`${this.props.match.params.fieldValue}`);
-            console.log(`&&&&&`);
 
             //console.log(this.props.desiredAirport);
             //console.log(result.data[2]);
@@ -59,7 +66,7 @@ class Airport extends Component {
 
             //Try to imlement a general request from the server, so we wont have to implement requests for every case..
 
-            fetch(`/data/general/${this.props.match.params.fieldName}/${this.props.match.params.fieldValue}`, {method: 'GET', credentials: 'include'})
+            fetch(`/data/general/${fieldName}/${this.props.match.params.fieldValue}`, {method: 'GET', credentials: 'include'})
             .then(res => res.json())
             .then(realObj => {
                 console.log(realObj);
@@ -68,37 +75,50 @@ class Airport extends Component {
 
         let url = "https://en.wikipedia.org/w/api.php"; 
 
-        // var params = {
-        //     action: "query",
-        //     prop: "images",
-        //     titles: this.state.data.headline,
-        //     format: "json"
-        // };
+        //console.log(`Airport.js: this.state.data.headline = ${this.state.data.headline}`);
 
-        // url = url + "?origin=*";
-        // Object.keys(params).forEach(function(key){url += "&" + key + "=" + params[key];});
+        var params = {
+            action: "query",
+            prop: "images",
+            titles: this.state.data.headline,
+            format: "json"
+        };
 
-        // fetch(url)
-        //     .then(response => {return response.json();})
-        //     .then(response => {
-        //         let mainInfoImage = '';
-        //         var pages = response.query.pages;
-        //         for (var page in pages) {
-        //             for (var img of pages[page].images) {
-        //                 mainInfoImage = encodeURIComponent(img.title);
+        url = url + "?origin=*";
+        Object.keys(params).forEach(function(key){url += "&" + key + "=" + params[key];});
 
-        //                 break;
-        //             }
+        fetch(url)
+            .then(response => {return response.json();})
+            .then(response => {
+                let mainInfoImage = 'http://avi-asia.com/wp-content/uploads/2016/06/0_0_1292_808_airportdev.png';
+                var pages = response.query.pages;
+                console.log("Airport.js: in second fetch, response is: ")
+                console.log(response);
+                //var mainInfoImage = encodeURIComponent(response.query.pages[0].images[6]);
+                //var mainInfoImage = encodeURIComponent("File:SdeDovAerodrome-Red.jpg");
+                for (var page in pages) {
+                    if( pages[page].images) {
 
-        //             break;
-        //         }
+                        for (var img of pages[page].images) {
+                            console.log(img.title);
+                            console.log(typeof img.title);
+                           if (img.title.includes(params.titles)){
+                            mainInfoImage = encodeURIComponent(img.title);
+                            mainInfoImage = `https://commons.wikimedia.org/wiki/Special:FilePath/${mainInfoImage}`;
+                            break;
+                           }
+    
+                        }
+                    }
 
-        //         mainInfoImage = `https://commons.wikimedia.org/wiki/Special:FilePath/${mainInfoImage}`;
-        //         console.log(`main image url is: ${mainInfoImage}`);
-        //         this.state.setState({data: {imageUrl: mainInfoImage}});
+                    break;
+                }
 
-        //     })
-        //     .catch(function(error){console.log(error);});
+                console.log(`main image url is: ${mainInfoImage}`);
+                this.setState({data: {imageUrl: mainInfoImage, headline: result.data[1][0], detailedInfo: result.data[2]}});
+
+            })
+            .catch(function(error){console.log(error);});
         } catch(err) {
             console.log("in Airport.js: componentDidMount(): in catch section. Error is:"); 
             console.log(err);
