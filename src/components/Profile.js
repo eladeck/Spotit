@@ -8,11 +8,13 @@ class Profile extends Component {
         super(props);
         this.state = {
             images:null,
+            currentProfileUser: null
             // currentLoggedInUser: this.props.loggedInUser,
             // userProfile: this.props.desiredUserProfile
         }
 
         this.handleFollow = this.handleFollow.bind(this);
+        this.fetchImagesAndUser = this.fetchImagesAndUser.bind(this);
     } // c'tor
 
     // methods:
@@ -30,30 +32,69 @@ class Profile extends Component {
 
     componentDidMount() {
         console.log(`444444444444444444444`)
+        console.log(`ComponentDidMount()`)
         console.log(this.props)
         console.log(`44444444444444444444`)
-        if(!this.props.desiredUserProfile) {console.log(`I was render without props user ----`);return;}
+        
         console.log(`i was renders WITH props`)
-        fetch(`/user/getImages?userName=${this.props.match.params.userName}`, {method: 'GET', credentials: 'include'})
-        .then(response => response.json())
-        .then(images => {console.log(`!!!!!!!!!!!!!!!!!!`); console.log(images); this.setState({images})});
+        this.fetchImagesAndUser();
+        // fetch(`/user/getUser?userName=${this.props.match.params.userName}`, {method:'GET', credentials:'include'})
+        // .then(response => response.json())
+        // .then(currentProfileUser => { 
+        //     console.log("ComponentDidUpdate: in second then of fetch(`/user/getUser?userName).")
+        //     this.setState({currentProfileUser})
+        // })
+
+        // fetch(`/user/getImages?userName=${this.props.match.params.userName}`, {method: 'GET', credentials: 'include'})
+        // .then(response => response.json())
+        // .then(images => {console.log("ComponentDidUpdate: in second then of fetch(`/user/getImages?userName)."); console.log(images); this.setState({images})});
+        
     } // didMount
 
+    componentDidUpdate(prevProps) {
+        console.log(`in componentDidUpdate`);
+
+        if(prevProps.match.params.userName !== this.props.match.params.userName) {
+            // fetch(`/user/getUser?userName=${this.props.match.params.userName}`, {method:'GET', credentials:'include'})
+            // .then(response => response.json())
+            // .then(currentProfileUser => { 
+            //     console.log("ComponentDidUpdate: in second then.")
+            //         this.setState({currentProfileUser})
+            // })
+            this.fetchImagesAndUser();
+        }
+    }
+
+    fetchImagesAndUser() {
+        fetch(`/user/getUser?userName=${this.props.match.params.userName}`, {method:'GET', credentials:'include'})
+        .then(response => response.json())
+        .then(currentProfileUser => { 
+            console.log("ComponentDidUpdate: in second then of fetch(`/user/getUser?userName).")
+            this.setState({currentProfileUser})
+        })
+
+        fetch(`/user/getImages?userName=${this.props.match.params.userName}`, {method: 'GET', credentials: 'include'})
+        .then(response => response.json())
+        .then(images => {console.log("ComponentDidUpdate: in second then of fetch(`/user/getImages?userName)."); console.log(images); this.setState({images})});
+        
+    }
     
     render() {
 
-        const currentProfileUser = this.props.desiredUserProfile;
+        //const currentProfileUser = this.props.desiredUserProfile;
         const loggedInUser = this.props.loggedInUser;
         console.log(`in render of Profile`)
-        console.log(this.props.desiredUserProfile)
+        console.log(this.props.match.params)
 
         return (
-            !currentProfileUser ? <Loader type="TailSpin" color="blue" height={120} width={120} /> :
+            !this.state.currentProfileUser ? <Loader type="TailSpin" color="blue" height={120} width={120} /> :
             <>
                 <ProfileMaterialUI
-                    currentProfileUser={currentProfileUser}
+                    currentProfileUser={this.state.currentProfileUser}
                     loggedInUser={loggedInUser}
                     images={this.state.images}
+                    handleFollow={this.props.handleFollow}
+                    handleUnfollow={this.props.handleUnfollow}
                 />
             </>
         );

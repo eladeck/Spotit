@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Loader from 'react-loader-spinner';
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom'
-
+import {withRouter} from 'react-router'
 import { PropsRoute, PublicRoute, PrivateRoute } from 'react-router-with-props';
 import Main from "./Main";
 import Register from "./Register"
@@ -253,7 +253,7 @@ class Container extends Component {
         return (
 
 
-          <Router>
+          <>
             {(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/reportSpecials"><div className="side-button">Report Special Arrival/Departure</div></Link> : null}
             {this.state.isLoggedIn ? <Link to="/imageForm"><div className="side-button">Add Image</div></Link> : null}
             
@@ -263,7 +263,7 @@ class Container extends Component {
             <Route path="/main" component={() => <Main extratAllFollowing={this.extratAllFollowing} loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser}/>} />
             {<Route exact path="/" component={() => <LandingPage flightInfo={this.state.flightInfo} imagesToDisplay={this.state.generalImages}/>} />}
             <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
-            <Route path="/profile/:userName" component={(props) => <Profile {...props} loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
+            <Route path="/profile/:userName" component={(props) => <Profile {...props} handleFollow={this.props.handleFollow} handleUnfollow={this.props.handleUnfollow} loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
             <Route path="/info/:fieldName/:fieldValue" component={props => <Airport  {...props} loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} />
 
             {
@@ -276,7 +276,7 @@ class Container extends Component {
                   <Route path="/" component={() => <LandingPage />} />
                 </Redirect>
             }
-          </Router>
+          </>
         );
       } // render
 } // component Container

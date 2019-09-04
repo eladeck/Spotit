@@ -12,7 +12,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
+//import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom'
 import TopSpotIts from "./TopSpotIts"
 import GoSpotit from "./GoSpotit"
 
@@ -163,9 +164,15 @@ export default class LandingPage extends Component {
                             <img className="hoverable-image" src={`/${imageObj.userName}/${imageObj.url}`} />
                             {console.log(imageObj)}
                             {console.log(`-----------------------------------------------`)}
-                            <div className="hoverable-overlay">
-                              Airport:<Link to={`/airport`}>{imageObj.airport}</Link>
-                            </div>
+                                <div className="hoverable-overlay">
+                                    <ul className="text-in-overlay">
+                                        <li>Airport:<Link to={`/info/airport/${imageObj.airport}`}>{imageObj.airport}</Link></li>
+                                        <li>Aircraft:<Link to={`/info/airplaneModel/${imageObj.airplaneModel}`}>{imageObj.airplaneModel}</Link></li>
+                                        <li>City:<Link to={`/info/city/${imageObj.city}`}>{imageObj.city}</Link></li>
+                                        <li>Country:<Link to={`/info/country/${imageObj.country}`}>{imageObj.country}</Link></li>
+                                        <li>Code: {imageObj.code}</li>
+                                    </ul>
+                                </div>
                           </div>
                       </Card>
                     </Grid>

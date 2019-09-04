@@ -76,6 +76,7 @@ class Feed extends Component {
                 let loggedInUserLikedThisImage;
                 if(this.props.loggedInUser) {
                     console.log(this.props.loggedInUser.userName)
+                    console.log(image)
                     loggedInUserLikedThisImage = image.likes.includes(this.props.loggedInUser.userName)
                 }
                 console.log(image)
@@ -100,7 +101,7 @@ class Feed extends Component {
                     <h2 onClick={() => this.handleGoToProfile(image.userName)}>
                         <Link to={`/profile/${image.userName}`}>{image.userName}</Link>
                     </h2>
-                    <div className='img-grade'>&#9733; &#9733; &#9733; &#9734; &#9734;</div>
+                    {/*<div className='img-grade'>&#9733; &#9733; &#9733; &#9734; &#9734;</div>*/}
                     <img src={`${image.userName}/${image.url}`} alt="not working" />
                 </div>
                 )

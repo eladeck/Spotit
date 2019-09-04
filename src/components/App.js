@@ -14,18 +14,20 @@ class App extends React.Component {
                 }
         this.updateLoggedInUser = this.updateLoggedInUser.bind(this)
         this.handleLogout = this.handleLogout.bind(this)
-        this.handleNewFollow = this.handleNewFollow.bind(this)
+        //this.handleNewFollow = this.handleNewFollow.bind(this)
+        this.handleFollow = this.handleFollow.bind(this)
+        this.handleUnfollow = this.handleUnfollow.bind(this)
         this.setRefToExtractAllFollowings = this.setRefToExtractAllFollowings.bind(this)
         // this.handleUrlChange = this.handleUrlChange.bind(this)
         } //
 
-        handleNewFollow() {
-                this.setState({thereIsNewFollow:true})
-                console.log("in App handleNewFollow")
-                // Header told the db that we know follow new guy, 
-                // hence I want to re-render container,
-                // cause it'll extract my followings and will show the new images of folloing
-        }
+        // handleNewFollow() {
+        //         this.setState({thereIsNewFollow:true})
+        //         console.log("in App handleNewFollow")
+        //         // Header told the db that we know follow new guy, 
+        //         // hence I want to re-render container,
+        //         // cause it'll extract my followings and will show the new images of folloing
+        // }
 
         handleLogout() {
                 this.setState({
@@ -47,6 +49,23 @@ class App extends React.Component {
                 this.setState({refToExtractAllFollowings});
         }
 
+        handleUnfollow(userNameToUnfollow) {
+                const shouldFetchLoggedInUserFromDb = true;
+                fetch(`/user/unfollow?userNameToUnfollow=${userNameToUnfollow}`, {method:'POST', credentials:"include"})
+                .then(res => res.json())
+                .then(obj => {this.state.refToExtractAllFollowings(shouldFetchLoggedInUserFromDb); console.log('after'); })
+        }
+              
+        handleFollow(userNameToFollow) {
+                const shouldFetchLoggedInUserFromDb = true;
+                console.log("in handleFollow")
+                // e.preventDefault();
+                fetch(`/user/follow?userNameToFollow=${userNameToFollow}`, {method:'POST', credentials:"include"})
+                .then(res => res.json())
+                .then(_ => {this.state.refToExtractAllFollowings(shouldFetchLoggedInUserFromDb); console.log('after'); })
+                // .then(newListOfFollowings => this.setState({newListOfFollowings}))
+        } // handleFollow
+        
         render() {
                 console.log("in App Render")
                 
@@ -56,8 +75,8 @@ class App extends React.Component {
                                 loggedInUser={this.state.loggedInUser}
                                 handleLogout={this.handleLogout}
                                 handleUrlChanged={this.handleUrlChange}
-                                handleNewFollow={this.handleNewFollow}
-                                extractAllFollowings={this.state.refToExtractAllFollowings}
+                                handleFollow={this.handleFollow}
+                                handleUnfollow={this.handleUnfollow}
                          />
                         <Container
                          loggedInUser={this.state.loggedInUser}
@@ -66,6 +85,8 @@ class App extends React.Component {
                          userWantsToLogout={this.state.userWantsToLogout}
                          
                          setRefToExtractAllFollowings={this.setRefToExtractAllFollowings}
+                         handleFollow={this.handleFollow}
+                         handleUnfollow={this.handleUnfollow}
                          />
                 </Router>
            );

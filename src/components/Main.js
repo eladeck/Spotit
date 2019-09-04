@@ -25,6 +25,7 @@ class Main extends Component {
   render() {
     console.log("in main render")
     console.log("about to renderTopSpotit, typeof setRefTofetchAllUsers is", typeof this.setRefTofetchAllUsers, this.setRefTofetchAllUsers)
+    console.log("about to render feed, loggedInUser is", this.props.loggedInUser)
 
 
     return (

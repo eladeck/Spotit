@@ -4,9 +4,10 @@ import ReactTooltip from 'react-tooltip'
 import Container from './Container';
 import ImageForm from './ImageForm';
 //import {BrowserRouter, Link,Route} from "react-router-dom";
-import { BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Link, WithRouter} from 'react-router-dom'
 //let Router = BrowserRouter;
 //let {BrowserRouter, Link,Route} = ReactRouterDOM;
+
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -42,13 +43,14 @@ class Header extends Component {
         }
 
         return (
+            
             <div style={divStyle}>
                 {this.state.allUsers.filter(user => user.userName.includes(this.state.searchWord)).map(user => {
                     console.log(user)
                     return (
                         <>
                         <div key={user.userName} style={{maxWidth:"130px", width:"130px",float:"left"}}>
-                            <span style={{position: "absolute", left:"0px",fontSize:"0.37em"}}>{user.userName}</span>
+                        <span style={{position: "absolute", left:"0px",fontSize:"0.37em"}} onClick={() => this.setState({showAllUsers: false})}><Link to={`/profile/${user.userName}`}>{user.userName}</Link></span>
                             <span onClick={() => this.handleFollow(user.userName)}style={{cursor:"pointer",fontSize:"0.3em", color:"red", right:"0px", position:"absolute"}}>follow</span>
                         </div>
                         <br />
@@ -56,6 +58,7 @@ class Header extends Component {
                     );
                 })}
             </div>
+            
         );
 
     } // renderAllUsersUnderInput
@@ -93,14 +96,10 @@ class Header extends Component {
         this.setState({searchWord:value, showAllUsers:showAllUsersBool});
     } // handleChange
 
-    handleFollow(userNameToFollow) {
-        const shouldFetchLoggedInUserFromDb = true;
-        console.log("in handleFollow")
-        // e.preventDefault();
-        fetch(`/user/follow?userNameToFollow=${userNameToFollow}`, {method:'POST', credentials:"include"})
-        .then(res => res.json())
-        .then(_ => {this.props.extractAllFollowings(shouldFetchLoggedInUserFromDb); console.log('after'); this.setState({showAllUsers:false}); })
-        // .then(newListOfFollowings => this.setState({newListOfFollowings}))
+    async handleFollow(userNameToFollow) {
+        await this.props.handleFollow(userNameToFollow);
+        console.log("in handleFollow, after awaiting props.handleFollow.")
+        this.setState({showAllUsers: false})
     } // handleFollow
 
     handleLogout() {
@@ -156,4 +155,4 @@ class Header extends Component {
         );
     } // render
 } // Header Component
-export default Header
+export default Header;

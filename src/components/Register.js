@@ -112,6 +112,7 @@ class Register extends Component {
         //     </div>
         // )
         return (
+            
             <main>
                 <form action="users/register" onSubmit={this.handleRegister}>
                     <input  name="firstName"  value={this.state.newUser.firstName}  onChange={this.handleChange}  placeholder="First Name"  />
@@ -166,6 +167,7 @@ class Register extends Component {
                 <p>registeredUser name: {this.state.registeredUser.regUserName}</p>
                 <p>registeredUser password: {this.state.registeredUser.regPassword}</p>
             </main>
+            
         )
     }
 }

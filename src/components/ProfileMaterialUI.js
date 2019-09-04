@@ -73,6 +73,35 @@ function handleGoToAirport(e) {
   console.log(e.target)
 }
 
+// const handleFollow = (loggedInUser, currentUserProfile) => {
+  
+//   console.log(`in handleFollow! ${isFollowing}`)
+
+//   const users = {
+//     userToUpdate: loggedInUser, // Holds the string of userName field.
+//     isFollowing: isFollowing,
+//     userToFollow: currentUserProfile; // Holds the string of userName field.
+//   }
+
+
+//   fetch('/user/addNewUser', {method: 'POST', body: newUserJSON, credentials: 'include'})
+//   .then(response => {            
+//       if (!response.ok) {                
+//           throw response;
+//       } else {
+//           return response.json()
+//       }
+//   })
+//   .then(newUser => {
+//       console.log(`ProfileMaterialUI: handleFollow: in second fetch.`);
+//   })
+//   .catch(err => {
+//     console.log(`ProfileMaterialUI: handleFollow: in second fetch. Error is: `);
+//     console.log(err);
+//   });
+//   return false;
+// }
+
 
 
 
@@ -80,10 +109,10 @@ export default function Album(props) {
   const classes = useStyles();
 
   const currentProfileUser = props.currentProfileUser;
+  const loggedInUser = props.loggedInUser;
   const images = props.images;
   console.log(`in mateiralUI, currentProfileUser is`);
   console.log(currentProfileUser);
-
   return (
     <React.Fragment>
       <CssBaseline />
@@ -102,9 +131,16 @@ export default function Album(props) {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
-                    Follow
-                  </Button>
+                  {!loggedInUser.following.includes(currentProfileUser.userName) ?
+                    <button onClick={() => props.handleFollow(currentProfileUser.userName)}>
+                      Follow
+                    </button>
+                    :
+                    <button onClick={() => props.handleUnfollow(currentProfileUser.userName)}>
+                      Unfollow
+                    </button>
+                  }
+                 
                 </Grid>
               
               </Grid>
@@ -124,11 +160,11 @@ export default function Album(props) {
                       {console.log(`-----------------------------------------------`)}
                       <div className="hoverable-overlay">
                         <ul className="text-in-overlay">
-                          <li>Airport:<Link to={`/info/airport/${imageObj.airport}`}>{imageObj.airport}</Link></li>
-                          <li>Aircraft:<Link to={`/info/airplaneModel/${imageObj.airplaneModel}`}>{imageObj.airplaneModel}</Link></li>
-                          <li>City:<Link to={`/info/city/${imageObj.city}`}>{imageObj.city}</Link></li>
-                          <li>Country:<Link to={`/info/country/${imageObj.country}`}>{imageObj.country}</Link></li>
-                          <li>Code: {imageObj.code}</li>
+                          <li className="inner-of-image-li">Airport:<Link to={`/info/airport/${imageObj.airport}`}>{imageObj.airport}</Link></li>
+                          <li className="inner-of-image-li">Aircraft:<Link to={`/info/airplaneModel/${imageObj.airplaneModel}`}>{imageObj.airplaneModel}</Link></li>
+                          <li className="inner-of-image-li">City:<Link to={`/info/city/${imageObj.city}`}>{imageObj.city}</Link></li>
+                          <li className="inner-of-image-li">Country:<Link to={`/info/country/${imageObj.country}`}>{imageObj.country}</Link></li>
+                          <li className="inner-of-image-li">Code: {imageObj.code}</li>
                         </ul>
                       </div>
                     </div>
