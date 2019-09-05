@@ -205,6 +205,9 @@ ul > li > a:hover {
 
   .followers-following {
     cursor: pointer;
+    width: fit-content;
+    margin: auto;
+    padding: 15px;
   }
   
 
@@ -551,4 +554,27 @@ ul > li > a:hover {
     background-color: #7bd4da;
   }
   /*form form form form formformform form*/
+
+  .button1 {
+    display:inline-block;
+    background-color:rgb(235, 229, 229);
+
+    padding:0.35em 1.2em;
+    border:0.1em solid rgb(192, 174, 174);
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.12em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    color:rgb(39, 7, 7);
+    text-align:center;
+    transition: all 0.2s;
+  }
+
+    .button1:hover{
+    color:#ffffff;
+    background-color:rgb(10, 0, 0);
+    cursor:pointer;
+    }
   

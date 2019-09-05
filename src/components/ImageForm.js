@@ -1,4 +1,6 @@
 import React, {Component} from "react"
+import Loader from 'react-loader-spinner'
+import {Redirect, Route} from 'react-router-dom'
 
 class ImageForm extends Component {
     constructor() {
@@ -13,6 +15,8 @@ class ImageForm extends Component {
            imageFormData: null,
            uploadedImage: null,
            uploading: false,
+           completed:false,
+           redirect:false,
         }
 
         
@@ -20,10 +24,16 @@ class ImageForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleBrowse = this.handleBrowse.bind(this);
         this.dataFormMap = this.dataFormMap.bind(this);
+        this.redirectMethod = this.redirectMethod.bind(this);
+    }
+
+    redirectMethod() {
+        this.setState({redirect:true})
     }
 
     handleBrowse(e) {
-        console.log(`in handle browse`)
+        console.log(e.target)
+        console.log(e.target.files)
         const image = e.target.files[0];
         this.setState({uploading:true})
 
@@ -34,23 +44,23 @@ class ImageForm extends Component {
             country: this.state.country,
             airport: this.state.airport,
             image,
-            likes:0
+            likes:[]
         };
-
-        console.log('gonna post this:----------------')
-        console.log(formData)
 
         fetch(`/image/upload`, {
             method:"POST",
             body: JSON.stringify(formData),
             credentials:"include"
          })
-         .then(res => res.json())
+         .then(res => {console.log("here");return res.json()})
          .then(realResObj => {
+             console.log("realResObj")
+             console.log(realResObj)
              this.setState({
                 //  realResObj,
-                 uploading:false
-             })
+                 uploading:false,
+                 completed:true,
+             }, () => setTimeout(this.redirectMethod, 2000))
          })
     } // handleBrowse
 
@@ -83,11 +93,23 @@ class ImageForm extends Component {
     render() {
         console.log(`in imageForm render`)
         window.state = this.state;
+        if(!this.state.imageFormData || this.state.uploading) return (
+        <div style={{position:"fixed", left:"50%", top:"50%"}}>
+           <Loader type="TailSpin" color="lightgreen" height={40} width={40} />
+        </div>)
 
         return (
-           !this.state.imageFormData ? <div>Loading...</div> : 
-           <main>
-                <form action="image/upload" method="post" encType="multipart/form-data" /*onSubmit={this.handleSubmit}*/>
+            this.state.completed ? (
+                    this.state.redirect ? 
+                    <Redirect push to="/home">
+                        <Route path="/home" component={() => <Main extratAllFollowing={this.extratAllFollowing} loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages}/>} />
+                   </Redirect> :
+                 <div style={{position:"fixed", left:"50%", top:"50%"}}>
+                     Image succusfully uploaded!
+                 </div>)
+               :
+               <main>
+          <form action="image/upload" method="post" encType="multipart/form-data" /*onSubmit={this.handleSubmit}*/>
                     <select value={this.state.airline} name="airline" onChange={this.handleChange}>
                         <option value="">-Choose Airline-</option>
                         {this.dataFormMap(this.state.imageFormData.airlines)}
@@ -119,17 +141,16 @@ class ImageForm extends Component {
                     <button type="submit">Upload</button>
                 </form>
 
-                <hr />
-                <h2>Entered information:</h2>
-                <p>Airline: {this.state.airline}</p>
-                <p>Airplane Model: {this.state.airplaneModel}</p>
-                <p>Country: {this.state.country}</p>
-                <p>City: {this.state.city}</p>
-                <p>Airport:{this.state.airport}</p>
-                <p>registration:{this.state.registration}</p>
-            </main>
+               <hr />
+               <h2>Entered information:</h2>
+               <p>Airline: {this.state.airline}</p>
+               <p>Airplane Model: {this.state.airplaneModel}</p>
+               <p>Country: {this.state.country}</p>
+               <p>City: {this.state.city}</p>
+               <p>Airport:{this.state.airport}</p>
+               <p>registration:{this.state.registration}</p>
+           </main>
         ) // End of return
-       
     }
 }
 

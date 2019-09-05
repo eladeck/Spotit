@@ -111,6 +111,11 @@ export default function Album(props) {
   const currentProfileUser = props.currentProfileUser;
   const loggedInUser = props.loggedInUser;
   const images = props.images;
+
+  if(!loggedInUser) {
+    return <div>Problem fetching / There is no logged in user. please refresh or try again</div>
+  }
+
   console.log(`in mateiralUI, currentProfileUser is`);
   console.log(currentProfileUser);
   return (
@@ -132,11 +137,11 @@ export default function Album(props) {
               <Grid container spacing={2} justify="center">
                 <Grid item>
                   {!loggedInUser.following.includes(currentProfileUser.userName) ?
-                    <button onClick={() => props.handleFollow(currentProfileUser.userName)}>
+                    <button className="button1" onClick={() => props.handleFollow(currentProfileUser.userName)}>
                       Follow
                     </button>
                     :
-                    <button onClick={() => props.handleUnfollow(currentProfileUser.userName)}>
+                    <button className="button1" onClick={() => props.handleUnfollow(currentProfileUser.userName)}>
                       Unfollow
                     </button>
                   }

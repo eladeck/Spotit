@@ -53,7 +53,7 @@ router.post(`/follow`, (req, res) => {
         { userName: userNameToFollow },
         { $addToSet: { followedBy: loggedInUserName } }
      );
-     
+
      // must know: the code-line 61 reutrns succus to client (browser) maybe before updatOne above occured.
      // but most most importantly it will occur after updateOne in 59
 
@@ -64,24 +64,25 @@ router.post(`/follow`, (req, res) => {
      );
 
 });
+
 router.post(`/unfollow`, (req, res) => {
     // console.log(req.query)
     const loggedInUserName = req.cookies.userName;
-    
+
     console.log("user.js: in router.post(/follow): req.query is:")
     console.log(req.query);
-    
+
     const userNameToUnfollow = req.query.userNameToUnfollow;
     const usersCollection = req.app.locals.usersCollection;
     console.log(`${loggedInUserName} wanna unfollow ${userNameToUnfollow}`)
 
-   
+
 
      usersCollection.updateOne(
         { userName: userNameToUnfollow },
         { $pull: { followedBy: loggedInUserName } }
      );
-     
+
      // must know: the code-line 61 reutrns succus to client (browser) maybe before updatOne above occured.
      // but most most importantly it will occur after updateOne in 59
 
@@ -90,8 +91,7 @@ router.post(`/unfollow`, (req, res) => {
         { $pull: { following: userNameToUnfollow } },
         res.status(200).send({msg: `ok! ${loggedInUserName} unfollowed ${userNameToUnfollow}`})
      );
-
-});
+     });
 
 // Register form
 router.get('/register', (req, res) => {
@@ -107,8 +107,8 @@ router.get('/register', (req, res) => {
 
 router.get('/getUser', (req, res) => {
     const userName = req.query.userName;
-    console.log(`router.get('/getUser') : user is ${userName}`)
     const usersCollection = req.app.locals.usersCollection;
+    console.log("gonna bring user" + userName)
     router.getUserFromDb(userName, usersCollection, res);
 });
 
@@ -143,7 +143,6 @@ router.get('/getImages', (req, res) => {
             user.images.forEach(imgId => {
                 imgCollection.find({"_id": ObjectId(imgId)}).toArray(function(err, result) {
                     if (err || result.length === 0) {
-                        console.log(`in router.get('/getImages'): couldn't find the image with id=${imgId}`)
                         res.send(401, {errMsg:`no such img with ${imgId} id`});
                     } else {
                         images.push(result[0]);
@@ -225,13 +224,12 @@ router.post('/addNewUser', (req, res) => {
     // req.checkBody('password2', 'Passwords do not match').equals(password);
     
     const usersCollection = req.app.locals.usersCollection;
-    usersCollection.insertOne(newUser, function(err, res) {
+    usersCollection.insertOne(newUser, function(err, dbResult) {
         if (err) throw err;
         console.log("1 document inserted");
+        res.send(dbResult.ops[0]) // automatically send status 200
         // db.close();
       });
-
-    res.send(newUser[0]) // automatically send status 200
 });
 
 router.get('/login', (req, res) => {
