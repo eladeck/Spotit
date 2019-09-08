@@ -66,6 +66,8 @@ class Profile extends Component {
     }
 
     fetchImagesAndUser() {
+
+        // Fetch of the user object
         fetch(`/user/getUser?userName=${this.props.match.params.userName}`, {method:'GET', credentials:'include'})
         .then(response => response.json())
         .then(currentProfileUser => { 
@@ -73,6 +75,7 @@ class Profile extends Component {
             this.setState({currentProfileUser})
         })
 
+        // Fetch of the user's images
         fetch(`/user/getImages?userName=${this.props.match.params.userName}`, {method: 'GET', credentials: 'include'})
         .then(response => response.json())
         .then(images => {console.log("ComponentDidUpdate: in second then of fetch(`/user/getImages?userName)."); console.log(images); this.setState({images})});

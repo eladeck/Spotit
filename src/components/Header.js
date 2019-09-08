@@ -65,7 +65,7 @@ class Header extends Component {
 
     handleUsersInputClick(e) {
         if(!this.state.allUsers) {
-            fetch('user/all', {method:"GET", credentials:"include"})
+            fetch('/user/all', {method:"GET", credentials:"include"})
             .then(res => res.json())
             .then(users => {
                 // TODO: error handling

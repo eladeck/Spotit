@@ -132,11 +132,11 @@ export default function Album(props) {
               <Grid container spacing={2} justify="center">
                 <Grid item>
                   {!loggedInUser.following.includes(currentProfileUser.userName) ?
-                    <button onClick={() => props.handleFollow(currentProfileUser.userName)}>
+                    <button className="follow-button" onClick={() => props.handleFollow(currentProfileUser.userName)}>
                       Follow
                     </button>
                     :
-                    <button onClick={() => props.handleUnfollow(currentProfileUser.userName)}>
+                    <button className="follow-button"  onClick={() => props.handleUnfollow(currentProfileUser.userName)}>
                       Unfollow
                     </button>
                   }
@@ -156,14 +156,24 @@ export default function Album(props) {
                   <Card className={classes.card}>
                     <div className="hoverable-image-container">
                       <img className="hoverable-image" src={`${imageObj.userName}/${imageObj.url}`} />
+                      <div id="myModal" className="modal">
+
+                        {/*<!-- The Close Button -->*/}
+                        <span className="close">&times;</span>
+
+                        {/*<!-- Modal Content (The Image) -->*/}
+                        <img className="modal-content" id="img01" />
+
+                        {/*<!-- Modal Caption (Image Text) -->*/}
+                        <div id="caption"></div>
+                      </div>
                       {console.log(imageObj)}
                       {console.log(`-----------------------------------------------`)}
                       <div className="hoverable-overlay">
                         <ul className="text-in-overlay">
-                          <li className="inner-of-image-li">Airport:<Link to={`/info/airport/${imageObj.airport}`}>{imageObj.airport}</Link></li>
                           <li className="inner-of-image-li">Aircraft:<Link to={`/info/airplaneModel/${imageObj.airplaneModel}`}>{imageObj.airplaneModel}</Link></li>
-                          <li className="inner-of-image-li">City:<Link to={`/info/city/${imageObj.city}`}>{imageObj.city}</Link></li>
-                          <li className="inner-of-image-li">Country:<Link to={`/info/country/${imageObj.country}`}>{imageObj.country}</Link></li>
+                          <li className="inner-of-image-li">Airport:<Link to={`/info/airport/${imageObj.airport}`}>{imageObj.airport}</Link></li>
+                          <li className="inner-of-image-li"><Link to={`/info/city/${imageObj.city}`}>{imageObj.city}</Link>, <Link to={`/info/country/${imageObj.country}`}>{imageObj.country}</Link></li>
                           <li className="inner-of-image-li">Code: {imageObj.code}</li>
                         </ul>
                       </div>

@@ -48,6 +48,8 @@ class GoSpotit extends Component {
     } // createListItems
 
     PopupExample() {
+      console.log(`GoSpotIt: PopupExample(): flightInfo is `)
+      console.log(this.props.flightInfo)
             return (
                 <Popup trigger={<h1 className="button title clickable-title"> Go Spotit! </h1>} modal>
                   {close => (

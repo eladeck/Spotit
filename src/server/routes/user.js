@@ -132,35 +132,48 @@ router.get('/getImages', (req, res) => {
     const userName = req.query.userName;
     const imgCollection = req.app.locals.imgCollection;
     const usersCollection = req.app.locals.usersCollection;
-
+    console.log(`in router.get('/getImages'). line 135`)
+    let flag = true;
     const images = [];
     usersCollection.find({"userName": userName}).toArray((err, result) => {
         if (err || result.length === 0) {
+            console.log(`in router.get('/getImages'): There was no user found under the name '${userName}'`)
             res.send(401, {errMsg:`no userName ${userName}.`});
         } else {
             const user = result[0];
-            
-            user.images.forEach(imgId => {
-                imgCollection.find({"_id": ObjectId(imgId)}).toArray(function(err, result) {
-                    if (err || result.length === 0) {
-                        console.log(`in router.get('/getImages'): couldn't find the image with id=${imgId}`)
-                        res.send(401, {errMsg:`no such img with ${imgId} id`});
-                    } else {
-                        images.push(result[0]);
+            console.log(`found user ${user.userName}`)
 
-                        if(images.length === user.images.length) {
-                            res.send(images);
+            if (user.images.length > 0) {
+                user.images.forEach(imgId => {
+                    imgCollection.find({"_id": ObjectId(imgId)}).toArray(function(err, result) {
+                        if (err || result.length === 0) {
+                            console.log(`in router.get('/getImages'): couldn't find the image with id=${imgId}`)
+                            res.send(401, {errMsg:`no such img with ${imgId} id`});
+                        } else {
+                            images.push(result[0]);
+    
+                            if(images.length === user.images.length) {
+                                res.send(images);
+                                return;
+                            }
                         }
-                    }
+                    });
                 });
-            });
+
+                flag = false;
+            }
 
             // console.log("images array is: ")
             // console.log(images);
-            // res.send(images);
+            
+            if (flag) {
+
+                res.send(images);
+            }
+            
         }
     });
-}); // getImage
+}); // getImages
 
 router.get('/login', (req, res) => {
     console.log(`in get. /login!`)
