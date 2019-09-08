@@ -141,7 +141,6 @@ router.get('/getImages', (req, res) => {
             res.send(401, {errMsg:`no userName ${userName}.`});
         } else {
             const user = result[0];
-<<<<<<< HEAD
             console.log(`found user ${user.userName}`)
 
             if (user.images.length > 0) {
@@ -157,18 +156,6 @@ router.get('/getImages', (req, res) => {
                                 res.send(images);
                                 return;
                             }
-=======
-            
-            user.images.forEach(imgId => {
-                imgCollection.find({"_id": ObjectId(imgId)}).toArray(function(err, result) {
-                    if (err || result.length === 0) {
-                        res.send(401, {errMsg:`no such img with ${imgId} id`});
-                    } else {
-                        images.push(result[0]);
-
-                        if(images.length === user.images.length) {
-                            res.send(images);
->>>>>>> 853ac946f007bad23478e08d8e279070947487ac
                         }
                     });
                 });

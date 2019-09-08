@@ -18,7 +18,7 @@ import ProductHero from './ProductHero'
 import PopupModal from './PopupModal'
 // import { BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom'
 
-
+import Popup from "reactjs-popup";
 
 function Copyright() {
   return (
@@ -141,7 +141,7 @@ export default function Album(props) {
                       Follow
                     </button>
                     :
-                    <button className="follow-button"  onClick={() => props.handleUnfollow(currentProfileUser.userName)}>
+                    <button className="unfollow-button"  onClick={() => props.handleUnfollow(currentProfileUser.userName)}>
                       Unfollow
                     </button>
                   }
@@ -160,18 +160,15 @@ export default function Album(props) {
               <Grid item key={index} xs={12} sm={6} md={4}>
                   <Card className={classes.card}>
                     <div className="hoverable-image-container">
-                      <img className="hoverable-image" src={`${imageObj.userName}/${imageObj.url}`} />
-                      <div id="myModal" className="modal">
-
-                        {/*<!-- The Close Button -->*/}
-                        <span className="close">&times;</span>
-
-                        {/*<!-- Modal Content (The Image) -->*/}
-                        <img className="modal-content" id="img01" />
-
-                        {/*<!-- Modal Caption (Image Text) -->*/}
-                        <div id="caption"></div>
-                      </div>
+                    <Popup
+                      trigger={<img className="hoverable-image" src={`${imageObj.userName}/${imageObj.url}`} />}
+                      modal
+                      closeOnDocumentClick
+                    >
+                      <span> <img className="hoverable-image" src={`${imageObj.userName}/${imageObj.url}`} /> </span>
+                    </Popup>
+                      
+                    
                       {console.log(imageObj)}
                       {console.log(`-----------------------------------------------`)}
                       <div className="hoverable-overlay">

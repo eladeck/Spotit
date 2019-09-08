@@ -557,14 +557,13 @@ ul > li > a:hover {
     background-color: #7bd4da;
   }
   /*form form form form formformform form*/
-<<<<<<< HEAD
   
 
   .follow-button {
     background-color:#44c767;
-    -moz-border-radius:28px;
-    -webkit-border-radius:28px;
-    border-radius:28px;
+    -moz-border-radius:17px;
+    -webkit-border-radius:17px;
+    border-radius:17px;
     border:2px solid #18ab29;
     display:inline-block;
     cursor:pointer;
@@ -573,7 +572,7 @@ ul > li > a:hover {
     font-size:17px;
     padding:16px 31px;
     text-decoration:none;
-    text-shadow:0px 0px 0px #2f6627;
+    text-shadow:0px 1px 0px #2f6627;
   }
   .follow-button:hover {
     background-color:#5cbf2a;
@@ -583,7 +582,31 @@ ul > li > a:hover {
     top:1px;
   }
 
+  .unfollow-button {
+    background-color:#c5d6ca;
+    -moz-border-radius:28px;
+    -webkit-border-radius:28px;
+    border-radius:28px;
+    border:1px solid #e6e6e6;
+    display:inline-block;
+    cursor:pointer;
+    color:#030103;
+    font-family:Arial;
+    font-size:17px;
+    padding:16px 31px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #2f6627;
+  }
+  .unfollow-button:hover {
+    background-color:#a6b0a0;
+  }
+  .unfollow-button:active {
+    position:relative;
+    top:1px;
+  }
+
   /*Modal Image style*/
+
 
   #myImg {
     border-radius: 5px;
@@ -608,7 +631,7 @@ ul > li > a:hover {
     background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
   }
   
-  /* Modal Content (Image) */
+  /* Modal Content (image) */
   .modal-content {
     margin: auto;
     display: block;
@@ -616,7 +639,7 @@ ul > li > a:hover {
     max-width: 700px;
   }
   
-  /* Caption of Modal Image (Image Text) - Same Width as the Image */
+  /* Caption of Modal Image */
   #caption {
     margin: auto;
     display: block;
@@ -628,14 +651,21 @@ ul > li > a:hover {
     height: 150px;
   }
   
-  /* Add Animation - Zoom in the Modal */
-  .modal-content, #caption {
+  /* Add Animation */
+  .modal-content, #caption {  
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
     animation-name: zoom;
     animation-duration: 0.6s;
   }
   
+  @-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+  }
+  
   @keyframes zoom {
-    from {transform:scale(0)}
+    from {transform:scale(0)} 
     to {transform:scale(1)}
   }
   
@@ -663,7 +693,6 @@ ul > li > a:hover {
       width: 100%;
     }
   }
-
   /*End Of Modal Image Style*/
 
 

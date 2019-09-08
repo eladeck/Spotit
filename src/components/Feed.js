@@ -1,7 +1,7 @@
 
 import React, { Component } from "react"
 import Loader from 'react-loader-spinner'
-
+import Popup from "reactjs-popup";
 import { BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom'
 
 
@@ -102,7 +102,20 @@ class Feed extends Component {
                         <Link to={`/profile/${image.userName}`}>{image.userName}</Link>
                     </h2>
                     {/*<div className='img-grade'>&#9733; &#9733; &#9733; &#9734; &#9734;</div>*/}
-                    <img src={`${image.userName}/${image.url}`} alt="not working" />
+                    <Popup
+                      trigger={<img id="myModal" src={`${image.userName}/${image.url}`} alt="not working" onClick={() => {console.log("Image Modal")}} />}
+                      modal
+                      closeOnDocumentClick
+                    >
+                      <span> <img id="myModal" src={`${image.userName}/${image.url}`} alt="not working" onClick={() => {console.log("Image Modal")}} style={{width:"100%", maxWidth:"850px"}} /> </span>
+                    </Popup>
+                    
+                    
+                    <div id="myModal" class="modal">
+                        <span class="close">&times;</span>
+                        <img class="modal-content" id="img01" />
+                        <div id="caption"></div>
+                    </div>
                 </div>
                 )
             });
