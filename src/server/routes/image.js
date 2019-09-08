@@ -16,7 +16,7 @@ upload.single("image" /* name attribute of <file> element in your form */),
  (req, res) => {
 
   if(!req.file) {
-    res.send({msg: "no file uploaded! please select file and then press upload"})
+    res.send({err: "no file uploaded! please select file and then press upload"})
   }
 
     const desiredFileName = req.file.originalname//`${req.file.filename}.jpg`
@@ -55,28 +55,25 @@ upload.single("image" /* name attribute of <file> element in your form */),
         country: req.body.country,
         city: req.body.city,
         airport: req.body.airport,
-        code: req.body.registration
+        code: req.body.registration,
+        likes: []
     };
     
     const imagesCollection = req.app.locals.imgCollection;
+    const style = 
+
     imagesCollection.insertOne(objectToInsert, (err, result) => {
         if(err) {
           console.log("in imagesCollection.insertOne(): ERROR occured.")
-          res.send(401, {errMsg:`Error occured while uploading image to database.`});
+          res.send(401, {err:`Error occured while uploading image to database.`});
         } else {
           console.log("in imagesCollection.insertOne(): Object successfully inserted.")
-          res.status(200).send(200, {msg:"successfully uploaded image"})
+          req.app.locals.usersCollection.updateOne(
+            { userName }, /*query: what record to update*/
+            { $addToSet: { images: ObjectId(result.ops[0]._id) } }, 
+            res.send('<div style="position:fixed;left:40%;top:40%;font-family:fantasy;letter-spacing:1px;word-spacing:2px;">' +
+              'image uploaded! go back to <a href="/">home page</a></div>'));
         }
-
-        // adding the fresh image id to the user's images list (but maybe to delete the image list from user record?)
-        let _id = result.ops[0]._id;
-        // _id = ObjectId.valueOf(_id);
-        // console.log(_id);
-
-        req.app.locals.usersCollection.updateOne(
-          { userName }, /*query: what record to update*/
-          { $addToSet: { images: ObjectId(_id) } }
-       );
     });
 });
 

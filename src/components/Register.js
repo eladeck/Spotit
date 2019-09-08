@@ -13,9 +13,7 @@ class Register extends Component {
             password: "",
             password2: "",
             gender: "",
-            // yearOfBirth: "",
-            // monthOfBirth: "",
-            // dayOfBirth: ""
+            score:0,
            },
            registeredUser: {
             regUserName: "",
@@ -70,16 +68,12 @@ class Register extends Component {
         })
         .then(newUser => {
             console.log(`server just sent as with:`);
-
-
-            
             this.props.handleSuccessfulLogin(newUser)
         })
         .catch(err => {
             alert('something is missing in adding new user')
             console.log("in catch:" + err);
         });
-        return false;
     }
 
     handleLogin(e) {

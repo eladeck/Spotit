@@ -111,6 +111,11 @@ export default function Album(props) {
   const currentProfileUser = props.currentProfileUser;
   const loggedInUser = props.loggedInUser;
   const images = props.images;
+
+  if(!loggedInUser) {
+    return <div>Problem fetching / There is no logged in user. please refresh or try again</div>
+  }
+
   console.log(`in mateiralUI, currentProfileUser is`);
   console.log(currentProfileUser);
   return (
