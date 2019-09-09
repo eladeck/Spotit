@@ -19,7 +19,7 @@ import PopupModal from './PopupModal'
 // import { BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom'
 
 import Popup from "reactjs-popup";
-
+import ImageCard from './ImageCard';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -157,53 +157,9 @@ export default function Album(props) {
           <Grid container spacing={4}>
             {!images ? "Loading..." :
             images.map((imageObj, index) => ( // to render loader until the images are here!
-              <Grid item key={index} xs={12} sm={6} md={4}>
-                  <Card className={classes.card}>
-                    <div className="hoverable-image-container">
-                    <Popup
-                      trigger={<img className="hoverable-image" src={`${imageObj.userName}/${imageObj.url}`} />}
-                      modal
-                      closeOnDocumentClick
-                    >
-                      <span> <img className="hoverable-image" src={`${imageObj.userName}/${imageObj.url}`} /> </span>
-                    </Popup>
-                      
-                    
-                      {console.log(imageObj)}
-                      {console.log(`-----------------------------------------------`)}
-                      <div className="hoverable-overlay">
-                        <ul className="text-in-overlay">
-                          <li className="inner-of-image-li">Aircraft:<Link to={`/info/airplaneModel/${imageObj.airplaneModel}`}>{imageObj.airplaneModel}</Link></li>
-                          <li className="inner-of-image-li">Airport:<Link to={`/info/airport/${imageObj.airport}`}>{imageObj.airport}</Link></li>
-                          <li className="inner-of-image-li"><Link to={`/info/city/${imageObj.city}`}>{imageObj.city}</Link>, <Link to={`/info/country/${imageObj.country}`}>{imageObj.country}</Link></li>
-                          <li className="inner-of-image-li">Code: {imageObj.code}</li>
-                        </ul>
-                      </div>
-                    </div>
-                  {/* <img src={imageObj.url}  style={{height:"170px", width:"auto", maxWidth:"500px"}} /> */}
-                  {/* <CardMedia
-                    className={classes.cardMedia}
-                    src={imageObj.url} // for some reasons only web urls worked not local pics
-                    title="Image title"
-                  /> */}
-                  {/* <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe the content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions> */}
-                </Card>
-              </Grid>
+            
+                    <ImageCard key={index} imageObj={imageObj} />
+    
             ))}
           </Grid>
         </Container>

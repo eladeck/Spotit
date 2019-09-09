@@ -10,7 +10,7 @@ import Register from "./Register"
 import ImageForm from "./ImageForm"
 import PlaneReportForm from "./PlaneReportForm";
 import Profile from "./Profile"
-import Airport from "./Airport"
+import GeneralInfo from "./GeneralInfo"
 import LandingPage from "./LandingPage"
 
 //let Router = BrowserRouter;
@@ -264,7 +264,7 @@ class Container extends Component {
             {<Route exact path="/" component={() => <LandingPage flightInfo={this.state.flightInfo} imagesToDisplay={this.state.generalImages}/>} />}
             <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
             <Route path="/profile/:userName" component={(props) => <Profile {...props} handleFollow={this.props.handleFollow} handleUnfollow={this.props.handleUnfollow} loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
-            <Route path="/info/:fieldName/:fieldValue" component={props => <Airport  {...props} loggedInUser={this.state.loggedInUser} desiredAirport={this.state.desiredAirport} />} />
+            <Route path="/info/:fieldName/:fieldValue" component={props => <GeneralInfo  {...props} loggedInUser={this.state.loggedInUser} />} />
 
             {
               this.state.isLoggedIn ?  
