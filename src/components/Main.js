@@ -22,6 +22,18 @@ class Main extends Component {
     this.setState({refToSpotitsfetchAllUsers:theMethod})
   }
 
+  shuffleArray(b) {
+    let a = b.slice(0);
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+    return a;
+}
+
   render() {
     console.log("in main render")
     console.log("about to renderTopSpotit, typeof setRefTofetchAllUsers is", typeof this.setRefTofetchAllUsers, this.setRefTofetchAllUsers)
@@ -36,6 +48,7 @@ class Main extends Component {
             />
             <Feed
                 loggedInUser={this.props.loggedInUser}
+                // allFollowingImages={this.shuffleArray(this.props.allFollowingImages)}
                 allFollowingImages={this.props.allFollowingImages}
                 setDesiredUser={this.props.setDesiredUser}
                 extratAllFollowing={this.props.extratAllFollowing}

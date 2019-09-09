@@ -82,10 +82,10 @@ async function startServer() {
     app.locals.goSpotItInfo = dbo.collection('goSpotItInfo');
 
     // WARNING !!!! code to insert field or remove field from all records in a collection!
-    // app.locals.imgCollection.updateMany({},
-    //     {$set : {"likes":[]}},
-    //     {upsert:false,
-    //     multi:true})
+    app.locals.usersCollection.updateMany({},
+        {$set : {"score":0}},
+        {upsert:false,
+        multi:true})
 
     // app.locals.imgCollection.updateMany({},
     //     {$unset : {"score":1}},

@@ -89,7 +89,7 @@ class Container extends Component {
       })
       .then(res => {
           if(res.errMsg) {
-              throw res.errMsg
+              alert("Ohh, something went wrong. Please try refresh the page.")
           } else {
               console.log(`Container.js: componentDidMount: inside second then: res is: `);
               console.log(res);
