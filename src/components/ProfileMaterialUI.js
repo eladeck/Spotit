@@ -129,6 +129,12 @@ export default function Album(props) {
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
               {currentProfileUser.firstName} {currentProfileUser.lastName}
             </Typography>
+            <div className="profile-picture">
+             <div className="user_avatar">
+                  {/* <img src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/73.jpg"></img> */}
+                  <img src={`${currentProfileUser.userName}/profilePicture.jpg`}></img>
+              </div>
+            </div>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
               <div> <PopupModal users={currentProfileUser.followedBy} textToDisplay={"Followers" } /></div>
               <div> <PopupModal users={currentProfileUser.following} textToDisplay={"Following" } /> </div>

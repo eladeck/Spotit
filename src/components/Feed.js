@@ -2,6 +2,7 @@
 import React, { Component } from "react"
 import Loader from 'react-loader-spinner'
 import Popup from "reactjs-popup";
+import Comments from "./Comments";
 import { BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom'
 
 
@@ -19,6 +20,10 @@ class Feed extends Component {
         this.handleGoToProfile = this.handleGoToProfile.bind(this);
         this.handleLike = this.handleLike.bind(this);
     } // c'tor
+
+    componentDidMount() {
+        this.setState({comments: this.props.comments})
+    }
 
     removeImageFromArray(imgId) {
         this.setState(prevState => {
@@ -62,6 +67,10 @@ class Feed extends Component {
             console.log(err);
         })
     } // handleGoToProfile
+
+    // handleNewComment() {
+
+    // }
 
     importImages() {
         if(this.props.allFollowingImages === "NO IMAGES!") {
@@ -107,35 +116,42 @@ class Feed extends Component {
                       modal
                       closeOnDocumentClick
                     >
-                      <span> <img src={`${image.userName}/${image.url}`} alt="not working" onClick={() => {console.log("Image Modal")}} style={{width:"100%", maxWidth:"850px"}} /> </span>
+                      <span>
+                           <img id="myModal" src={`${image.userName}/${image.url}`} alt="not working" onClick={() => {console.log("Image Modal")}} style={{width:"100%", maxWidth:"850px"}} /> 
+                           {console.log(image)}
+                           <Comments 
+                            comments={image.comments} 
+                            imageId={image._id}
+                            extratAllFollowing={this.props.extratAllFollowing}
+                            />
+                           {/* <ol className="img-comments">
+                               {image.comments.map((commentObj, i) => (
+                               <li key={i} className="comment">
+                                   <div>{commentObj.userName}</div>
+                                   <div>{commentObj.text}</div>
+                                   <div>{commentObj.date}</div>
+                               </li>))}
+                           </ol> */}
+                           {/* <input type="text" />
+                           <button onClick={this.handleNewComment}>+</button> */}
+                      </span>
                     </Popup>
                     
-                   
+                    
+                    <div id="myModal" class="modal">
+                        <span className="close">&times;</span>
+                        <img className="modal-content" id="img01" />
+                        <div id="caption"></div>
+                    </div>
                 </div>
                 )
             });
 
-            const shuffledImageWrappers = this.shuffleArray(imageWrappers);
-            console.log(this.state.likedImages)
-            console.log(this.state.likedImages.length)
-            console.log(imageWrappers)
-            console.log(shuffledImageWrappers)
-            // if we already liked image, i dont want to shuffle again the array
-            return this.state.likedImages.length > 0 ? imageWrappers : shuffledImageWrappers;
+            return imageWrappers;
           } // else
     } // importImages
 
-    shuffleArray(b) {
-        let a = b.slice(0);
-        var j, x, i;
-        for (i = a.length - 1; i > 0; i--) {
-            j = Math.floor(Math.random() * (i + 1));
-            x = a[i];
-            a[i] = a[j];
-            a[j] = x;
-        }
-        return a;
-    }
+
 
     render() {
         const images = this.importImages();
