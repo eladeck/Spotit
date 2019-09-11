@@ -123,6 +123,7 @@ class Register extends Component {
                     <h1 className="sign-in-h1">Sign In</h1>
                     <input type="text" name="regUserName"  value={this.state.registeredUser.userName} onChange={this.handleChange}  placeholder="Username"  />
                     <input type="password" name="regPassword"  value={this.state.registeredUser.password} onChange={this.handleChange}  placeholder="Password" />
+                    <div style={{color:"red"}}>{this.state.errMsg}</div>
                     <input type="submit" name="signup_submit" value="Sign me in" onClick={this.handleLogin} />
                 </div>
             </div>

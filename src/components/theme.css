@@ -448,29 +448,29 @@ ul > li > a:hover {
   
   
   /*MODALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL*/
-  .modal {
+  .not-hidden-modal {
     font-size:12px;
   }
-  .modal > .header {
+  .modal, .not-hidden-modal > .header {
     width: 100%;
     border-bottom: 1px solid gray;
     font-size: 18px;
     text-align: center;
     padding: 5px;
   }
-  .modal > .content {
+  .modal, .not-hidden-modal > .content {
     width: 100%;
     padding: 10px 5px;
     max-height:500px;
     overflow-y: scroll;
   }
-  .modal > .actions {
+  .modal, .not-hidden-modal > .actions {
     width: 100%;
     padding: 10px 5px;
     margin: auto;
     text-align: center;
   }
-  .modal > .close {
+  .modal, .not-hidden-modal > .close {
     cursor: pointer;
     position: absolute;
     display: block;
@@ -826,7 +826,8 @@ ul > li > a:hover {
 }
 
 .image-form-select-box,
-input[type="text"],
+.image-form-select-box > input[type="text"],
+.login-box input[type="text"],
 input[type="password"] {
   display: block;
   box-sizing: border-box;
@@ -843,7 +844,8 @@ input[type="password"] {
 }
 
 .image-form-select-box:focus,
-input[type="text"]:focus,
+.image-form-select-box > input[type="text"]:focus,
+.login-box input[type="text"]:focus,
 input[type="password"]:focus {
   border-bottom: 2px solid #16a085;
   color: #16a085;

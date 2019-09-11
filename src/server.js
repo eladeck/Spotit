@@ -81,17 +81,6 @@ async function startServer() {
     app.locals.specialReport = dbo.collection('specialReports');
     app.locals.goSpotItInfo = dbo.collection('goSpotItInfo');
 
-    // WARNING !!!! code to insert field or remove field from all records in a collection!
-    app.locals.usersCollection.updateMany({},
-        {$set : {"score":0}},
-        {upsert:false,
-        multi:true})
-
-    // app.locals.imgCollection.updateMany({},
-    //     {$unset : {"score":1}},
-    //     {upsert:false,
-    //     multi:true})
-
     app.use('/user', user);
     app.use('/image', image);
     app.use('/airport', airport);
