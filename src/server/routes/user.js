@@ -176,9 +176,9 @@ router.get('/getImages', (req, res) => {
 }); // getImages
 
 router.get('/login', (req, res) => {
-    console.log(`in get. /login!`)
     const userName = req.query.userName;
     const password = req.query.password;
+    console.log(`user.js: in router.get('/login'): userName is ${userName} and password is ${password}`)
 
     res.cookie('userName', userName, {expires: new Date(2020, 1, 1)});
 

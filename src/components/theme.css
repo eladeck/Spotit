@@ -210,7 +210,9 @@ ul > li > a:hover {
     padding: 15px;
   }
   
-
+  .flight-info-h2 {
+    font-family: 'Roboto', sans-serif;
+  }
   .logout:hover {
     color:gray;
     box-shadow: bisque;
@@ -720,3 +722,259 @@ ul > li > a:hover {
     }
   
 
+/*Sign Up Button*/
+.signup-button {
+	background-color:#7db88d;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:10px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Verdana;
+	font-size:17px;
+	padding:16px 31px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+.signup-button:hover {
+	background-color:#678f51;
+}
+.signup-button:active {
+	position:relative;
+	top:1px;
+}
+
+/*End Of Sign Up Button*/
+/*Sign Up And Register Style*/
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+*:focus {
+  outline: none;
+}
+.sign-in-background-image{
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  position:absolute;
+  margin-left: 1px;
+  width: 1672px;
+  margin-top: 68px;
+  height: 923px;
+}
+
+.sign-in-background-image > img{
+  position: absolute;
+    margin-left: 8px;
+    width: 1672px;
+    margin-top: 0px;
+    height: 923px;
+    opacity: 0.7;
+}
+.login-box {
+  position: absolute;
+  top: 2%;
+  left: 26%;
+  margin: 5% auto;
+  width: 600px;
+  height: 500px;
+  background: #FFF;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  padding: 0;
+ 
+  font-size: 16px;
+  color: #222;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
+
+.left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  padding: 40px;
+  width: 300px;
+  height: 400px;
+}
+
+.sign-in-h1 {
+  margin: 0 0 20px 0;
+  font-weight: 300;
+  font-size: 28px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.image-form-select-box,
+input[type="text"],
+input[type="password"] {
+  display: block;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 4px;
+  width: 220px;
+  height: 32px;
+  border: none;
+  border-bottom: 1px solid #AAA;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  transition: 0.2s ease;
+}
+
+.image-form-select-box:focus,
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-bottom: 2px solid #16a085;
+  color: #16a085;
+  transition: 0.2s ease;
+}
+
+input[type="submit"] {
+  margin-top: 28px;
+  width: 120px;
+  height: 32px;
+  background: #16a085;
+  border: none;
+  border-radius: 2px;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: 0.1s ease;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+  opacity: 0.8;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  transition: 0.1s ease;
+}
+
+input[type="submit"]:active {
+  opacity: 1;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  transition: 0.1s ease;
+}
+
+.or {
+  position: absolute;
+  top: 180px;
+  left: 280px;
+  width: 40px;
+  height: 40px;
+  background: #DDD;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  line-height: 40px;
+  text-align: center;
+}
+
+.right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  box-sizing: border-box;
+  padding: 40px;
+  width: 300px;
+  height: 400px;
+  background: url('https://goo.gl/YbktSj');
+  background-size: cover;
+  background-position: center;
+  border-radius: 0 2px 2px 0;
+}
+
+.right .loginwith {
+  display: block;
+  margin-bottom: 40px;
+  font-size: 28px;
+  color: #FFF;
+  text-align: center;
+}
+
+
+/*End Of Sign Up Button*/
+/*Image Form Style*/
+.image-form-box {
+  position: relative;
+  margin: 5% auto;
+  width: 700px;
+  height: 500px;
+  background: #FFF;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  font-size: 16px;
+  color: #222;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
+
+.image-form-right-image {
+  height: 495px;
+  width: 350px;
+  opacity: 0.75;
+  margin-top: -37px;
+  margin-bottom: 0px;
+  margin-right: 133px;
+  margin-left: -45px;
+}
+
+.image-form-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  padding: 40px;
+  width: 350px;
+  height: 500px;
+}
+
+.image-form-h1 {
+  margin: 0 0 20px 0;
+  font-weight: 350;
+  font-size: 28px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.image-form-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  box-sizing: border-box;
+  padding: 40px;
+  width: 350px;
+  height: 500px;
+  background: url('https://goo.gl/YbktSj');
+  background-size: cover;
+  background-position: center;
+  border-radius: 0 2px 2px 0;
+}
+
+
+/*End Of Image Form Style*/
+/*Landing Page Style*/
+.landing-page-iamge-container{
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.buttom-center-paragraph {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-shadow: 0 0 5px #fff, 0 0 0px #fff, 0 0 6px white, 0 0 4px white, 0 0 0px white, 0 0 5px white;
+  animation: littleScroll 2s ease-out, glow 2s linear;
+  transition: 1s;
+  font-size: 30px;
+  color: rgb(0, 0, 0);
+  font-weight: 500;
+}
+/*End Of Landing Page Style*/

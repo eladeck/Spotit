@@ -107,15 +107,10 @@ class Feed extends Component {
                       modal
                       closeOnDocumentClick
                     >
-                      <span> <img id="myModal" src={`${image.userName}/${image.url}`} alt="not working" onClick={() => {console.log("Image Modal")}} style={{width:"100%", maxWidth:"850px"}} /> </span>
+                      <span> <img src={`${image.userName}/${image.url}`} alt="not working" onClick={() => {console.log("Image Modal")}} style={{width:"100%", maxWidth:"850px"}} /> </span>
                     </Popup>
                     
-                    
-                    <div id="myModal" class="modal">
-                        <span class="close">&times;</span>
-                        <img class="modal-content" id="img01" />
-                        <div id="caption"></div>
-                    </div>
+                   
                 </div>
                 )
             });

@@ -17,17 +17,19 @@ export default function ImageCard(props) {
     const imageObj = props.imageObj;
     console.log(imageObj)
     console.log(classes)
+    console.log(`url is: ${imageObj.userName}/${imageObj.url}`);
+    
     return(
         <>
             <Grid item xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                     <div className="hoverable-image-container">
                     <Popup
-                    trigger={<img className="hoverable-image" src={`${imageObj.userName}/${imageObj.url}`} />}
+                    trigger={<img className="hoverable-image" alt="Image couldn't be displayed" src={`/${imageObj.userName}/${imageObj.url}`} />}
                     modal
                     closeOnDocumentClick
                     >
-                        <span> <img className="hoverable-image" src={`${imageObj.userName}/${imageObj.url}`} /> </span>
+                        <span> <img className="hoverable-image" alt="Image couldn't be displayed" src={`/${imageObj.userName}/${imageObj.url}`} /> </span>
                     </Popup>
                     <div className="hoverable-overlay">
                         <ul className="text-in-overlay">

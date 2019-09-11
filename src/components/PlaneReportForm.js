@@ -10,7 +10,6 @@ class PlaneReportForm extends Component {
             aircraft: "",
             estimatedTimeArriaval: ""
         }
-
         
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);

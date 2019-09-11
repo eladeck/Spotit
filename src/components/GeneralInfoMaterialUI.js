@@ -87,10 +87,11 @@ export default function GeneralInfoMaterialUI(props) {
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
+            {console.log(`GeneralInfoMaterialUI: render(): images are `)}{console.log(images)}
             {!images ? "Loading..." :
             images.map((imageObj, index) => ( // to render loader until the images are here!
-
-                    <ImageCard key={index} imageObj={imageObj} />
+            
+              <ImageCard key={index} imageObj={imageObj} />
             ))}
           </Grid>
         </Container>

@@ -136,9 +136,18 @@ export default class LandingPage extends Component {
             <CssBaseline />
             <main>
               {/* Hero unit */}
-              <div className={classes.heroContent}>
+              <div className={classes.heroContent}>  
 
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+            <div className="landing-page-iamge-container">
+            <img src="/defaultPicturesToBeDisplayed/LandingPage.jpg" alt="Not working.." style={{width:"100%", opacity:"0.5", height:"456px"}}/>
+            <div className="buttom-center-paragraph">
+                Welcome to SpotIt! <br />  
+                The first social media for airplane spotters. <br />
+                Here, you can find the latest updates about special flight arrivals, and share your latest shots with other spotters. <br />
+                Let's go SpotIt!
+            </div>
+            </div>   
+            {/*<Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
               <img src="https://baydrach.com/wp-content/uploads/2016/10/airplane.jpg" alt="Not working.." />
               <div className="header-main-image-text">
               <Typography variant="h5" align="center" color="textSecondary" paragraph>
@@ -146,9 +155,9 @@ export default class LandingPage extends Component {
                 The first social media for airplane spotters.
                 Here, you can find the latest updates about special flight arrivals, and share your latest shots with other spotters.
                 Let's go SpotIt!
-              </Typography>
+        </Typography>
             </div>
-            </Typography>
+        </Typography>*/}
          
               </div>
               <Container className={classes.cardGrid} maxWidth="md">

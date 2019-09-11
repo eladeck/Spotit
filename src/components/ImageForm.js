@@ -56,11 +56,17 @@ class ImageForm extends Component {
          .then(realResObj => {
              console.log("realResObj")
              console.log(realResObj)
-             this.setState({
+            //  this.setState({
+            //     //  realResObj,
+            //      uploading:false,
+            //      completed:true,
+            //  }, () => setTimeout(this.redirectMethod, 2000))
+            this.setState({
                 //  realResObj,
                  uploading:false,
                  completed:true,
-             }, () => setTimeout(this.redirectMethod, 2000))
+                 redirect:true
+             });
          })
     } // handleBrowse
 
@@ -98,48 +104,58 @@ class ImageForm extends Component {
            <Loader type="TailSpin" color="lightgreen" height={40} width={40} />
         </div>)
 
+        console.log(`ImageFormData: state.redirect is ${this.state.redirect}`)
         return (
             this.state.completed ? (
                     this.state.redirect ? 
                     <Redirect push to="/home">
                         <Route path="/home" component={() => <Main extratAllFollowing={this.extratAllFollowing} loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages}/>} />
-                   </Redirect> :
+                   </Redirect> 
+                   :
                  <div style={{position:"fixed", left:"50%", top:"50%"}}>
                      Image succusfully uploaded!
                  </div>)
                :
                <main>
-          <form action="image/upload" method="post" encType="multipart/form-data" /*onSubmit={this.handleSubmit}*/>
-                    <select value={this.state.airline} name="airline" onChange={this.handleChange}>
-                        <option value="">-Choose Airline-</option>
-                        {this.dataFormMap(this.state.imageFormData.airlines)}
-                    </select>
+                   
+                    <div class="image-form-box">
+                        <form className="image-form-left" action="image/upload" method="post" encType="multipart/form-data" /*onSubmit={this.handleSubmit}*/>
+                        <h1 className="image-form-h1">Add New Image</h1>
+                        <select class="image-form-select-box" value={this.state.airline} name="airline" onChange={this.handleChange}>
+                            <option value="">Choose Airline</option>
+                            {this.dataFormMap(this.state.imageFormData.airlines)}
+                        </select>
 
-                    <select value={this.state.airplaneModel} name="airplaneModel" onChange={this.handleChange}>
-                        <option value="">-Choose Airplane Model-</option>
-                        {this.dataFormMap(this.state.imageFormData.aircrafts)}
-                    </select>
-                    
-                    <select value={this.state.country} name="country" onChange={this.handleChange}>
-                        <option value="">-Country-</option>
-                        {this.dataFormMap(this.state.imageFormData.countries)}
-                    </select>
+                        <select class="image-form-select-box" value={this.state.airplaneModel} name="airplaneModel" onChange={this.handleChange}>
+                            <option value="">Choose Airplane Model</option>
+                            {this.dataFormMap(this.state.imageFormData.aircrafts)}
+                        </select>
 
-                    <select value={this.state.city} name="city" onChange={this.handleChange}>
-                        <option value="">-City-</option>
-                        {this.dataFormMap(this.state.imageFormData.cities)}
-                    </select>
+                        <select class="image-form-select-box" value={this.state.country} name="country" onChange={this.handleChange}>
+                            <option value="">Country</option>
+                            {this.dataFormMap(this.state.imageFormData.countries)}
+                        </select>
 
-                    <select value={this.state.airport} name="airport" onChange={this.handleChange}>
-                        <option value="">-Airport-</option>
-                        {this.dataFormMap(this.state.imageFormData.airports)}
-                    </select>
-                    <input  name="registration"  value={this.state.registration}  onChange={this.handleChange}  placeholder="Registration"  />
+                        <select class="image-form-select-box" value={this.state.city} name="city" onChange={this.handleChange}>
+                            <option value="">City</option>
+                            {this.dataFormMap(this.state.imageFormData.cities)}
+                        </select>
 
-                    {/* <button onClick={this.handleBrowse}>Browse</button> */}
-                    <input type="file" name="image" /*onChange={this.handleBrowse}*/ />
-                    <button type="submit">Upload</button>
-                </form>
+                        <select class="image-form-select-box" value={this.state.airport} name="airport" onChange={this.handleChange}>
+                            <option value="">Airport</option>
+                            {this.dataFormMap(this.state.imageFormData.airports)}
+                        </select>
+                        <input type="text" name="registration"  value={this.state.registration}  onChange={this.handleChange}  placeholder="Registration"  />
+
+                        {/* <button onClick={this.handleBrowse}>Browse</button> */}
+                        <input type="file" name="image" /*onChange={this.handleBrowse}*/ />
+                        <input type="submit" name="submit" value="Submit" />
+                    </form>
+
+                <div class="image-form-right">
+   <img class="image-form-right-image"src="http://antonhein.com/wp-content/gallery/airplane-spotting-at-amsterdam-airport-schiphol/Schiphol003.jpg" />
+  </div>
+                </div>
 
                <hr />
                <h2>Entered information:</h2>

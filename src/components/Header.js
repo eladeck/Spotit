@@ -124,9 +124,9 @@ class Header extends Component {
     }
     render() {
         
-        return (
+        return ( 
                    <header>
-      <div className="logo"><img src={"logo.png"} alt="Spotit"/></div>
+      <div className="logo"><img src={"logo.png"} style={{width:'60px', height: '61px'}} alt="Spotit"/></div>
       {/* <input placeholder="Search..." className="input-style" type="textbox"></input> */}
       <nav>
           <ul>
@@ -136,9 +136,9 @@ class Header extends Component {
                       <input name='userNameToFollow' type='textbox' onChange={this.handleChange} onClick={this.handleUsersInputClick} autoComplete="off"/>
                       {this.state.showAllUsers ? this.renderAllUsersUnderInput() : null}
                   </form>
-              </li>
+              </li> 
               
-              {this.props.loggedInUser ? <li><Link to="/home">home</Link></li> :
+              {this.props.loggedInUser ? <li><Link to="/home">Home</Link></li> :
                <li><Link to="/register">Register</Link></li>}
                {/* <li onClick={this.handleUrlChanged}><Link to="/register">Register</Link></li>} */}
               <li><a href="#forum">Forum</a></li>

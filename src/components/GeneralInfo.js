@@ -13,7 +13,8 @@ class GeneralInfo extends Component {
             // userProfile: this.props.desiredUserProfile
         }
 
-        
+        this.fetchInfoForPage = this.fetchInfoForPage.bind(this);
+        this.getDefaultPicture = this.getDefaultPicture.bind(this);
     } // c'tor
 
     // methods:
@@ -38,7 +39,23 @@ class GeneralInfo extends Component {
     //     .then(images => {console.log(`!!!!!!!!!!!!!!!!!!`); console.log(images); this.setState({images})});
     // } // didMount
 
-   async componentDidMount() {
+    async componentDidMount() {
+       await this.fetchInfoForPage();
+    } // componentDidMount
+
+    async componentDidUpdate(PrevProps) {
+        console.log("GeneralInfo: componentDidUpdate(): PrevProps and props are");
+        console.log(PrevProps)
+        console.log(this.props);
+        
+        if (PrevProps.match.url !== this.props.match.url) {
+            
+            console.log("GeneralInfo: urls are different!");
+            await this.fetchInfoForPage();
+        }
+    }
+
+    async fetchInfoForPage() {
         try{
             console.log("in Airport.js: componentDidMount():  desired airport is:")
             let fieldValue = this.props.match.params.fieldValue;
@@ -53,8 +70,12 @@ class GeneralInfo extends Component {
             const searchValue = encodeURIComponent(fieldValue);
             console.log(`&&&&&`);
             const result = await axios(`https://cors-anywhere.herokuapp.com/en.wikipedia.org/w/api.php?action=opensearch&search=${searchValue}`);
-            console.log("in Airport.js: componentDidMount():  Wikipedia result is:")
-            console.log(result)
+            
+            
+            // console.log("in Airport.js: componentDidMount():  Wikipedia result is:")
+            // console.log(result)
+
+
 
             //console.log(this.props.desiredAirport);
             //console.log(result.data[2]);
@@ -68,9 +89,16 @@ class GeneralInfo extends Component {
 
             fetch(`/data/general/${fieldName}/${this.props.match.params.fieldValue}`, {method: 'GET', credentials: 'include'})
             .then(res => res.json())
-            .then(realObj => {
-                console.log(realObj);
-                this.setState({images: realObj});
+            .then(realImages => {
+
+
+                // console.log(`GeneralInfo: first fetch('/data/general/') realImages is`);
+                // console.log(realImages);
+
+
+
+                this.setState({images: realImages});  
+
             }).catch(err => {console.log("in Airport.js: componentDidMount(): in fetch->catch. errr is: "); console.log(err);})
 
         let url = "https://en.wikipedia.org/w/api.php"; 
@@ -90,22 +118,27 @@ class GeneralInfo extends Component {
         fetch(url)
             .then(response => {return response.json();})
             .then(response => {
-                let mainInfoImage = 'http://avi-asia.com/wp-content/uploads/2016/06/0_0_1292_808_airportdev.png';
+                //let mainInfoImage = 'http://avi-asia.com/wp-content/uploads/2016/06/0_0_1292_808_airportdev.png';
+                let mainInfoImage = this.getDefaultPicture(fieldName);
                 var pages = response.query.pages;
-                console.log("Airport.js: in second fetch, response is: ")
-                console.log(response);
+                
+                
+                // console.log("Airport.js: in second fetch, response is: ")
+                // console.log(response);
+               
+               
                 //var mainInfoImage = encodeURIComponent(response.query.pages[0].images[6]);
                 //var mainInfoImage = encodeURIComponent("File:SdeDovAerodrome-Red.jpg");
                 for (var page in pages) {
                     if( pages[page].images) {
 
                         for (var img of pages[page].images) {
-                            console.log(img.title);
-                            console.log(typeof img.title);
-                           if (img.title.includes(params.titles)){
-                            mainInfoImage = encodeURIComponent(img.title);
-                            mainInfoImage = `https://commons.wikimedia.org/wiki/Special:FilePath/${mainInfoImage}`;
-                            break;
+                            // console.log(img.title);
+                            // console.log(typeof img.title);
+                           if (img.title.includes(params.titles)) {
+                                mainInfoImage = encodeURIComponent(img.title);
+                                mainInfoImage = `https://commons.wikimedia.org/wiki/Special:FilePath/${mainInfoImage}`;
+                                break;
                            }
     
                         }
@@ -114,7 +147,9 @@ class GeneralInfo extends Component {
                     break;
                 }
 
-                console.log(`main image url is: ${mainInfoImage}`);
+                // console.log(`main image url is: ${mainInfoImage}`);
+                
+                
                 this.setState({data: {imageUrl: mainInfoImage, headline: result.data[1][0], detailedInfo: result.data[2]}});
 
             })
@@ -123,8 +158,30 @@ class GeneralInfo extends Component {
             console.log("in Airport.js: componentDidMount(): in catch section. Error is:"); 
             console.log(err);
         }
+    }
 
-    } // componentDidMount
+    getDefaultPicture(fieldName) {
+        let url = '';
+        switch(fieldName) {
+            case 'airport':
+                url = '/defaultPicturesToBeDisplayed/defaultAirport.png';
+            break;
+            case 'airline':
+                    url = '/defaultPicturesToBeDisplayed/defaultAirline.jpg';
+            break;
+            case 'airplaneModel':
+                    url = '/defaultPicturesToBeDisplayed/defaultAirline.jpg';
+            break;
+            case 'city':
+                    url = '/defaultPicturesToBeDisplayed/defaultCity.jpg';
+            break;
+            default:
+                    url = '/defaultPicturesToBeDisplayed/defaultAirport.png';
+            break;
+        }
+
+        return url;
+    }
 
     render() {
 

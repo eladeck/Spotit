@@ -1,5 +1,6 @@
 import React, {Component} from "react"
-import Form from "./Form"
+import SignUp from './SignUp'
+import SignIn from './SignIn'
 
 class Register extends Component {
     constructor() {
@@ -13,7 +14,7 @@ class Register extends Component {
             password: "",
             password2: "",
             gender: "",
-            score:0,
+            score:0,           
            },
            registeredUser: {
             regUserName: "",
@@ -68,12 +69,14 @@ class Register extends Component {
         })
         .then(newUser => {
             console.log(`server just sent as with:`);
+            
             this.props.handleSuccessfulLogin(newUser)
         })
         .catch(err => {
             alert('something is missing in adding new user')
             console.log("in catch:" + err);
         });
+        return false;
     }
 
     handleLogin(e) {
@@ -99,69 +102,31 @@ class Register extends Component {
     } // handleLogin
 
     render() {
-        console.log("01010 in register)")        
-        // return (
-        //     <div className="form">
-        //         <Form />
-        //     </div>
-        // )
+        window.state = this.state
+
         return (
-            
-            <main>
-                <form action="users/register" onSubmit={this.handleRegister}>
-                    <input  name="firstName"  value={this.state.newUser.firstName}  onChange={this.handleChange}  placeholder="First Name"  />
-                    <br />
-                    
-                    <input  name="lastName"  value={this.state.newUser.lastName} onChange={this.handleChange}  placeholder="Last Name"  />
-                    <br />
-
-                    <input type="email" name="email"  value={this.state.newUser.email} onChange={this.handleChange}  placeholder="Email"  />
-                    <br />
-
-                    <input  name="userName"  value={this.state.newUser.userName} onChange={this.handleChange}  placeholder="Username"  />
-                    <br />
-                    
+            <div class="sign-in-background-image">
+                <img src="/defaultPicturesToBeDisplayed/registrationBackground.jpg"  />
+            <div className="login-box">
+                <div className="left">
+                    <h1 className="sign-in-h1">Register</h1>
+                    <input type="text" name="firstName"  value={this.state.newUser.firstName}  onChange={this.handleChange}  placeholder="First Name" />
+                    <input type="text" name="lastName"  value={this.state.newUser.lastName} onChange={this.handleChange}  placeholder="Last Name"  />
+                    <input type="text" name="email"  value={this.state.newUser.email} onChange={this.handleChange}  placeholder="Email"  />
+                    <input type="text" name="userName"  value={this.state.newUser.userName} onChange={this.handleChange}  placeholder="Username"  />
                     <input type="password" name="password"  value={this.state.newUser.password} onChange={this.handleChange}  placeholder="Password" />
-                    <br />
-
                     <input type="password" name="password2"  value={this.state.newUser.password2} onChange={this.handleChange}  placeholder="Confirm password" />
-                    <br />
-                    
-                    <label>
-                        <input type="radio" name="gender"value="male"checked={this.state.gender === "male"}onChange={this.handleChange}/> Male
-                    </label>
-                    
-                    <br />
-                    
-                    <label>
-                        <input type="radio" name="gender" value="female" checked={this.state.gender === "female"} onChange={this.handleChange} /> Female
-                    </label>
-                    <br />
-                    
-                    <button type="button" onClick={this.handleRegister}>Register</button>
-                </form>
-                <hr />
-
-                <form onSubmit={this.handleLogin}>
-                    <input  name="regUserName"  value={this.state.registeredUser.userName} onChange={this.handleChange}  placeholder="Username"  />
-                    <br />
+                    <input type="submit" name="signup_submit"  value="Register" onClick={this.handleRegister} />
+                </div>
+                <div className="or">OR</div>
+                <div className="right">
+                    <h1 className="sign-in-h1">Sign In</h1>
+                    <input type="text" name="regUserName"  value={this.state.registeredUser.userName} onChange={this.handleChange}  placeholder="Username"  />
                     <input type="password" name="regPassword"  value={this.state.registeredUser.password} onChange={this.handleChange}  placeholder="Password" />
-                    <br />
-                    <div style={{color:"red"}}>{this.state.errMsg}</div>
-                    <button type="submit">Log In</button>
-                </form>
-                <hr />
-                <h2>Entered information:</h2>
-                <p>Your name: {this.state.newUser.firstName} {this.state.newUser.lastName}</p>
-                <p>Your User Name: {this.state.newUser.userName}</p>
-                <p>Your age: {this.state.newUser.age}</p>
-                <p>Your gender: {this.state.newUser.gender}</p>
-                <p>Your destination:{this.state.newUser.dayOfBirth}.{this.state.newUser.monthOfBirth}.{this.state.newUser.yearOfBirth}</p>
-                <hr />
-                <p>registeredUser name: {this.state.registeredUser.regUserName}</p>
-                <p>registeredUser password: {this.state.registeredUser.regPassword}</p>
-            </main>
-            
+                    <input type="submit" name="signup_submit" value="Sign me in" onClick={this.handleLogin} />
+                </div>
+            </div>
+            </div>
         )
     }
 }
