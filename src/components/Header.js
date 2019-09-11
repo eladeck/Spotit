@@ -126,7 +126,7 @@ class Header extends Component {
         
         return ( 
                    <header>
-      <div className="logo"><img src={"logo.png"} style={{width:'60px', height: '61px'}} alt="Spotit"/></div>
+      <a href="/" className="logo"><img src={"logo.png"} style={{width:'60px', height: '61px'}} alt="Spotit"/></a>
       {/* <input placeholder="Search..." className="input-style" type="textbox"></input> */}
       <nav>
           <ul>
@@ -138,15 +138,21 @@ class Header extends Component {
                   </form>
               </li> 
               
-              {this.props.loggedInUser ? <li><Link to="/home">Home</Link></li> :
+              {this.props.loggedInUser ? <li><Link to="/">Home</Link></li> :
                <li><Link to="/register">Register</Link></li>}
                {/* <li onClick={this.handleUrlChanged}><Link to="/register">Register</Link></li>} */}
-              <li><a href="#forum">Forum</a></li>
+              <li>
+                <a className="tooltip" href="#forum">
+                    <div class="tooltip">Forum
+                        <span class="tooltiptext">Soon!</span>
+                    </div>
+                </a>
+             </li>
               <li><a href="#about">About</a></li>
           </ul>
       </nav>
       {this.props.loggedInUser ?
-      <div onMouseEnter={this.mouseEnterProfile} className="profile-logo"><a href="#profile">{this.props.loggedInUser.userName}</a></div> : null}
+      <div onMouseEnter={this.mouseEnterProfile} className="profile-logo"><a href={`/profile/${this.props.loggedInUser.userName}`}>{this.props.loggedInUser.userName}</a></div> : null}
       {this.props.loggedInUser ?
       <p className="logout" onClick={this.handleLogout}>log out</p> : null}
       {/* <p data-tip="hello world">Tooltip</p>

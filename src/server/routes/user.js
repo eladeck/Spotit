@@ -279,13 +279,12 @@ router.post('/specialReport', (req, res) => {
     //newReport.sourceAirport = findAirportCode(airportsCollection, newReport.sourceAirport);
     //newReport.destinationAirport = findAirportCode(airportsCollection, newReport.destinationAirport);
 
-    reportCollection.insertOne(newReport, (err, res) => {
+    reportCollection.insertOne(newReport, (err, DbResult) => {
         if (err) throw err;
         console.log("1 document inserted");
-        
+        res.send('<div style="position:fixed;left:40%;top:40%;font-family:fantasy;letter-spacing:1px;word-spacing:2px;">' +
+        'Thank you for report and contribute to the community. go back to <a href="/">home page</a></div>')
       });
-
-    res.send(newReport) // automatically send status 200
 });
 
 const findAirportCode = (airportsCollection, currentAirport) => {
