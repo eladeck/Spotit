@@ -98,7 +98,7 @@ class Feed extends Component {
                 return (
                 <div key={i} className="image-wrapper">
 
-                        
+                          
                     {/* ---- dor code: <h2><Link to="/main">{el.user}</Link></h2>*/}
                     
                     {/* <label className="like-count">{image.likes > 0 ? image.likes : null}</label> */}
@@ -159,6 +159,8 @@ class Feed extends Component {
         return (
             <div className="feed">
                 <h1 className="title">Spotit Feed</h1>
+                <Link to="/imageForm"><img className="feed-post-image" title="Post" src="cameraIcon.png" /></Link>
+                { this.props.loggedInUser.reportPermission ? <Link to="/reportSpecials"><img className="feed-post-image" title="Report Special Arrival" src="megaphone.png" /></Link> : null}
                 {images ? (images.length === 0 ? noImgMsg : images) : 
                     <Loader type="TailSpin" color="lightgreen" height={80} width={80} />}
             </div>

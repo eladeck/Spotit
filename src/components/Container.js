@@ -254,8 +254,8 @@ class Container extends Component {
 
 
           <>
-            {(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/reportSpecials"><div className="side-button">Report Special Arrival/Departure</div></Link> : null}
-            {this.state.isLoggedIn ? <Link to="/imageForm"><div className="side-button">Add Image</div></Link> : null}
+            {/*{(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/reportSpecials"><div className="side-button">Report Special Arrival/Departure</div></Link> : null}
+            {this.state.isLoggedIn ? <Link to="/imageForm"><div className="side-button">Add Image</div></Link> : null}*/}
             
             <Route path="/imageForm" component={() => <ImageForm />} />
             <Route path="/reportSpecials" component={() => <PlaneReportForm />} />
