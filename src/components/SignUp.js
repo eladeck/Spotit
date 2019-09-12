@@ -56,7 +56,8 @@ export default function SignUp() {
   </div>
   <div className="or">OR</div>
   <div className="right">
-    
+
+    <div></div>
     <h1 className="sign-in-h1">Sign In</h1>
     
     <input type="text" name="username" placeholder="Username" />

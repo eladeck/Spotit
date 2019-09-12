@@ -8,8 +8,8 @@ class Comments extends React.Component {
             inputComment:"",
         }
 
-        this.handleChange = this.handleChange.bind(this)
-        this.handleNewComment = this.handleNewComment.bind(this)
+        this.handleChange = this.handleChange.bind(this);
+        this.handleNewComment = this.handleNewComment.bind(this);
     }
 
     handleChange(event) {

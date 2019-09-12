@@ -13,14 +13,13 @@ class Register extends Component {
             userName: "",
             password: "",
             password2: "",
-            gender: "",
-            score:0,           
            },
            registeredUser: {
             regUserName: "",
             regPassword: "",
            },
            errMsg:"",
+           registerErrMsg:"",
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleRegister = this.handleRegister.bind(this)
@@ -57,6 +56,20 @@ class Register extends Component {
         console.log("the user is " + this.state.newUser.firstName);
         // this.props.handleSuccessfulLogin();
         let newUser = this.state.newUser
+
+        if(this.state.newUser.password !== this.state.newUser.password2) {
+            this.setState({registerErrMsg:"passwords must match"});
+            return;
+        }
+
+        for(var propName in this.state.newUser) {
+            if(!this.state.newUser[propName]) {
+                this.setState({registerErrMsg: propName + " can not be empty"});
+                return;
+            }
+        } // for
+
+        newUser.score = 0;
         let newUserJSON = JSON.stringify(newUser)
 
         fetch('/user/addNewUser', {method: 'POST', body: newUserJSON, credentials: 'include'})
@@ -116,6 +129,7 @@ class Register extends Component {
                     <input type="text" name="userName"  value={this.state.newUser.userName} onChange={this.handleChange}  placeholder="Username"  />
                     <input type="password" name="password"  value={this.state.newUser.password} onChange={this.handleChange}  placeholder="Password" />
                     <input type="password" name="password2"  value={this.state.newUser.password2} onChange={this.handleChange}  placeholder="Confirm password" />
+                    <div style={{color:"red"}}>{this.state.registerErrMsg}</div>
                     <input type="submit" name="signup_submit"  value="Register" onClick={this.handleRegister} />
                 </div>
                 <div className="or">OR</div>
@@ -123,6 +137,7 @@ class Register extends Component {
                     <h1 className="sign-in-h1">Sign In</h1>
                     <input type="text" name="regUserName"  value={this.state.registeredUser.userName} onChange={this.handleChange}  placeholder="Username"  />
                     <input type="password" name="regPassword"  value={this.state.registeredUser.password} onChange={this.handleChange}  placeholder="Password" />
+                    <div style={{color:"red"}}>{this.state.errMsg}</div>
                     <input type="submit" name="signup_submit" value="Sign me in" onClick={this.handleLogin} />
                 </div>
             </div>

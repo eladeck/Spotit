@@ -14,7 +14,7 @@ const password = '1234';
 const mongoUrl = `mongodb+srv://DorBenLulu:${password}@spotit-bx5gf.mongodb.net/test?retryWrites=true`;
 const bodyParser = require('body-parser');
 
-app.use(bodyParser.text());
+app.use(bodyParser.text()); 
 app.use(cookieParser());
 app.use(express.static("../public")) 
 app.use(express.static("./server/images")) // for fetching images! because client knows the path to the images ./server/images/BAA380.jpg
@@ -79,17 +79,6 @@ async function startServer() {
     app.locals.cities = dbo.collection('cities');
     app.locals.specialReport = dbo.collection('specialReports');
     app.locals.goSpotItInfo = dbo.collection('goSpotItInfo');
-
-    // WARNING !!!! code to insert field or remove field from all records in a collection!
-    app.locals.usersCollection.updateMany({},
-        {$set : {"score":0}},
-        {upsert:false,
-        multi:true})
-
-    // app.locals.imgCollection.updateMany({},
-    //     {$unset : {"score":1}},
-    //     {upsert:false,
-    //     multi:true})
 
     app.use('/user', user);
     app.use('/image', image);

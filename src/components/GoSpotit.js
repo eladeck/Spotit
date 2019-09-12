@@ -53,7 +53,7 @@ class GoSpotit extends Component {
             return (
                 <Popup trigger={<h1 className="button title clickable-title"> Go Spotit! </h1>} modal>
                   {close => (
-                    <div className="modal">
+                    <div className="not-hidden-modal">
                       <a className="close" onClick={close}>
                         &times;
                       </a>

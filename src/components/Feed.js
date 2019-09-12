@@ -21,9 +21,7 @@ class Feed extends Component {
         this.handleLike = this.handleLike.bind(this);
     } // c'tor
 
-    componentDidMount() {
-        this.setState({comments: this.props.comments})
-    }
+
 
     removeImageFromArray(imgId) {
         this.setState(prevState => {

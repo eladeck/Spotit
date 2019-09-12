@@ -35,7 +35,7 @@ class PlaneReportForm extends Component {
             body: JSON.stringify(specialArrivalReport),
             credentials:"include"
          })
-         .then(res => res.json())
+         .then(res => {window.location.href="/"; res.json()})
          .then(uploadedImage => {
             console.log("In PlaneReportForm:: handleSubmit:: inside second then. The response is:");
             console.log(uploadedImage);
