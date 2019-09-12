@@ -5,7 +5,6 @@ const MongoClient = require('mongodb').MongoClient;
 const user = require('./server/routes/user');
 const image = require('./server/routes/image');
 
-
 const airport = require('./server/routes/airport');
 
 
@@ -22,7 +21,7 @@ app.use(express.static("./server/images")) // for fetching images! because clien
 
 let dbo;
 
-const port = 3002;
+const port = process.env.PORT || 3002;
 app.listen(port, () => console.log(`started listening to port ${port}!`))
 
 // MongoClient.connect(mongoUrl, { useNewUrlParser: true }, (err, db) => {
