@@ -116,6 +116,7 @@ export default function Album(props) {
     return <div>Problem fetching / There is no logged in user. please refresh or try again</div>
   }
 
+  const isUserVistingOwnProfile = props.loggedInUser.userName === props.desiredProfile;
   console.log(`in mateiralUI, currentProfileUser is`);
   console.log(currentProfileUser);
   return (
@@ -132,7 +133,15 @@ export default function Album(props) {
             <div className="profile-picture">
              <div className="user_avatar">
                   {/* <img src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/73.jpg"></img> */}
-                  <img src={`${currentProfileUser.userName}/profilePicture.jpg`}></img>
+                  <img src={`${currentProfileUser.profilePictureUrl}`}></img>
+                  {isUserVistingOwnProfile ? 
+                    <form className="" action="image/updateProfilePicture" method="post" encType="multipart/form-data" >
+                      <input type="file" name="image" />
+                      <input type="submit" name="submit" value="Submit" />
+                    </form>
+                    :
+                    null
+                  }
               </div>
             </div>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
@@ -142,15 +151,19 @@ export default function Album(props) {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  {!loggedInUser.following.includes(currentProfileUser.userName) ?
-                    <button className="follow-button" onClick={() => props.handleFollow(currentProfileUser.userName)}>
-                      Follow
-                    </button>
+                  { isUserVistingOwnProfile ? 
+                    (!loggedInUser.following.includes(currentProfileUser.userName) ?
+                      <button className="follow-button" onClick={() => props.handleFollow(currentProfileUser.userName)}>
+                        Follow
+                      </button>
+                      :
+                      <button className="unfollow-button"  onClick={() => props.handleUnfollow(currentProfileUser.userName)}>
+                        Unfollow
+                      </button>
+                    )
                     :
-                    <button className="unfollow-button"  onClick={() => props.handleUnfollow(currentProfileUser.userName)}>
-                      Unfollow
-                    </button>
-                  }
+                    null
+                    }
                  
                 </Grid>
               

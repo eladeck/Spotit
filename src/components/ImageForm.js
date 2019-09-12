@@ -153,8 +153,8 @@ class ImageForm extends Component {
                     </form>
 
                 <div className="image-form-right">
-   <img className="image-form-right-image"src="http://antonhein.com/wp-content/gallery/airplane-spotting-at-amsterdam-airport-schiphol/Schiphol003.jpg" />
-  </div>
+                    <img className="image-form-right-image"src="/imageFormPicture.jpg" />
+                </div>
                 </div>
 
                <hr />
