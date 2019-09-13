@@ -56,13 +56,14 @@ upload.single("image" /* name attribute of <file> element in your form */),
         city: req.body.city,
         airport: req.body.airport,
         code: req.body.registration,
+        description: req.body.description,
         likes: []
     };
     
     const imagesCollection = req.app.locals.imgCollection;
     
 
-    imagesCollection.insertOne(objectToInsert, (err, result) => {
+    imagesCollection.insertOne(objectToInsert, (err, result) => { 
         if(err) {
           console.log("in imagesCollection.insertOne(): ERROR occured.")
           res.send(401, {err:`Error occured while uploading image to database.`});
