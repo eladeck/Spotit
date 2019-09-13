@@ -7,7 +7,7 @@ export default function PopupModal(props) {
     return (
         <Popup trigger={<h2 className="followers-following"> {props.users.length} {props.textToDisplay} </h2>} modal>
           {close => (
-            <div className="modal">
+            <div className="not-hidden-modal">
               <a className="close" onClick={close}>
                 &times;
               </a>

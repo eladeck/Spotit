@@ -130,6 +130,7 @@ async function startServer() {
             imageFormData.countries = await (collectionPromise(countries));
             imageFormData.cities = await (collectionPromise(cities));
             imageFormData.airports = await (collectionPromise(airports));
+	    // https://stackoverflow.com/questions/35612428/call-async-await-functions-in-parallel
             return imageFormData;
         }
     
