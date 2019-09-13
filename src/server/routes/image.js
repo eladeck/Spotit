@@ -27,7 +27,7 @@ upload.single("image" /* name attribute of <file> element in your form */),
     const userDirectory = path.join(__dirname, `../images/${userName}`);
     const newImagePath = path.join(__dirname, `../images/${userName}/${desiredFileName}`);
 
-    if (!fs.existsSync(userDirectory)) {
+    if (!fs.existsSync(userDirectory)) {// If user's folder does not exist, create it.
         fs.mkdirSync(userDirectory)
     }
 
@@ -60,7 +60,7 @@ upload.single("image" /* name attribute of <file> element in your form */),
     };
     
     const imagesCollection = req.app.locals.imgCollection;
-    const style = 
+    
 
     imagesCollection.insertOne(objectToInsert, (err, result) => {
         if(err) {

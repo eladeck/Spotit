@@ -8,13 +8,14 @@ class Comments extends React.Component {
             inputComment:"",
         }
 
-        this.handleChange = this.handleChange.bind(this)
-        this.handleNewComment = this.handleNewComment.bind(this)
+        this.handleChange = this.handleChange.bind(this);
+        this.handleNewComment = this.handleNewComment.bind(this);
     }
 
     handleChange(event) {
         const {name, value, type, checked} = event.target
-        this.setState({[name]: value})
+        this.setState({[name]: value});
+        console.log();
     }
 
     handleNewComment() {

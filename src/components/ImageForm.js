@@ -118,43 +118,43 @@ class ImageForm extends Component {
                :
                <main>
                    
-                    <div class="image-form-box">
+                    <div className="image-form-box">
                         <form className="image-form-left" action="image/upload" method="post" encType="multipart/form-data" /*onSubmit={this.handleSubmit}*/>
                         <h1 className="image-form-h1">Add New Image</h1>
-                        <select class="image-form-select-box" value={this.state.airline} name="airline" onChange={this.handleChange}>
+                        <select className="image-form-select-box" value={this.state.airline} name="airline" onChange={this.handleChange}>
                             <option value="">Choose Airline</option>
                             {this.dataFormMap(this.state.imageFormData.airlines)}
                         </select>
 
-                        <select class="image-form-select-box" value={this.state.airplaneModel} name="airplaneModel" onChange={this.handleChange}>
+                        <select className="image-form-select-box" value={this.state.airplaneModel} name="airplaneModel" onChange={this.handleChange}>
                             <option value="">Choose Airplane Model</option>
                             {this.dataFormMap(this.state.imageFormData.aircrafts)}
                         </select>
 
-                        <select class="image-form-select-box" value={this.state.country} name="country" onChange={this.handleChange}>
+                        <select className="image-form-select-box" value={this.state.country} name="country" onChange={this.handleChange}>
                             <option value="">Country</option>
                             {this.dataFormMap(this.state.imageFormData.countries)}
                         </select>
 
-                        <select class="image-form-select-box" value={this.state.city} name="city" onChange={this.handleChange}>
+                        <select className="image-form-select-box" value={this.state.city} name="city" onChange={this.handleChange}>
                             <option value="">City</option>
                             {this.dataFormMap(this.state.imageFormData.cities)}
                         </select>
 
-                        <select class="image-form-select-box" value={this.state.airport} name="airport" onChange={this.handleChange}>
+                        <select className="image-form-select-box" value={this.state.airport} name="airport" onChange={this.handleChange}>
                             <option value="">Airport</option>
                             {this.dataFormMap(this.state.imageFormData.airports)}
                         </select>
-                        <input type="text" name="registration"  value={this.state.registration}  onChange={this.handleChange}  placeholder="Registration"  />
+                        <input className="image-form-input-text" type="text" name="registration"  value={this.state.registration}  onChange={this.handleChange}  placeholder="Registration"  />
 
                         {/* <button onClick={this.handleBrowse}>Browse</button> */}
                         <input type="file" name="image" /*onChange={this.handleBrowse}*/ />
                         <input type="submit" name="submit" value="Submit" />
                     </form>
 
-                <div class="image-form-right">
-   <img class="image-form-right-image"src="http://antonhein.com/wp-content/gallery/airplane-spotting-at-amsterdam-airport-schiphol/Schiphol003.jpg" />
-  </div>
+                <div className="image-form-right">
+                    <img className="image-form-right-image"src="/imageFormPicture.jpg" />
+                </div>
                 </div>
 
                <hr />

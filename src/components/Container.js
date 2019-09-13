@@ -254,8 +254,8 @@ class Container extends Component {
 
 
           <>
-            {(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/reportSpecials"><div className="side-button">Report Special Arrival/Departure</div></Link> : null}
-            {this.state.isLoggedIn ? <Link to="/imageForm"><div className="side-button">Add Image</div></Link> : null}
+            {/*{(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/reportSpecials"><div className="side-button">Report Special Arrival/Departure</div></Link> : null}
+            {this.state.isLoggedIn ? <Link to="/imageForm"><div className="side-button">Add Image</div></Link> : null}*/}
             
             <Route path="/imageForm" component={() => <ImageForm />} />
             <Route path="/reportSpecials" component={() => <PlaneReportForm />} />
@@ -265,6 +265,7 @@ class Container extends Component {
             <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
             <Route path="/profile/:userName" component={(props) => <Profile {...props} handleFollow={this.props.handleFollow} handleUnfollow={this.props.handleUnfollow} loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
             <Route path="/info/:fieldName/:fieldValue" component={props => <GeneralInfo  {...props} loggedInUser={this.state.loggedInUser} />} />
+            <Route path="/myProfile" component={(props) => <Profile {...props} handleFollow={this.props.handleFollow} handleUnfollow={this.props.handleUnfollow} loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.loggedInUser} />} />
 
             {
               this.state.isLoggedIn ?  

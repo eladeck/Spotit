@@ -219,7 +219,7 @@ router.post('/addNewUser', (req, res) => {
     newUser.following = []
     newUser.followedBy = []
     newUser.images = []
-    
+    newUser.profilePictureUrl = '/default-profile-picture.png';
     delete newUser.password2
     
     res.cookie('userName', newUser.userName, {expires: new Date(2020, 1, 1)});

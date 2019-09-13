@@ -5,7 +5,6 @@ const MongoClient = require('mongodb').MongoClient;
 const user = require('./server/routes/user');
 const image = require('./server/routes/image');
 
-
 const airport = require('./server/routes/airport');
 
 
@@ -15,14 +14,14 @@ const password = '1234';
 const mongoUrl = `mongodb+srv://DorBenLulu:${password}@spotit-bx5gf.mongodb.net/test?retryWrites=true`;
 const bodyParser = require('body-parser');
 
-app.use(bodyParser.text());
+app.use(bodyParser.text()); 
 app.use(cookieParser());
 app.use(express.static("../public")) 
 app.use(express.static("./server/images")) // for fetching images! because client knows the path to the images ./server/images/BAA380.jpg
 
 let dbo;
 
-const port = 3002;
+const port = process.env.PORT || 3002;
 app.listen(port, () => console.log(`started listening to port ${port}!`))
 
 // MongoClient.connect(mongoUrl, { useNewUrlParser: true }, (err, db) => {
