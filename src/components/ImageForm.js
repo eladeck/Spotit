@@ -12,6 +12,7 @@ class ImageForm extends Component {
            country: "",
            airport: "",
            date: "",
+           description: "",
            imageFormData: null,
            uploadedImage: null,
            uploading: false,
@@ -114,7 +115,7 @@ class ImageForm extends Component {
                    :
                  <div style={{position:"fixed", left:"50%", top:"50%"}}>
                      Image succusfully uploaded!
-                 </div>)
+                 </div>) 
                :
                <main>
                    
@@ -146,7 +147,7 @@ class ImageForm extends Component {
                             {this.dataFormMap(this.state.imageFormData.airports)}
                         </select>
                         <input className="image-form-input-text" type="text" name="registration"  value={this.state.registration}  onChange={this.handleChange}  placeholder="Registration"  />
-
+                        <input class="image-form-description" name="description" value={this.state.description} placeholder="Description"  onChange={this.handleChange}/>
                         {/* <button onClick={this.handleBrowse}>Browse</button> */}
                         <input type="file" name="image" /*onChange={this.handleBrowse}*/ />
                         <input type="submit" name="submit" value="Submit" />
