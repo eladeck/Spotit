@@ -77,54 +77,24 @@ upload.single("image" /* name attribute of <file> element in your form */),
     });
 });
 
-function getDate() {
-  var today = new Date();
-var dd = today.getDate();
-var mm = today.getMonth() + 1; //January is 0!
 
-var yyyy = today.getFullYear();
-if (dd < 10) {
-  dd = '0' + dd;
-} 
-if (mm < 10) {
-  mm = '0' + mm;
-} 
-var today = dd + '/' + mm + '/' + yyyy;
-
-var today2 = new Date();
-var h = today2.getHours();
-var m = today2.getMinutes();
-var s = today2.getSeconds();
-// add a zero in front of numbers<10
-m = checkTime(m);
-s = checkTime(s);
-return today + '-' + h + ":" + m;
-}
-
-function checkTime(i) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  return i;
-}
 
 
 
 router.post('/newComment', (req, res) => {
   console.log("i am here. req.body is " + req.body)
-  let text = req.body;
-  let userName = req.cookies.userName;
+  // let text = req.body;
+  // let userName = req.cookies.userName;
+  // let date = getDate();
+  // let comment = {
+    //   userName,
+    //   text,
+    //   date,
+    // }
   let id = req.query.id;
-  let date = getDate();
-  let comment = {
-    userName,
-    text,
-    date,
-  }
-  console.log("comment text is " + text);
-  console.log("userName is " + userName);
-  console.log("imageId is " + id);
-  console.log("date is " + date);
+  let comment = JSON.parse(req.body)
+  console.log("comment:")
+  console.log(comment)
 
   req.app.locals.imgCollection.updateOne(
     { _id: ObjectId(id) },

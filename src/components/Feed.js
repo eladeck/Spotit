@@ -97,44 +97,32 @@ class Feed extends Component {
 
                 return (
                 <div key={i} className="image-wrapper">
-
-                          
-                    {/* ---- dor code: <h2><Link to="/main">{el.user}</Link></h2>*/}
-                    
-                    {/* <label className="like-count">{image.likes > 0 ? image.likes : null}</label> */}
                     <label className="like-count">{image.likes.length + maybeAddOneToLikes}</label>
-                    
                     <i onClick={(e) => this.handleLike(image._id, image, e)} class={likeClassName}></i>
-                    <h2 onClick={() => this.handleGoToProfile(image.userName)}>
-                        <Link to={`/profile/${image.userName}`}>{image.userName}</Link>
-                    </h2>
-                    {/*<div className='img-grade'>&#9733; &#9733; &#9733; &#9734; &#9734;</div>*/}
+                    <Link to={`/profile/${image.userName}`}>
+                        <h2>{image.userName}</h2>
+                    </Link>
                     <Popup
                       trigger={<img id="myModal" src={`${image.userName}/${image.url}`} alt="not working" onClick={() => {console.log("Image Modal")}} />}
                       modal
                       closeOnDocumentClick
                     >
                       <span>
-                           <img id="myModal" src={`${image.userName}/${image.url}`} alt="not working" onClick={() => {console.log("Image Modal")}} style={{width:"100%", maxWidth:"850px"}} /> 
+                          <div className="hoverable-image-container">
+                               <img className="hoverable-image" id="myModal" src={`${image.userName}/${image.url}`} alt="not working" onClick={() => {console.log("Image Modal")}} style={{width:"100%", maxWidth:"850px"}} /> 
+                               <div className="hoverable-overlay">
+                                   <p>{image.description}</p>
+                                </div>
+                          </div>
                            {console.log(image)}
                            <Comments 
-                            comments={image.comments} 
-                            imageId={image._id}
-                            extratAllFollowing={this.props.extratAllFollowing}
+                                comments={image.comments} 
+                                imageId={image._id}
+                                extratAllFollowing={this.props.extratAllFollowing}
+                                loggedInUser={this.props.loggedInUser}
                             />
-                           {/* <ol className="img-comments">
-                               {image.comments.map((commentObj, i) => (
-                               <li key={i} className="comment">
-                                   <div>{commentObj.userName}</div>
-                                   <div>{commentObj.text}</div>
-                                   <div>{commentObj.date}</div>
-                               </li>))}
-                           </ol> */}
-                           {/* <input type="text" />
-                           <button onClick={this.handleNewComment}>+</button> */}
                       </span>
                     </Popup>
-                    
                     
                     <div id="myModal" class="modal">
                         <span className="close">&times;</span>
@@ -162,7 +150,7 @@ class Feed extends Component {
                 <Link to="/imageForm"><img className="feed-post-image" title="Post" src="cameraIcon.png" /></Link>
                 { this.props.loggedInUser.reportPermission ? <Link to="/reportSpecials"><img className="feed-post-image" title="Report Special Arrival" src="megaphone.png" /></Link> : null}
                 {images ? (images.length === 0 ? noImgMsg : images) : 
-                    <Loader type="TailSpin" color="lightgreen" height={80} width={80} />}
+                    <Loader type="TailSpin" color="lightblue" height={80} width={80} />}
             </div>
         ); 
     } // render

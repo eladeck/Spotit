@@ -258,7 +258,7 @@ ul > li > a:hover {
   
   .hoverable-overlay {
     position: absolute; 
-    bottom: 0; 
+    bottom: 4px; 
     background: rgb(0, 0, 0);
     background: rgba(0, 0, 0, 0.5);
     color: #f1f1f1; 
@@ -267,7 +267,7 @@ ul > li > a:hover {
     opacity:0;
     color: white;
     font-size: 20px;
-    padding: 20px;
+    /* padding: 20px; */
     text-align: center;
   }
   
@@ -358,15 +358,15 @@ ul > li > a:hover {
     font-size: 2em;
   }
   @import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP|Playfair+Display|Roboto+Slab&display=swap');
-  .image-wrapper > h2 {
+  .image-wrapper h2 {
       top:0;
       position: absolute;
       width: fit-content;
       text-align: left;
       margin:auto;
       padding:5px;
-      font-family: Arial;
-      font-size: 2em;
+      font-family: fantasy;
+      font-size: 1.5em;
       text-transform: uppercase;
       color: white;
       letter-spacing: 0.5px;
@@ -383,6 +383,12 @@ ul > li > a:hover {
       text-decoration: none;
   }
 
+  .image-wrapper h2:hover { 
+    color: rgb(214, 112, 112);
+    text-decoration: underline;
+
+
+  }
         .scroll-container {
             overflow: hidden;
             max-height: 400px;
@@ -1027,11 +1033,11 @@ input[type="submit"]:active {
     /*8888888888 comment comment  comment 888888888888888888888888888888888*/
     @import url(https://fonts.googleapis.com/css?family=Lato:300,400);
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
-*, *:before, *:after {
+/* *, *:before, *:after {
   margin: 0;
   padding: 0;
   transition: all 0.2s ease;
-}
+} */
 body, html {
   height: 100%;
   width: 100%;
@@ -1057,7 +1063,7 @@ body {
   width: 66%;
   height: 100%;
   max-height: 123px;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   /* margin: 0 auto; */
   /* padding: 10px; */
   width: 100%;
@@ -1234,3 +1240,8 @@ body {
       color:darkslateblue
     }
     /* tool tip*/
+
+    .popup-content {
+      overflow-y:scroll;
+      overflow-x:hidden;
+    }

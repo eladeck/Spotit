@@ -85,6 +85,7 @@ async function startServer() {
     app.use('/airport', airport);
     app.use('/data', data);
 
+
     // all server code goes here and it'll happen only when db is up
     app.get('/profile/:someUserName/:someImageUrl', (req, res) => { 
         const imgUrl = req.params.someImageUrl;

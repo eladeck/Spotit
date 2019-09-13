@@ -90,7 +90,8 @@ class Profile extends Component {
         console.log(this.props.match.params)
 
         return (
-            !this.state.currentProfileUser ? <Loader type="TailSpin" color="blue" height={120} width={120} /> :
+            !this.state.currentProfileUser ? 
+            <div style={{position:"fixed", left:"48%", top:"40%"}}><Loader type="TailSpin" color="lightblue" height={40} width={40} /></div> :
             <>
                 <ProfileMaterialUI
                     currentProfileUser={this.state.currentProfileUser}

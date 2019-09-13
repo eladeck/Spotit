@@ -198,7 +198,7 @@ class GeneralInfo extends Component {
                     images={this.state.images}
                 /> 
                 :
-                <Loader type="TailSpin" color="blue" height={120} width={120} />
+                <div style={{position:"fixed", left:"48%", top:"40%"}}><Loader type="TailSpin" color="lightblue" height={40} width={40} /></div>
                 }
             </>
         );
