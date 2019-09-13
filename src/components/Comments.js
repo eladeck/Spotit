@@ -78,10 +78,6 @@ class Comments extends React.Component {
     }
 
     render() {
-        if(!this.props.comments) {
-            return <div>no comments</div>;
-        }
-
         return (
             <div className="comment_block">
             <div className="create_new_comment">
@@ -95,7 +91,7 @@ class Comments extends React.Component {
                       <i onClick={this.handleNewComment} class="fa fa-paper-plane send-comment" aria-hidden="true"></i>
                   }
               </div>
-              {this.props.comments.map((comment, i) => (
+              {this.props.comments && this.props.comments.map((comment, i) => (
                           <div key={i} className="new_comment">
                           <ul className="user_comment">
                               <div className="user_avatar">
