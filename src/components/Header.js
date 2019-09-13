@@ -17,6 +17,7 @@ class Header extends Component {
             allUsers:null,
             showAllUsers:false,
             searchWord:"",
+            searchFor:"users",
         }
 
         this.handleLogout = this.handleLogout.bind(this)
@@ -26,6 +27,7 @@ class Header extends Component {
         this.handleUsersInputClick = this.handleUsersInputClick.bind(this)
         this.renderAllUsersUnderInput = this.renderAllUsersUnderInput.bind(this)
         this.handleUrlChanged = this.handleUrlChanged.bind(this);
+        this.handleSelectChange = this.handleSelectChange.bind(this);
 
     } // c'tor
 
@@ -45,7 +47,9 @@ class Header extends Component {
         return (
             
             <div style={divStyle}>
-                {this.state.allUsers.filter(user => user.userName.includes(this.state.searchWord)).map(user => {
+                {this.state.allUsers
+                .filter(user => user.userName.includes(this.state.searchWord) && user.userName.startsWith(this.state.searchWord))
+                .map(user => {
                     console.log(user)
                     return (
                         <>
@@ -106,6 +110,48 @@ class Header extends Component {
         this.props.handleLogout();
     }
 
+    renderAllData() {
+        const divStyle = {
+            width: "160px",
+            height: "fit-content",
+            maxHeight: "500px",
+            overflow: "scroll",
+            zIndex: "1",
+            position: "absolute",
+            backgroundColor: "#ece4e4de",
+            fontFamily: "sens-serif",
+            borderColor: "black",
+            borderStyle: "solid",
+        }
+
+        return (
+            <div style={divStyle}>
+                {this.props.iataCodeData && this.props.iataCodeData[this.state.searchFor]
+                .filter(data => data.name.toLowerCase().startsWith(this.state.searchWord))
+                .map(data => {
+                    console.log(data)
+                    return (
+                        <>
+                        <div key={data.name} style={{maxWidth:"130px", width:"130px",float:"left"}}>
+                          <span style={{position: "absolute", left:"0px",fontSize:"0.37em"}} 
+                              onClick={() => this.setState({showAllUsers: false})}>
+                              <Link to={`/info/${this.state.searchFor}/${data.name}`}>
+                               {data.name}
+                                </Link>
+                            </span>
+                        </div>
+                        <br />
+                        </>
+                    );
+                })}
+            </div>);
+    }
+
+    handleSelectChange(e) {
+        const searchFor = e.target.value;
+        this.setState({searchFor})
+    }
+
     componentWillUnmount() {
         fetch(`/imageFormData`, {method: 'GET', credentials: 'include'})
         .then(response => {
@@ -130,11 +176,19 @@ class Header extends Component {
       {/* <input placeholder="Search..." className="input-style" type="textbox"></input> */}
       <nav>
           <ul>
-              <li><a>follow:</a></li>
+              <li><a>Search For</a></li>
+                <select onChange={this.handleSelectChange}>
+                    <option value="users">Users</option>
+                    <option value="airports">Airports</option>
+                    <option value="aircrafts">Aircrafts</option>
+                    <option value="countries">Countries</option>
+                    <option value="airlines">Airlines</option>
+                </select>
               <li>
                   <form>
-                      <input name='userNameToFollow' type='textbox' onChange={this.handleChange} onClick={this.handleUsersInputClick} autoComplete="off"/>
-                      {this.state.showAllUsers ? this.renderAllUsersUnderInput() : null}
+                      <input placeholder={this.state.searchFor} name='userNameToFollow' type='textbox' onChange={this.handleChange} onClick={this.handleUsersInputClick} autoComplete="off"/>
+                      {this.state.showAllUsers && this.state.searchFor === "users" ? this.renderAllUsersUnderInput() : null}
+                      {this.state.showAllUsers && this.state.searchFor !== "users" ? this.renderAllData() : null}
                   </form>
               </li> 
               

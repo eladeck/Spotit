@@ -72,7 +72,7 @@ class Comments extends React.Component {
          .then(res => {
              setTimeout(() => {
                  this.props.comments.unshift(comment);
-                 this.setState({isSending:false, inputComment:""}/*, () => window.location.href="/"*/)}, 2000);
+                 this.setState({isSending:false, inputComment:""}/*, () => window.location.href="/"*/)}, 500);
           })
          .catch(error => this.setState({inputComment:"Error! try refresh the page " + error}));
     }

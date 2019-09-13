@@ -85,7 +85,6 @@ async function startServer() {
     app.use('/airport', airport);
     app.use('/data', data);
 
-
     // all server code goes here and it'll happen only when db is up
     app.get('/profile/:someUserName/:someImageUrl', (req, res) => { 
         const imgUrl = req.params.someImageUrl;
@@ -120,7 +119,7 @@ async function startServer() {
         
         const collectionPromise = (collection) => {
             return new Promise((resolve, reject) => {
-                collection.find({}).limit(10).toArray((err, result) => { // limit to only 10
+                collection.find({}).limit(100).toArray((err, result) => { // limit to only 10
                     err ? reject(err) : resolve(result);
                 })});
         }

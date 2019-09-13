@@ -24,11 +24,11 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="/">
+        Spotit
       </Link>{' '}
       {new Date().getFullYear()}
-      {'. Built with '}
+      {'. Partially Built with '}
       <Link color="inherit" href="https://material-ui.com/">
         Material-UI.
       </Link>
@@ -186,10 +186,10 @@ export default function Album(props) {
       {/* Footer */}
       <footer className={classes.footer}>
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
+          {/* Footer */}
         </Typography>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Something here to give the footer a purpose!
+          {/* Something here to give the footer a purpose! */}
         </Typography>
         <Copyright />
       </footer>

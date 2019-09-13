@@ -80,7 +80,7 @@ export default function GeneralInfoMaterialUI(props) {
               {dataToDisplay}
             </Typography>
             {console.log(`GeneralInfoMaterialUI.js: main image URL is: ${props.data.imageUrl}`)}
-            <img src={props.data.imageUrl} alt="main info image not found" height="300" width="300" />
+            <img src={props.data.imageUrl} alt="main info image not found" height="100%" width="100%" />
           
           </Container>
         </div>
@@ -88,7 +88,7 @@ export default function GeneralInfoMaterialUI(props) {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {console.log(`GeneralInfoMaterialUI: render(): images are `)}{console.log(images)}
-            {!images ? "Loading..." :
+            {!images || images.errMsg ? "There currently aren't additional images to present." :
             images.map((imageObj, index) => ( // to render loader until the images are here!
             
               <ImageCard key={index} imageObj={imageObj} />
@@ -99,10 +99,10 @@ export default function GeneralInfoMaterialUI(props) {
       {/* Footer */}
       <footer className={classes.footer}>
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
+          {/* Footer */}
         </Typography>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Something here to give the footer a purpose!
+          {/* Something here to give the footer a purpose! */}
         </Typography>
        
       </footer>

@@ -1190,6 +1190,10 @@ body {
   color: #ff6347;
 }
 
+select {
+  width: fit-content;
+}
+
 .send-comment {
   color: #ff6347;
     /* padding: 10px; */

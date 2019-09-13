@@ -11,6 +11,7 @@ class App extends React.Component {
                         loggedInUser:null,
                         userWantsToLogout:false,
                         refToExtractAllFollowings:null,
+                        iataCodeData:null,
                 }
         this.updateLoggedInUser = this.updateLoggedInUser.bind(this)
         this.handleLogout = this.handleLogout.bind(this)
@@ -28,6 +29,14 @@ class App extends React.Component {
         //         // hence I want to re-render container,
         //         // cause it'll extract my followings and will show the new images of folloing
         // }
+
+        componentDidMount() {
+                // for fetching airplanes and stuff
+                fetch(`/imageFormData`, {method: 'GET', credentials: 'include'})
+                .then(response => response.json())
+                .then(iataCodeData => this.setState({iataCodeData}))
+                .catch(errMsg => this.setState({errMsg}))
+        }
 
         handleLogout() {
                 this.setState({
@@ -77,6 +86,7 @@ class App extends React.Component {
                                 handleUrlChanged={this.handleUrlChange}
                                 handleFollow={this.handleFollow}
                                 handleUnfollow={this.handleUnfollow}
+                                iataCodeData={this.state.iataCodeData}
                          />
                         <Container
                          loggedInUser={this.state.loggedInUser}
