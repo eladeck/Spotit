@@ -175,6 +175,124 @@ router.get('/getImages', (req, res) => {
     });
 }); // getImages
 
+router.get('/getFollowersProfilePicture', (req, res) => {
+    const userName = req.query.userName;
+    const usersCollection = req.app.locals.usersCollection;
+    console.log(`in router.get('/getFollowersProfilePicture')!!!!!!!!!!!!!!!!!!!!!!`)
+
+    let user = null;
+
+    usersCollection.find({"userName": userName}).toArray((err, result) => {
+        console.log("in router.get('/getFollowersProfilePicture'): usersCollection.find({'userName' userName}): result is");
+        //console.log(result);
+        if (err || result.length === 0) {
+            console.log(`in router.get('/getFollowersProfilePicture'): There was no user found under the name '${userName}'`)
+            res.send(401, {errMsg:`no userName ${userName}.`});
+        } else {
+             user = result[0];
+            console.log(`found user ${user.userName}`);
+            
+
+            // user.followedBy.forEach(followedBy => {
+            //     usersCollection.find({"userName": followedBy}).toArray((err, innerUser) => {
+            //         if(err || innerUser.length === 0) {
+            //             console.log(`in router.get('/getFollowersProfilePicture'). In forEach: couldn't find follower ${followedBy}`)
+            //             res.send(401, {errMsg:`Failed to find follower ${followedBy} of ${userName}`});
+            //         } else {
+            //             const userFollower = innerUser[0];
+            //             followedByProfilePicture.push({userName: followedBy, profilePicture: userFollower.profilePictureUrl});
+            //         }
+            //     });
+            // });
+
+        }
+
+
+        let followingProfilePicture =[];
+        let followedByProfilePicture = [];
+        // fetch all followingws profile picture url.
+
+        user.following.forEach(follower => {
+
+            const findFollowerPromise = () => {
+                return new Promise((resolve,reject) => {
+                    usersCollection.find({"userName": follower}).toArray((err, innerUser) => {
+                        if(err || innerUser.length === 0) {
+                            console.log(`in router.get('/getFollowersProfilePicture'). In forEach: couldn't find follower ${follower}`)
+                            reject(err);
+                        } else {
+                            const userFollower = innerUser[0];
+                            const result = {userName: follower, profilePictureUrl: userFollower.profilePictureUrl};
+                            resolve(result);
+                        }
+                    });
+                })
+            }
+
+            const callFindFollowersPromise = async () => {
+                const result = await findFollowerPromise();              
+                // console.log(`router.get('/getFollowersProfilePicture'): in callFindFollowersPromise: result is  `)
+                // console.log(result)
+                return result;
+            }
+
+            callFindFollowersPromise().then(obj => {
+                // console.log(`router.get('/getFollowersProfilePicture'): in callFindFollowersPromise().then(): obj is  `)
+                // console.log(obj)
+                followingProfilePicture.push(obj);
+
+                if (followedByProfilePicture.length == user.followedBy.length && followingProfilePicture.length == user.following.length) {
+                    const allProfilePictures = {followedByProfilePicture, followingProfilePicture};
+                    console.log(`router.get('/getFollowersProfilePicture'): res.send() is done from followingProfilePicture.`)
+                    console.log(`router.get('/getFollowersProfilePicture'): allProfilePictures is`)
+                    console.log(allProfilePictures);
+                    res.send(allProfilePictures);
+                }
+            });
+        });
+
+        user.followedBy.forEach(follower => {
+
+            const findFollowerPromise = () => {
+                return new Promise((resolve,reject) => {
+                    usersCollection.find({"userName": follower}).toArray((err, innerUser) => {
+                        if(err || innerUser.length === 0) {
+                            console.log(`in router.get('/getFollowersProfilePicture'). In forEach: couldn't find follower ${follower}`)
+                            reject(err);
+                        } else {
+                            const userFollower = innerUser[0];
+                            const result = {userName: follower, profilePictureUrl: userFollower.profilePictureUrl};
+                            resolve(result);
+                        }
+                    });
+                })
+            }
+
+            const callFindFollowersPromise = async () => {
+                const result = await findFollowerPromise();              
+                // console.log(`router.get('/getFollowersProfilePicture'): in callFindFollowersPromise: result is  `)
+                // console.log(result)
+                return result;
+            }
+
+            callFindFollowersPromise().then(obj => {
+                // console.log(`router.get('/getFollowersProfilePicture'): in callFindFollowersPromise().then(): obj is  `)
+                // console.log(obj)
+                followedByProfilePicture.push(obj);
+
+                if (followedByProfilePicture.length == user.followedBy.length && followingProfilePicture.length == user.following.length) {
+                    const allProfilePictures = {followedByProfilePicture, followingProfilePicture};
+                    console.log(`router.get('/getFollowersProfilePicture'): res.send() is done from followedByProfilePicture.`)
+                    
+                    console.log(`router.get('/getFollowersProfilePicture'): allProfilePictures is`)
+                    console.log(allProfilePictures);
+                    res.send(allProfilePictures);
+                }
+            });
+        });
+    });
+
+});
 router.get('/login', (req, res) => {
     const userName = req.query.userName;
     const password = req.query.password;

@@ -133,7 +133,8 @@ export default function Album(props) {
             <div className="profile-picture">
              <div className="user_avatar">
                   {/* <img src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/73.jpg"></img> */}
-                  <img src={`${currentProfileUser.profilePictureUrl}`}></img>
+                 <img src={`${currentProfileUser.profilePictureUrl}`}></img>
+
                   {isUserVistingOwnProfile ? 
                     <form className="" action="image/updateProfilePicture" method="post" encType="multipart/form-data" >
                       <input type="file" name="image" />
@@ -145,8 +146,8 @@ export default function Album(props) {
               </div>
             </div>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              <div> <PopupModal users={currentProfileUser.followedBy} textToDisplay={"Followers" } /></div>
-              <div> <PopupModal users={currentProfileUser.following} textToDisplay={"Following" } /> </div>
+              <div> <PopupModal users={props.followingProfilePicture} textToDisplay={"Followers" } /></div>
+              <div> <PopupModal users={props.followedByProfilePicture} textToDisplay={"Following" } /> </div>
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
