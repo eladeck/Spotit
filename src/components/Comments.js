@@ -89,14 +89,14 @@ class Comments extends React.Component {
                       <i class="fas fa-spinner fa-pulse send-comment"></i>
                        :
                       <i onClick={this.handleNewComment} class="fa fa-paper-plane send-comment" aria-hidden="true"></i>
-                  }
-              </div>
+                  } 
+              </div> 
               {this.props.comments && this.props.comments.map((comment, i) => (
                           <div key={i} className="new_comment">
                           <ul className="user_comment">
                               <div className="user_avatar">
                                   {/* <img src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/73.jpg"></img> */}
-                                  <img src={`${comment.userName}/profilePicture.jpg`}></img>
+                                  <img src={`${this.props.loggedInUser.profilePictureUrl}`}></img>
                               </div>
                               <div className="comment_body">
                                   <p>{comment.text}</p>

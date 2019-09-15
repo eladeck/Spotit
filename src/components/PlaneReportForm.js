@@ -1,4 +1,5 @@
 import React, {Component} from "react"
+import Loader from 'react-loader-spinner'
 
 class PlaneReportForm extends Component {
     constructor() {
@@ -74,39 +75,49 @@ class PlaneReportForm extends Component {
         window.state = this.state;
         const date = new Date();
         return (
-           !this.state.imageFormData ? <div>Loading...</div> : 
+           !this.state.imageFormData ? <Loader type="TailSpin" color="lightblue" height={40} width={40} /> : 
            <main>
-                <form action="user/specialReport" method="post" encType="multipart/form-data" onSubmit={this.handleSubmit}>
-                    <select value={this.state.sourceAirport} name="sourceAirport" onChange={this.handleChange}>
-                        <option value="">-Choose Source Airport-</option>
+               <div className="image-form-box">
+                <form className="image-form-left" action="user/specialReport" method="post" encType="multipart/form-data" onSubmit={this.handleSubmit}>
+                <h1 className="image-form-h1">Report About Special Arrival</h1>
+                    <select className="image-form-select-box" value={this.state.sourceAirport} name="sourceAirport" onChange={this.handleChange}>
+                        <option value="">Choose Source Airport</option>
                         {this.dataFormMap(this.state.imageFormData.airports)}
                     </select>
 
-                    <select value={this.state.destinationAirport} name="destinationAirport" onChange={this.handleChange}>
-                        <option value="">-Choose Destination Airport-</option>
+                    <select className="image-form-select-box" value={this.state.destinationAirport} name="destinationAirport" onChange={this.handleChange}>
+                        <option value="">Choose Destination Airport</option>
                         {this.dataFormMap(this.state.imageFormData.airports)}
                     </select>
 
-                    <select value={this.state.airline} name="airline" onChange={this.handleChange}>
-                        <option value="">-Choose Airline-</option>
+                    <select className="image-form-select-box" value={this.state.airline} name="airline" onChange={this.handleChange}>
+                        <option value="">Choose Airline</option>
                         {this.dataFormMap(this.state.imageFormData.airlines)}
-                    </select>
+                    </select> 
 
-                    <select value={this.state.aircraft} name="aircraft" onChange={this.handleChange}>
-                        <option value="">-Choose Airplane Model-</option>
+                    <select className="image-form-select-box" value={this.state.aircraft} name="aircraft" onChange={this.handleChange}>
+                        <option value="">Choose Airplane Model</option>
                         {this.dataFormMap(this.state.imageFormData.aircrafts)}
                     </select>
                     
                     <input type="datetime-local" value={this.state.estimatedTimeArriaval} name="estimatedTimeArriaval" onChange={this.handleChange} />
-                    <button type="submit">Report</button>
+                    <button type="submit" class="form-submit-button">Report</button>
                 </form>
-                <hr />
+                
+                
+
+                <div className="image-form-right">
+                    <img className="image-form-right-image"src="/man-megaphone-shouting.jpg" />
+                </div>
+                </div>
+
+                {/*<hr />
                 <h2>Entered information:</h2>
                 <p>Source Airport: {this.state.sourceAirport}</p>
                 <p>Destination Airport: {this.state.destinationAirport}</p>
                 <p>Airline: {this.state.airline}</p>
                 <p>Airplane Model: {this.state.aircraft}</p>
-                <p>Date:{this.state.estimatedTimeArriaval}</p>
+                <p>Date:{this.state.estimatedTimeArriaval}</p>*/}
             </main>
         ) // End of return
        

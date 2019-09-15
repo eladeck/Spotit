@@ -28,7 +28,13 @@ nav {
     text-transform: uppercase;
 } */
 
-
+.popup-username-image
+{
+  width: 40px;
+  height: 40px;
+  margin-left: -169px;
+  border-radius: 50px;
+}
 
 @keyframes glow{
   90% {
@@ -52,6 +58,10 @@ nav {
   font-size:19px;
 }
 
+.text-in-overlay li {
+  padding:0px;
+}
+
 header{
   font-size:40px;
     height:60px;
@@ -61,11 +71,55 @@ header{
   /* background: rgb(76,200,22);
     background: linear-gradient(6deg, rgba(76,200,22,0.5718662464985995) 0%, rgba(26,121,9,0.7231267507002801) 55%); */
     background: rgb(105,122,102);
-background: linear-gradient(6deg, rgba(105,122,102,1) 9%, rgba(105,122,102,0.8211659663865546) 59%, rgba(184,198,182,0.8211659663865546) 92%);
+    background: linear-gradient(6deg, rgba(105,122,102,1) 9%, rgba(105,122,102,0.8211659663865546) 59%, rgba(184,198,182,0.8211659663865546) 92%);
     display: flex;
     justify-content: space-between;
     align-items: center;
     /* margin-top: 50px */
+}
+
+.header-select-box {
+  display: block;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 4px;
+  width: 100px;
+  height: 24px;
+  border: none;
+  border-bottom: 1px solid #AAA;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  transition: 0.2s ease;
+
+}
+
+.header-select-box:focus {
+  border-bottom: 2px solid #16a085;
+  color: #16a085;
+  transition: 0.2s ease;
+}
+
+input[type="textbox"] {
+  display: block;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 4px;
+  width: 220px;
+  height: 24px;
+  border: none;
+  border-bottom: 1px solid #AAA;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  transition: 0.2s ease;
+}
+
+
+input[type="textbox"]:focus {
+  border-bottom: 2px solid #16a085;
+  color: #025f4c;
+  transition: 0.2s ease;
 }
 
 .logo{
@@ -100,6 +154,24 @@ ul > li > a {
 
 ul > li > a:hover {
     color: lightgray;
+
+}
+
+span > a {
+  color: black;
+  text-decoration: none;
+}
+span > a:hover{
+  color: #025f4c;
+  text-decoration: none;
+}
+
+.not-hidden-modal a {
+  color: rgb(15, 14, 14);
+    font-size: 2.65em;
+    font-weight: 200;
+    text-decoration: none;
+    transition: all .5s ease;
 }
 
 .profile-logo {
@@ -208,8 +280,10 @@ ul > li > a:hover {
   }
 
   .logout {
+    width: 40px;
+    height: 40px;
     cursor:pointer;
-    font-size:0.35em;
+
     margin-right:20px
   }
 
@@ -365,7 +439,8 @@ ul > li > a:hover {
       text-align: left;
       margin:auto;
       padding:5px;
-      font-family: fantasy;
+      /*font-family: fantasy;*/
+      font-family: 'Roboto', sans-serif;
       font-size: 1.5em;
       text-transform: uppercase;
       color: white;
@@ -384,10 +459,7 @@ ul > li > a:hover {
   }
 
   .image-wrapper h2:hover { 
-    color: rgb(214, 112, 112);
-    text-decoration: underline;
-
-
+    color: rgb(128, 119, 119);
   }
         .scroll-container {
             overflow: hidden;
@@ -509,9 +581,9 @@ ul > li > a:hover {
     width: 334px;
     border-radius: 15%;
     margin: auto;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size:20px;
-
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
   }
 
   /*form form form form form form form form*/
@@ -574,6 +646,28 @@ ul > li > a:hover {
   }
   .form button:hover {
     background-color: #7bd4da;
+  }
+
+  .form-submit-button {
+    display: block;
+    box-sizing: border-box;
+    margin-top: 20px;
+    padding: 4px;
+    width: 220px;
+    height: 32px;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    transition: 0.2s ease;
+    background: #16a085;
+    color:white;
+  }
+
+  .form-submit-button:hover {
+    
+    background: #aee7dc;
+    transition: 0.2s ease;
   }
   /*form form form form formformform form*/
   
@@ -814,7 +908,7 @@ ul > li > a:hover {
   margin: 5% auto;
   width: 600px;
   height: 500px;
-  background: #FFF;
+  background: #fffc;
   border-radius: 2px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   padding: 0;
@@ -863,6 +957,7 @@ ul > li > a:hover {
   transition: 0.2s ease;
 }
 
+.input[type="datetime-local" i],
 .image-form-select-box,
 .image-form-select-box > input[type="text"],
 .login-box input[type="text"],
@@ -881,6 +976,7 @@ input[type="password"] {
   transition: 0.2s ease;
 }
 
+.input[type="datetime-local" i]:focus,
 .image-form-select-box:focus,
 .image-form-select-box > input[type="text"]:focus,
 .login-box input[type="text"]:focus,
@@ -972,12 +1068,12 @@ input[type="submit"]:active {
 
 .image-form-right-image {
   height: 642px;
-  width: 350px;
+  width: 400px;
   opacity: 0.75;
   margin-top: -37px;
   margin-bottom: 0px;
-  margin-right: 133px;
-  margin-left: -45px;
+  margin-right: 137px;
+  margin-left: -94px;
 }
 
 .image-form-input-text {
@@ -1076,10 +1172,43 @@ body {
   vertical-align: middle;
 }
 .user_avatar img {
-  width: 100%;
-  height: 100%;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
+  margin-top: -17px;
+  margin-left: -7px;
 }
+
+.user-info img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-top: 18px;
+  margin-left: -724px;
+}
+
+.upload-image-button {
+  display: block;
+  box-sizing: border-box;
+  margin-top: 20px;
+  padding: 4px;
+  width: 220px;
+  height: 32px;
+  border: none;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  transition: 0.2s ease;
+  background: #16a085;
+  color:white;
+}
+
+.upload-image-button:hover {
+  
+  background: #aee7dc;
+  transition: 0.2s ease;
+}
+
 .comment_block {
   width: 66%;
   height: 100%;
@@ -1270,3 +1399,66 @@ select {
       overflow-y:scroll;
       overflow-x:hidden;
     }
+
+    /*GENERAL INFO STYLE*/
+    .general-info-box {
+      position: relative;
+      margin: 5% auto;
+      width: 900px;
+      height: 600px;
+      background: #FFF;
+      border-radius: 2px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+      padding: 0;
+      font-size: 16px;
+      color: #222;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 300;
+      margin-left: -185px;
+    }
+    
+    .general-info-left {
+      position: absolute;
+      top: 0;
+      left: 0;
+      box-sizing: border-box;
+      padding: 40px;
+      width: 600px;
+      height: 400px;
+    }
+    
+    .general-info-left-h1 {
+      margin: 0 0 20px 0;
+      font-weight: 300;
+      font-size: 40px;
+      font-family: 'Roboto', sans-serif;
+      text-align: center;
+    }
+    
+    .general-info-left p {
+      line-height: 1.5;
+    }
+    
+    .general-info-right {
+      position: absolute;
+      top: 0;
+      right: 0;
+      box-sizing: border-box;
+      padding: 40px;
+      width: 300px;
+      height: 400px;
+      background: url('https://goo.gl/YbktSj');
+      background-size: cover;
+      background-position: center;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .general-info-right > img{
+      border-radius: 4px;
+      width: 317px;
+      height: 400px;
+      margin-left: -67px;
+      margin-top: 75px;
+    }
+    
+    /*END OF GENERAL INFO STYLE*/

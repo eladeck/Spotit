@@ -17,9 +17,11 @@ class Header extends Component {
             allUsers:null,
             showAllUsers:false,
             searchWord:"",
-            searchFor:"users",
+            searchFor:"users"
+            //loggInUser: null  // We have to use 'loggedInUser' in state because it is going to be changed each time we hit 'follow/'unfollow' button.
         }
 
+        //console.log("in constructor, loggedInUser is ", props.loggedInUser, this.props.loggedInUser);
         this.handleLogout = this.handleLogout.bind(this)
         this.handleFollow = this.handleFollow.bind(this)
         this.handleChange = this.handleChange.bind(this)
@@ -28,20 +30,20 @@ class Header extends Component {
         this.renderAllUsersUnderInput = this.renderAllUsersUnderInput.bind(this)
         this.handleUrlChanged = this.handleUrlChanged.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
-
     } // c'tor
 
     renderAllUsersUnderInput(e) {
         console.log("in renderallUser")
         const divStyle = {
-            width: "fit-content",
+            width: "220px",
             height: "fit-content",
             zIndex: "1",
             position: "absolute",
-            backgroundColor: "#886c6cde",
-            fontFamily: "none",
-            borderColor: "goldenrod",
+            backgroundColor: "rgba(255, 255, 255, 0.87)",
+            fontFamily: "'Roboto', sans-serif",
+            borderColor: "#4fb4652e",
             borderStyle: "solid",
+            color: "black"
         }
 
         return (
@@ -55,7 +57,11 @@ class Header extends Component {
                         <>
                         <div key={user.userName} style={{maxWidth:"130px", width:"130px",float:"left"}}>
                         <span style={{position: "absolute", left:"0px",fontSize:"0.37em"}} onClick={() => this.setState({showAllUsers: false})}><Link to={`/profile/${user.userName}`}>{user.userName}</Link></span>
-                            <span onClick={() => this.handleFollow(user.userName)}style={{cursor:"pointer",fontSize:"0.3em", color:"red", right:"0px", position:"absolute"}}>follow</span>
+                            {!this.props.loggedInUser.following.includes(user.userName) ?
+                            <span onClick={() => this.handleFollow(user.userName)} style={{cursor:"pointer",fontSize:"0.3em", color:"#034437", right:"0px", position:"absolute"}}>Follow</span>
+                            :
+                            <span onClick={() => this.handleUnfollow(user.userName)} style={{cursor:"pointer",fontSize:"0.3em", color:"#034437", right:"0px", position:"absolute"}}>Unfollow</span>
+                            }
                         </div>
                         <br />
                         </>
@@ -106,8 +112,15 @@ class Header extends Component {
         this.setState({showAllUsers: false})
     } // handleFollow
 
+    async handleUnfollow(userNameToFollow) {
+        await this.props.handleUnfollow(userNameToFollow);
+        console.log("in handleUnfollow, after awaiting props.handleUnfollow.")
+       
+        this.setState({showAllUsers: false})
+    } // handleUnfollow
+
     handleLogout() {
-        this.props.handleLogout();
+        this.props.handleLogout(); 
     }
 
     renderAllData() {
@@ -118,9 +131,9 @@ class Header extends Component {
             overflow: "scroll",
             zIndex: "1",
             position: "absolute",
-            backgroundColor: "#ece4e4de",
-            fontFamily: "sens-serif",
-            borderColor: "black",
+            backgroundColor: "rgba(255, 255, 255, 0.87)",
+            fontFamily: "'Roboto', sans-serif",
+            borderColor: "#4fb4652e",
             borderStyle: "solid",
         }
 
@@ -170,35 +183,39 @@ class Header extends Component {
     }
     render() {
         
-        return ( 
+        console.log("Header render(): this.props.loggedInUser is", this.props.loggInUser);
+
+        return (  
                    <header>
       <a href="/" className="logo"><img src={"logo.png"} style={{width:'60px', height: '61px'}} alt="Spotit"/></a>
       {/* <input placeholder="Search..." className="input-style" type="textbox"></input> */}
       <nav>
           <ul>
               <li><a>Search For</a></li>
-                <select onChange={this.handleSelectChange}>
+              <li>
+                <select className="header-select-box" onChange={this.handleSelectChange}>
                     <option value="users">Users</option>
                     <option value="airports">Airports</option>
                     <option value="aircrafts">Aircrafts</option>
                     <option value="countries">Countries</option>
                     <option value="airlines">Airlines</option>
                 </select>
+               </li>
               <li>
                   <form>
                       <input placeholder={this.state.searchFor} name='userNameToFollow' type='textbox' onChange={this.handleChange} onClick={this.handleUsersInputClick} autoComplete="off"/>
                       {this.state.showAllUsers && this.state.searchFor === "users" ? this.renderAllUsersUnderInput() : null}
                       {this.state.showAllUsers && this.state.searchFor !== "users" ? this.renderAllData() : null}
-                  </form>
+                  </form> 
               </li> 
               
               {this.props.loggedInUser ? <li><Link to="/">Home</Link></li> :
                <li><Link to="/register">Login</Link></li>}
                {/* <li onClick={this.handleUrlChanged}><Link to="/register">Register</Link></li>} */}
               <li>
-                <a className="tooltip" href="#forum">
-                    <div class="tooltip">Forum
-                        <span class="tooltiptext">Soon!</span>
+                <a className="tooltip" href="/">
+                    <div className="tooltip">Forum
+                        <span className="tooltiptext">Soon!</span>
                     </div>
                 </a>
              </li>
@@ -207,9 +224,9 @@ class Header extends Component {
       {this.props.loggedInUser ?
       <div onMouseEnter={this.mouseEnterProfile} className="profile-logo">
           <Link to={`/profile/${this.props.loggedInUser.userName}`}>{this.props.loggedInUser.userName}</Link>
-          </div> : null}
+          </div> : null} 
       {this.props.loggedInUser ?
-      <p className="logout" onClick={this.handleLogout}>log out</p> : null}
+      <img src="/exit.png" className="logout" onClick={this.handleLogout}/> : null}
       {/* <p data-tip="hello world">Tooltip</p>
       <ReactTooltip/> */}
    </header>

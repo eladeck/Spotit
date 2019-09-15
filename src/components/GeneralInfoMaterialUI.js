@@ -73,16 +73,20 @@ export default function GeneralInfoMaterialUI(props) {
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              {headline}
-            </Typography>
-            <Typography paragraph="true" >
-              {dataToDisplay}
-            </Typography>
-            {console.log(`GeneralInfoMaterialUI.js: main image URL is: ${props.data.imageUrl}`)}
-            <img src={props.data.imageUrl} alt="main info image not found" height="100%" width="100%" />
-          
-          </Container>
+            
+            <div class="general-info-box">
+              <div class="general-info-left">
+                <h1 className="general-info-left-h1">{headline}</h1>
+                <p>
+                {dataToDisplay}
+                </p>
+              </div>
+
+              <div class="general-info-right">
+              <img src={props.data.imageUrl} alt="main info image not found" height="100%" width="100%" />
+              </div>  
+            </div>
+          </Container> 
         </div>
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}

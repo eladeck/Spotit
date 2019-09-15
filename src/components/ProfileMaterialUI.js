@@ -102,7 +102,21 @@ function handleGoToAirport(e) {
 //   return false;
 // }
 
+const handleSubmit = () => {
 
+var input = document.querySelector('input[type="file"]')
+var data = new FormData()
+data.append('file', input.files[0])
+data.append('user', 'hubot')
+
+console.log("ProfileMaterialUI: handleSubmit!!!!!!")
+alert("ProfileMaterialUI: handleSubmit!!!!!!");
+  fetch(`/image/updateProfilePicture`, {
+    method:"POST",
+    body:  new FormData(data.files[0])
+ }).then(obj => {console.log("Uploaded profile picture successfuly!")})
+ 
+}
 
 
 export default function Album(props) {
@@ -140,27 +154,33 @@ export default function Album(props) {
               {currentProfileUser.firstName} {currentProfileUser.lastName}
             </Typography>
             <div className="profile-picture">
-             <div className="user_avatar">
+             <div className="user-info">
                   {/* <img src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/73.jpg"></img> */}
-                  <img src={`${currentProfileUser.profilePictureUrl}`}></img>
+                 <img src={`${currentProfileUser.profilePictureUrl}`}></img>
+
                   {isUserVistingOwnProfile ? 
-                    <form className="" action="image/updateProfilePicture" method="post" encType="multipart/form-data" >
+                    <form action="/image/updateProfilePicture" method="post" encType="multipart/form-data" /*onSubmit={this.handleSubmit}*/>
                       <input type="file" name="image" />
-                      <input type="submit" name="submit" value="Submit" />
+                     <input type="submit" name="submit" value="Change Picture" /*onClick={handleSubmit}*//>
+                      {/*<button type="submit" className="upload-image-button" >Upload</button>*/}
                     </form>
-                    :
-                    null
+                    : 
+                    null 
                   }
               </div>
-            </div>
+            </div> 
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              <div> <PopupModal users={currentProfileUser.followedBy} textToDisplay={"Followers" } /></div>
-              <div> <PopupModal users={currentProfileUser.following} textToDisplay={"Following" } /> </div>
+              <div> <PopupModal users={props.followingProfilePicture} textToDisplay={"Followers" } /></div>
+              <div> <PopupModal users={props.followedByProfilePicture} textToDisplay={"Following" } /> </div>
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
+<<<<<<< HEAD
+                  { !isUserVistingOwnProfile ? 
+=======
                   {!isUserVistingOwnProfile ? 
+>>>>>>> e4f0292b493e90c3293f7adb18f3a7dbb793db48
                     (!loggedInUser.following.includes(currentProfileUser.userName) ?
                       <button className="follow-button" onClick={() => props.handleFollow(currentProfileUser.userName)}>
                         Follow
@@ -195,7 +215,7 @@ export default function Album(props) {
       </main>
       {/* Footer */}
       <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
+        <Typography variant="h6" align="center" gutterBottom> 
           {/* Footer */}
         </Typography>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">

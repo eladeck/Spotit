@@ -14,6 +14,7 @@ class App extends React.Component {
                         iataCodeData:null,
                 }
         this.updateLoggedInUser = this.updateLoggedInUser.bind(this)
+        //this.fetchUser = this.fetchUser.bind(this);
         this.handleLogout = this.handleLogout.bind(this)
         //this.handleNewFollow = this.handleNewFollow.bind(this)
         this.handleFollow = this.handleFollow.bind(this)
@@ -37,6 +38,18 @@ class App extends React.Component {
                 .then(response => response.json())
                 .then(iataCodeData => {console.log("finished");console.log(ms - new Date().getTime());this.setState({iataCodeData})})
                 .catch(errMsg => this.setState({errMsg}))
+                //this.fetchUser();
+
+        }
+
+        fetchUser(){
+
+                fetch(`/user/getUser?userName=${this.state.loggedInUser.userName}`, {method:'GET', credentials:'include'})
+                .then(response => response.json())
+                .then(loggedInUser => { 
+                        
+                        this.setState({loggedInUser});
+                })
         }
 
         handleLogout() {
@@ -64,6 +77,7 @@ class App extends React.Component {
                 fetch(`/user/unfollow?userNameToUnfollow=${userNameToUnfollow}`, {method:'POST', credentials:"include"})
                 .then(res => res.json())
                 .then(obj => {this.state.refToExtractAllFollowings(shouldFetchLoggedInUserFromDb); console.log('after'); })
+               // this.fetchUser();
         }
               
         handleFollow(userNameToFollow) {
@@ -73,6 +87,8 @@ class App extends React.Component {
                 fetch(`/user/follow?userNameToFollow=${userNameToFollow}`, {method:'POST', credentials:"include"})
                 .then(res => res.json())
                 .then(_ => {this.state.refToExtractAllFollowings(shouldFetchLoggedInUserFromDb); console.log('after'); })
+
+                //this.fetchUser();
                 // .then(newListOfFollowings => this.setState({newListOfFollowings}))
         } // handleFollow
         

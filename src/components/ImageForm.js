@@ -116,7 +116,7 @@ class ImageForm extends Component {
                  <div style={{position:"fixed", left:"50%", top:"50%"}}>
                      Image succusfully uploaded!
                  </div>) 
-               :
+               : 
                <main>
                    
                     <div className="image-form-box">
@@ -150,7 +150,7 @@ class ImageForm extends Component {
                         <input class="image-form-description" name="description" value={this.state.description} placeholder="Description"  onChange={this.handleChange}/>
                         {/* <button onClick={this.handleBrowse}>Browse</button> */}
                         <input type="file" name="image" /*onChange={this.handleBrowse}*/ />
-                        <input type="submit" name="submit" value="Submit" />
+                        <button type="submit" class="form-submit-button">Submit</button>
                     </form>
 
                 <div className="image-form-right">
@@ -158,14 +158,14 @@ class ImageForm extends Component {
                 </div>
                 </div>
 
-               <hr />
+              {/*<hr />
                <h2>Entered information:</h2>
                <p>Airline: {this.state.airline}</p>
                <p>Airplane Model: {this.state.airplaneModel}</p>
                <p>Country: {this.state.country}</p>
                <p>City: {this.state.city}</p>
                <p>Airport:{this.state.airport}</p>
-               <p>registration:{this.state.registration}</p>
+              <p>registration:{this.state.registration}</p> */}
            </main>
         ) // End of return
     }

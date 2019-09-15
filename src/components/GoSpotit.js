@@ -57,7 +57,7 @@ class GoSpotit extends Component {
                       <a className="close" onClick={close}>
                         &times;
                       </a>
-                      <div className="header" style={{color:"pink"}}> What are you waiting for? Go Spotit </div>
+                      <div className="header" style={{color:"black"}}> What are you waiting for? Go Spotit </div>
                       <div className="content">
                           <ul style={{overflow:"auto"}}>
                               {this.props.flightInfo.map(flightInfoObject => 
@@ -74,7 +74,7 @@ class GoSpotit extends Component {
            
                       </div>
                       <div className="actions">
-                        <Popup
+                      { /* <Popup
                           trigger={<button className="button"> {this.props.inside} </button>}
                           position="top center"
                           closeOnDocumentClick
@@ -82,7 +82,7 @@ class GoSpotit extends Component {
                           <span>
 
                           </span>
-                        </Popup>
+                      </Popup>*/}
                         <button
                           className="button"
                           onClick={() => {
