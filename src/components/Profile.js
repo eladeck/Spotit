@@ -79,7 +79,7 @@ class Profile extends Component {
             // Get the profile pictures of all followers and following.
             return fetch(`/user/getFollowersProfilePicture?userName=${this.props.match.params.userName}`, {method:'GET', credentials:'include'})
         })
-        .then(response => {
+        .then(response => { 
             console.log("response is ", response);
             response.json().then(followersPicture => {
                 console.log("followersPicture is ", followersPicture)
@@ -113,9 +113,11 @@ class Profile extends Component {
         console.log(this.state.followedByProfilePicture)
 
         return (
-            !(this.state.currentProfileUser && this.state.followingProfilePicture && this.state.followedByProfilePicture) ? <Loader type="TailSpin" color="blue" height={120} width={120} /> :
-            <>
-                <ProfileMaterialUI
+            !(this.state.currentProfileUser && this.state.followingProfilePicture && this.state.followedByProfilePicture) ?  
+            <div style={{position:"fixed", left:"48%", top:"40%"}}><Loader type="TailSpin" color="lightblue" height={40} width={40} /></div> 
+            :
+            <> 
+                <ProfileMaterialUI 
                     currentProfileUser={this.state.currentProfileUser}
                     loggedInUser={loggedInUser}
                     images={this.state.images}

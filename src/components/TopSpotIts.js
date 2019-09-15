@@ -51,16 +51,16 @@ class TopSpotIts extends Component {
             <div className="top-spotits">
                 <h1 className="clickable-title title">Top Spotits</h1>
                  <ul>
-                     {(!this.state.allUsers || this.state.loading) ? <Loader type="TailSpin" color="lightgreen" height={40} width={40} /> :
+                     {(!this.state.allUsers || this.state.loading) ? <Loader type="TailSpin" color="lightblue" height={40} width={40} /> :
                      this.state.allUsers
                      .sort((userA, userB) => (userA.score < userB.score) ? 1 : ((userB.score < userA.score) ? -1 : 0))
-                     .map(user => 
-                        <li>
+                     .map((user, index) => 
+                        <li key={index}>
                            <div className='top-spotit-user'>
                              <img style={{maxWidth:"12%", position:"relative", left:"-15px"}} src={'./img/camera-logo.png'}></img>
-                             {`[${user.score}] ${user.firstName} ${user.lastName} (${this.calcRank(user.score)})`}
+                             {`(${user.score}) ${user.firstName} ${user.lastName} (${this.calcRank(user.score)})`}
                            </div>
-                       </li>
+                       </li> 
                      )}
                     {/* <li>
                         <div className='top-spotit-user'>

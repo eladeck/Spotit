@@ -30,3 +30,8 @@ ReactDOM.render(<App />, document.getElementById("root"))
     //     {$unset : {"isAuthorizedToUploadFlights": 1}},
     //     {upsert:false,
     //     multi:true})
+
+            // app.locals.imgCollection.updateMany({},
+        // {$set : {"description":""}},
+        // {upsert:false,
+        // multi:true})

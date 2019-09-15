@@ -11,8 +11,10 @@ class App extends React.Component {
                         loggedInUser:null,
                         userWantsToLogout:false,
                         refToExtractAllFollowings:null,
+                        iataCodeData:null,
                 }
         this.updateLoggedInUser = this.updateLoggedInUser.bind(this)
+        //this.fetchUser = this.fetchUser.bind(this);
         this.handleLogout = this.handleLogout.bind(this)
         //this.handleNewFollow = this.handleNewFollow.bind(this)
         this.handleFollow = this.handleFollow.bind(this)
@@ -28,6 +30,26 @@ class App extends React.Component {
         //         // hence I want to re-render container,
         //         // cause it'll extract my followings and will show the new images of folloing
         // }
+
+        componentDidMount() {
+                // for fetching airplanes and stuff
+                fetch(`/imageFormData`, {method: 'GET', credentials: 'include'})
+                .then(response => response.json())
+                .then(iataCodeData => this.setState({iataCodeData}))
+                .catch(errMsg => this.setState({errMsg}))
+                //this.fetchUser();
+
+        }
+
+        fetchUser(){
+
+                fetch(`/user/getUser?userName=${this.state.loggedInUser.userName}`, {method:'GET', credentials:'include'})
+                .then(response => response.json())
+                .then(loggedInUser => { 
+                        
+                        this.setState({loggedInUser});
+                })
+        }
 
         handleLogout() {
                 this.setState({
@@ -54,6 +76,7 @@ class App extends React.Component {
                 fetch(`/user/unfollow?userNameToUnfollow=${userNameToUnfollow}`, {method:'POST', credentials:"include"})
                 .then(res => res.json())
                 .then(obj => {this.state.refToExtractAllFollowings(shouldFetchLoggedInUserFromDb); console.log('after'); })
+               // this.fetchUser();
         }
               
         handleFollow(userNameToFollow) {
@@ -63,6 +86,8 @@ class App extends React.Component {
                 fetch(`/user/follow?userNameToFollow=${userNameToFollow}`, {method:'POST', credentials:"include"})
                 .then(res => res.json())
                 .then(_ => {this.state.refToExtractAllFollowings(shouldFetchLoggedInUserFromDb); console.log('after'); })
+
+                //this.fetchUser();
                 // .then(newListOfFollowings => this.setState({newListOfFollowings}))
         } // handleFollow
         
@@ -77,6 +102,7 @@ class App extends React.Component {
                                 handleUrlChanged={this.handleUrlChange}
                                 handleFollow={this.handleFollow}
                                 handleUnfollow={this.handleUnfollow}
+                                iataCodeData={this.state.iataCodeData}
                          />
                         <Container
                          loggedInUser={this.state.loggedInUser}

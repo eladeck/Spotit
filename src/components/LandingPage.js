@@ -21,11 +21,11 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="/">
+        Spotit
       </Link>{' '}
       {new Date().getFullYear()}
-      {'. Built with '}
+      {'. Partially Built with '}
       <Link color="inherit" href="https://material-ui.com/">
         Material-UI.
       </Link>
@@ -131,7 +131,7 @@ export default class LandingPage extends Component {
         
         const images = this.props.imagesToDisplay;
 
-        return (
+        return ( 
             <React.Fragment>
             <CssBaseline />
             <main>
@@ -167,24 +167,7 @@ export default class LandingPage extends Component {
                 <Grid container spacing={4}>
                   {!images ? "Loading..." :
                   images.map((imageObj, index) => ( // to render loader until the images are here!
-                    <Grid item key={index} xs={12} sm={6} md={4}>
-                        <Card className={classes.card}>
-                          <div className="hoverable-image-container">
-                            <img className="hoverable-image" src={`/${imageObj.userName}/${imageObj.url}`} />
-                            {console.log(imageObj)}
-                            {console.log(`-----------------------------------------------`)}
-                                <div className="hoverable-overlay">
-                                    <ul className="text-in-overlay">
-                                        <li>Airport:<Link to={`/info/airport/${imageObj.airport}`}>{imageObj.airport}</Link></li>
-                                        <li>Aircraft:<Link to={`/info/airplaneModel/${imageObj.airplaneModel}`}>{imageObj.airplaneModel}</Link></li>
-                                        <li>City:<Link to={`/info/city/${imageObj.city}`}>{imageObj.city}</Link></li>
-                                        <li>Country:<Link to={`/info/country/${imageObj.country}`}>{imageObj.country}</Link></li>
-                                        <li>Code: {imageObj.code}</li>
-                                    </ul>
-                                </div>
-                          </div>
-                      </Card>
-                    </Grid>
+                    <ImageCard key={index} imageObj={imageObj} />
                   ))}
                 </Grid>
               </Container>
@@ -193,10 +176,10 @@ export default class LandingPage extends Component {
             {/* Footer */}
             <footer className={classes.footer}>
               <Typography variant="h6" align="center" gutterBottom>
-                Footer
+                {/* Footer */}
               </Typography>
               <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-                Something here to give the footer a purpose!
+                {/* Something here to give the footer a purpose! */}
               </Typography>
               <Copyright />
             </footer>

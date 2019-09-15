@@ -186,11 +186,12 @@ class GeneralInfo extends Component {
     render() {
 
         console.log(`in render of Airport`)
+        const pageType = window.location.pathname.split('/')[2]
 
         return (
             // !airportInfo ? <Loader type="TailSpin" color="blue" height={120} width={120} /> :
             <>
-            <h1>Airport Page</h1>
+            {/* <h1>{pageType.substring(0, pageType.length - 1)} Page</h1> */}
                 {(this.state.data && this.state.images) ? 
                 <GeneralInfoMaterialUI
                     data={this.state.data}
@@ -198,7 +199,7 @@ class GeneralInfo extends Component {
                     images={this.state.images}
                 /> 
                 :
-                <Loader type="TailSpin" color="blue" height={120} width={120} />
+                <div style={{position:"fixed", left:"48%", top:"40%"}}><Loader type="TailSpin" color="lightblue" height={40} width={40} /></div>
                 }
             </>
         );

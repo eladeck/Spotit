@@ -11,21 +11,40 @@ const upload = multer({
     // you might also want to set some limits: https://github.com/expressjs/multer#limits
   });
 
-router.post('/upload', (req, res, next) => {console.log('in image upload!'); next()},
-upload.single("image" /* name attribute of <file> element in your form */),
- (req, res) => {
+  router.post('/updateProfilePicture', (req, res, next) => {console.log('in image upload!'); next()}, 
+  upload.single("image" /* name attribute of <file> element in your form */),
+  (req, res) => {
+    if(!req.file) {
+      res.send({err: "no file uploaded! please select file and then press upload"})
+    }
 
-  if(!req.file) {
-    res.send({err: "no file uploaded! please select file and then press upload"})
+    console.log("In router.post('/updateProfilePicture): going to upload profile picture ")
+
+    const imageName = req.file.originalname;
+    const usersCollection = req.app.locals.usersCollection;
+    const userToFind = {userName: req.cookies.userName};
+    const newProfilePictureUrl = {$set: {profilePictureUrl: `${req.cookies.userName}/${imageName}`}}
+
+    usersCollection.updateOne(userToFind, newProfilePictureUrl, (err, collectionResult) => {
+      if (err) throw err;
+      console.log("Profile picture was updated.");
+      uploadImage(req, res);
+      res.send('<div style="position:fixed;left:40%;top:40%;font-family:fantasy;letter-spacing:1px;word-spacing:2px;">' +
+              'image uploaded! go back to <a href="/">home page</a></div>');
+    });
+
   }
+  );
+  
+  const uploadImage = (req, res) => {
 
-    const desiredFileName = req.file.originalname//`${req.file.filename}.jpg`
-
+    const imageName = req.file.originalname//`${req.file.filename}.jpg 
+    console.log("uploadImage imageName is", imageName);   
     const tempPath = req.file.path;
     const userName = req.cookies.userName;
 
     const userDirectory = path.join(__dirname, `../images/${userName}`);
-    const newImagePath = path.join(__dirname, `../images/${userName}/${desiredFileName}`);
+    const newImagePath = path.join(__dirname, `../images/${userName}/${imageName}`);
 
     if (!fs.existsSync(userDirectory)) {// If user's folder does not exist, create it.
         fs.mkdirSync(userDirectory)
@@ -46,6 +65,76 @@ upload.single("image" /* name attribute of <file> element in your form */),
     // console.log(`---. req.file is`)
     // console.log(req.file)
 
+    // const objectToInsert = {
+    //     userName,
+    //     date: new Date(),
+    //     url: imageName, // this is like "llbg3.jpg". desiredFileName was not good here since it was "4das9r31uoijdas.jpg"
+    //     airplaeModel: req.body.airplaneModel,
+    //     airline: req.body.airline,
+    //     country: req.body.country,
+    //     city: req.body.city,
+    //     airport: req.body.airport,
+    //     code: req.body.registration,
+    //     description: req.body.description,
+    //     likes: [],
+    //     comments: []
+    // };
+    
+    // const imagesCollection = req.app.locals.imgCollection;
+    
+
+    // imagesCollection.insertOne(objectToInsert, (err, result) => { 
+    //     if(err) {
+    //       console.log("in imagesCollection.insertOne(): ERROR occured.")
+    //       res.send(401, {err:`Error occured while uploading image to database.`});
+    //     } else {
+    //       console.log("in imagesCollection.insertOne(): Object successfully inserted.")
+    //       req.app.locals.usersCollection.updateOne(
+    //         { userName }, /*query: what record to update*/
+    //         { $addToSet: { images: ObjectId(result.ops[0]._id) } }, 
+    //         res.send('<div style="position:fixed;left:40%;top:40%;font-family:fantasy;letter-spacing:1px;word-spacing:2px;">' +
+    //           'image uploaded! go back to <a href="/">home page</a></div>'));
+    //     }
+    // });
+  }
+router.post('/upload', (req, res, next) => {console.log('in image upload!'); next()},
+upload.single("image" /* name attribute of <file> element in your form */),
+ (req, res) => {
+
+  if(!req.file) {
+    res.send({err: "no file uploaded! please select file and then press upload"})
+  }
+
+  uploadImage(req, res);
+
+     const desiredFileName = req.file.originalname//`${req.file.filename}.jpg`
+
+
+    // const tempPath = req.file.path;
+    // const userName = req.cookies.userName;
+
+    // const userDirectory = path.join(__dirname, `../images/${userName}`);
+    // const newImagePath = path.join(__dirname, `../images/${userName}/${desiredFileName}`);
+
+    // if (!fs.existsSync(userDirectory)) {// If user's folder does not exist, create it.
+    //     fs.mkdirSync(userDirectory)
+    // }
+
+    // fs.rename(tempPath, newImagePath, function (err) {
+    //   if (err) throw err;
+    //   console.log('renamed complete');
+    //   console.log(`tempPath is ${tempPath}`);
+    //   console.log(`newImagePath is ${newImagePath}`);
+    // });
+
+
+
+    // // const imageObject = JSON.parse(req.body);
+    // // console.log(`--- inside upload. req.body is`)
+    // // console.log(req.body)
+    // // console.log(`---. req.file is`)
+    // // console.log(req.file)
+    const userName = req.cookies.userName;
     const objectToInsert = {
         userName,
         date: new Date(),
@@ -57,7 +146,8 @@ upload.single("image" /* name attribute of <file> element in your form */),
         airport: req.body.airport,
         code: req.body.registration,
         description: req.body.description,
-        likes: []
+        likes: [],
+        comments: []
     };
     
     const imagesCollection = req.app.locals.imgCollection;
@@ -78,54 +168,24 @@ upload.single("image" /* name attribute of <file> element in your form */),
     });
 });
 
-function getDate() {
-  var today = new Date();
-var dd = today.getDate();
-var mm = today.getMonth() + 1; //January is 0!
 
-var yyyy = today.getFullYear();
-if (dd < 10) {
-  dd = '0' + dd;
-} 
-if (mm < 10) {
-  mm = '0' + mm;
-} 
-var today = dd + '/' + mm + '/' + yyyy;
-
-var today2 = new Date();
-var h = today2.getHours();
-var m = today2.getMinutes();
-var s = today2.getSeconds();
-// add a zero in front of numbers<10
-m = checkTime(m);
-s = checkTime(s);
-return today + '-' + h + ":" + m;
-}
-
-function checkTime(i) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  return i;
-}
 
 
 
 router.post('/newComment', (req, res) => {
   console.log("i am here. req.body is " + req.body)
-  let text = req.body;
-  let userName = req.cookies.userName;
+  // let text = req.body;
+  // let userName = req.cookies.userName;
+  // let date = getDate();
+  // let comment = {
+    //   userName,
+    //   text,
+    //   date,
+    // }
   let id = req.query.id;
-  let date = getDate();
-  let comment = {
-    userName,
-    text,
-    date,
-  }
-  console.log("comment text is " + text);
-  console.log("userName is " + userName);
-  console.log("imageId is " + id);
-  console.log("date is " + date);
+  let comment = JSON.parse(req.body)
+  console.log("comment:")
+  console.log(comment)
 
   req.app.locals.imgCollection.updateOne(
     { _id: ObjectId(id) },

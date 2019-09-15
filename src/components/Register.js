@@ -122,6 +122,7 @@ class Register extends Component {
                 <img src="/defaultPicturesToBeDisplayed/registrationBackground.jpg"  />
             <div className="login-box">
                 <div className="left">
+                    <form onSubmit={this.handleRegister}>
                     <h1 className="sign-in-h1">Register</h1>
                     <input type="text" name="firstName"  value={this.state.newUser.firstName}  onChange={this.handleChange}  placeholder="First Name" />
                     <input type="text" name="lastName"  value={this.state.newUser.lastName} onChange={this.handleChange}  placeholder="Last Name"  />
@@ -130,15 +131,20 @@ class Register extends Component {
                     <input type="password" name="password"  value={this.state.newUser.password} onChange={this.handleChange}  placeholder="Password" />
                     <input type="password" name="password2"  value={this.state.newUser.password2} onChange={this.handleChange}  placeholder="Confirm password" />
                     <div style={{color:"red"}}>{this.state.registerErrMsg}</div>
-                    <input type="submit" name="signup_submit"  value="Register" onClick={this.handleRegister} />
+                    <button type="submit" class="form-submit-button">Register</button>
+                    {/*<input type="submit" name="signup_submit"  value="Register" onClick={this.handleRegister} />*/}
+                    </form>
                 </div>
-                <div className="or">OR</div>
+                <div className="or">OR</div> 
                 <div className="right">
                     <h1 className="sign-in-h1">Sign In</h1>
+                    <form onSubmit={this.handleLogin}>
                     <input type="text" name="regUserName"  value={this.state.registeredUser.userName} onChange={this.handleChange}  placeholder="Username"  />
                     <input type="password" name="regPassword"  value={this.state.registeredUser.password} onChange={this.handleChange}  placeholder="Password" />
                     <div style={{color:"red"}}>{this.state.errMsg}</div>
-                    <input type="submit" name="signup_submit" value="Sign me in" onClick={this.handleLogin} />
+                    <button type="submit" class="form-submit-button">Register</button>
+                    {/*<input type="submit" name="signup_submit" value="Sign me in" onClick={this.handleLogin} />*/}
+                    </form>
                 </div>
             </div>
             </div>

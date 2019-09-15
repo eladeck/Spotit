@@ -119,7 +119,7 @@ async function startServer() {
         
         const collectionPromise = (collection) => {
             return new Promise((resolve, reject) => {
-                collection.find({}).limit(10).toArray((err, result) => { // limit to only 10
+                collection.find({}).limit(100).toArray((err, result) => { // limit to only 10
                     err ? reject(err) : resolve(result);
                 })});
         }
@@ -150,8 +150,8 @@ async function startServer() {
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname + "/../public/index.html"))
     })
-} // startServer
+} // startServer 
 
 startServer();
 
-module.exports = MongoClient;
+module.exports = MongoClient; 

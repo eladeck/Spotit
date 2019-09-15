@@ -157,7 +157,7 @@ router.get('/getImages', (req, res) => {
                                 return;
                             }
                         }
-                    });
+                    }); 
                 });
 
                 flag = false;
@@ -175,15 +175,38 @@ router.get('/getImages', (req, res) => {
     });
 }); // getImages
 
+
+const findFollowerPromise = (usersCollection, follower) => {
+    return new Promise((resolve,reject) => {
+        usersCollection.find({"userName": follower}).toArray((err, innerUser) => {
+            if(err || innerUser.length === 0) {
+                //console.log(`in router.get('/getFollowersProfilePicture'). In forEach: couldn't find follower ${follower}`)
+                reject(err);
+            } else {
+                const userFollower = innerUser[0];
+                const result = {userName: follower, profilePictureUrl: userFollower.profilePictureUrl};
+                resolve(result);
+            }
+        });
+    })
+}
+
+const callFindFollowersPromise = async (usersCollection, follower) => {
+    const result = await findFollowerPromise(usersCollection, follower);              
+    // console.log(`router.get('/getFollowersProfilePicture'): in callFindFollowersPromise: result is  `)
+    // console.log(result)
+    return result;
+}
+
 router.get('/getFollowersProfilePicture', (req, res) => {
     const userName = req.query.userName;
     const usersCollection = req.app.locals.usersCollection;
-    console.log(`in router.get('/getFollowersProfilePicture')!!!!!!!!!!!!!!!!!!!!!!`)
+   // console.log(`in router.get('/getFollowersProfilePicture')!!!!!!!!!!!!!!!!!!!!!!`)
 
     let user = null;
 
     usersCollection.find({"userName": userName}).toArray((err, result) => {
-        console.log("in router.get('/getFollowersProfilePicture'): usersCollection.find({'userName' userName}): result is");
+       // console.log("in router.get('/getFollowersProfilePicture'): usersCollection.find({'userName' userName}): result is");
         //console.log(result);
         if (err || result.length === 0) {
             console.log(`in router.get('/getFollowersProfilePicture'): There was no user found under the name '${userName}'`)
@@ -191,20 +214,6 @@ router.get('/getFollowersProfilePicture', (req, res) => {
         } else {
              user = result[0];
             console.log(`found user ${user.userName}`);
-            
-
-            // user.followedBy.forEach(followedBy => {
-            //     usersCollection.find({"userName": followedBy}).toArray((err, innerUser) => {
-            //         if(err || innerUser.length === 0) {
-            //             console.log(`in router.get('/getFollowersProfilePicture'). In forEach: couldn't find follower ${followedBy}`)
-            //             res.send(401, {errMsg:`Failed to find follower ${followedBy} of ${userName}`});
-            //         } else {
-            //             const userFollower = innerUser[0];
-            //             followedByProfilePicture.push({userName: followedBy, profilePicture: userFollower.profilePictureUrl});
-            //         }
-            //     });
-            // });
-
         }
 
 
@@ -214,29 +223,7 @@ router.get('/getFollowersProfilePicture', (req, res) => {
 
         user.following.forEach(follower => {
 
-            const findFollowerPromise = () => {
-                return new Promise((resolve,reject) => {
-                    usersCollection.find({"userName": follower}).toArray((err, innerUser) => {
-                        if(err || innerUser.length === 0) {
-                            console.log(`in router.get('/getFollowersProfilePicture'). In forEach: couldn't find follower ${follower}`)
-                            reject(err);
-                        } else {
-                            const userFollower = innerUser[0];
-                            const result = {userName: follower, profilePictureUrl: userFollower.profilePictureUrl};
-                            resolve(result);
-                        }
-                    });
-                })
-            }
-
-            const callFindFollowersPromise = async () => {
-                const result = await findFollowerPromise();              
-                // console.log(`router.get('/getFollowersProfilePicture'): in callFindFollowersPromise: result is  `)
-                // console.log(result)
-                return result;
-            }
-
-            callFindFollowersPromise().then(obj => {
+            callFindFollowersPromise(usersCollection, follower).then(obj => {
                 // console.log(`router.get('/getFollowersProfilePicture'): in callFindFollowersPromise().then(): obj is  `)
                 // console.log(obj)
                 followingProfilePicture.push(obj);
@@ -253,46 +240,26 @@ router.get('/getFollowersProfilePicture', (req, res) => {
 
         user.followedBy.forEach(follower => {
 
-            const findFollowerPromise = () => {
-                return new Promise((resolve,reject) => {
-                    usersCollection.find({"userName": follower}).toArray((err, innerUser) => {
-                        if(err || innerUser.length === 0) {
-                            console.log(`in router.get('/getFollowersProfilePicture'). In forEach: couldn't find follower ${follower}`)
-                            reject(err);
-                        } else {
-                            const userFollower = innerUser[0];
-                            const result = {userName: follower, profilePictureUrl: userFollower.profilePictureUrl};
-                            resolve(result);
-                        }
-                    });
-                })
-            }
-
-            const callFindFollowersPromise = async () => {
-                const result = await findFollowerPromise();              
-                // console.log(`router.get('/getFollowersProfilePicture'): in callFindFollowersPromise: result is  `)
-                // console.log(result)
-                return result;
-            }
-
-            callFindFollowersPromise().then(obj => {
+            callFindFollowersPromise(usersCollection, follower).then(obj => {
                 // console.log(`router.get('/getFollowersProfilePicture'): in callFindFollowersPromise().then(): obj is  `)
                 // console.log(obj)
                 followedByProfilePicture.push(obj);
 
                 if (followedByProfilePicture.length == user.followedBy.length && followingProfilePicture.length == user.following.length) {
                     const allProfilePictures = {followedByProfilePicture, followingProfilePicture};
-                    console.log(`router.get('/getFollowersProfilePicture'): res.send() is done from followedByProfilePicture.`)
+                   // console.log(`router.get('/getFollowersProfilePicture'): res.send() is done from followedByProfilePicture.`)
                     
-                    console.log(`router.get('/getFollowersProfilePicture'): allProfilePictures is`)
-                    console.log(allProfilePictures);
+                    //console.log(`router.get('/getFollowersProfilePicture'): allProfilePictures is`)
+                    //console.log(allProfilePictures);
                     res.send(allProfilePictures);
                 }
             });
         });
     });
 
-});
+}); // getFollowersProfilePicture
+
+
 router.get('/login', (req, res) => {
     const userName = req.query.userName;
     const password = req.query.password;
