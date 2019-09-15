@@ -57,7 +57,8 @@ class Header extends Component {
                         <>
                         <div key={user.userName} style={{maxWidth:"130px", width:"130px",float:"left"}}>
                         <span style={{position: "absolute", left:"0px",fontSize:"0.37em"}} onClick={() => this.setState({showAllUsers: false})}><Link to={`/profile/${user.userName}`}>{user.userName}</Link></span>
-                            {!this.props.loggedInUser.following.includes(user.userName) ?
+                        {!this.props.loggedInUser ? null :
+                            !this.props.loggedInUser.following.includes(user.userName) ?
                             <span onClick={() => this.handleFollow(user.userName)} style={{cursor:"pointer",fontSize:"0.3em", color:"#034437", right:"0px", position:"absolute"}}>Follow</span>
                             :
                             <span onClick={() => this.handleUnfollow(user.userName)} style={{cursor:"pointer",fontSize:"0.3em", color:"#034437", right:"0px", position:"absolute"}}>Unfollow</span>
@@ -209,7 +210,7 @@ class Header extends Component {
                   </form> 
               </li> 
               
-              {this.props.loggedInUser ? <li><Link to="/">Home</Link></li> :
+              {this.props.loggedInUser ? <li><Link to="/home">Home</Link></li> :
                <li><Link to="/register">Login</Link></li>}
                {/* <li onClick={this.handleUrlChanged}><Link to="/register">Register</Link></li>} */}
               <li>
@@ -218,6 +219,9 @@ class Header extends Component {
                         <span className="tooltiptext">Soon!</span>
                     </div>
                 </a>
+             </li>
+             <li>
+                 <Link to="/about">About</Link>
              </li>
           </ul>
       </nav>

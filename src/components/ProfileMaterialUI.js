@@ -135,7 +135,7 @@ export default function Album(props) {
   const images = props.images;
 
   if(!loggedInUser) {
-    return <div>Problem fetching / There is no logged in user. please refresh or try again</div>
+    return <p>Only logged in user can watch user profiles. Please Login or Register</p>
   }
 
   const isUserVistingOwnProfile = props.loggedInUser.userName === currentProfileUser.userName;

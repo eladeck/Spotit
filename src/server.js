@@ -116,7 +116,8 @@ async function startServer() {
         
         const collectionPromise = (collection) => {
             return new Promise((resolve, reject) => {
-                collection.find({}).limit(100).toArray((err, result) => { // limit to only 10
+                // collection.find({}).toArray((err, result) => { // limit to only 10
+                collection.find({}).limit(1000).toArray((err, result) => { // limit to only 10
                     err ? reject(err) : resolve(result);
                 })});
         }

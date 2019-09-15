@@ -16,6 +16,7 @@ import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom'
 import TopSpotIts from "./TopSpotIts"
 import GoSpotit from "./GoSpotit"
+import ImageCard from './ImageCard';
 
 function Copyright() {
   return (
@@ -129,7 +130,7 @@ export default class LandingPage extends Component {
     render() {
         const classes = this.useStyles();
         
-        const images = this.props.imagesToDisplay;
+        const images = this.props.imagesToDisplay;  
 
         return ( 
             <React.Fragment>
