@@ -3,7 +3,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 
 module.exports = {
-  entry: ["./src/index.js"],
+  entry: ["@babel/polyfill","./src/index.js"],
   output: {
     filename: "bundle.js",
     path: resolve(__dirname, "public")
@@ -24,14 +24,14 @@ module.exports = {
         test: /\.(png|svg|jpg|jpeg|gif)$/,
         loader: 'file-loader'
       },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: "html-loader"
-          }
-        ]
-      }
+      // {
+      //   test: /\.html$/,
+      //   use: [
+      //     {
+      //       loader: "html-loader"
+      //     }
+      //   ]
+      // }
     ]
   },
   plugins: [

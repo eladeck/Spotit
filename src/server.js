@@ -4,10 +4,7 @@ const app = express();
 const MongoClient = require('mongodb').MongoClient;
 const user = require('./server/routes/user');
 const image = require('./server/routes/image');
-
 const airport = require('./server/routes/airport');
-
-
 const data = require('./server/routes/data');
 const cookieParser = require('cookie-parser');
 const password = '1234';
