@@ -1405,7 +1405,7 @@ select {
       position: relative;
       margin: 5% auto;
       width: 900px;
-      height: 600px;
+      height: 650px;
       background: #FFF;
       border-radius: 2px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
@@ -1423,8 +1423,9 @@ select {
       left: 0;
       box-sizing: border-box;
       padding: 40px;
-      width: 600px;
-      height: 400px;
+      width: 563px;
+      height: 620px;
+      overflow: auto;
     }
     
     .general-info-left-h1 {

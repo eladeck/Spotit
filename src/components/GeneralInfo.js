@@ -149,8 +149,9 @@ class GeneralInfo extends Component {
 
                 // console.log(`main image url is: ${mainInfoImage}`);
                 
-                
-                this.setState({data: {imageUrl: mainInfoImage, headline: result.data[1][0], detailedInfo: result.data[2]}});
+                const detailedInfo = result.data[2].length === 0 ? `No Information was found about ${this.props.match.params.fieldValue} ${fieldName}` : result.data[2];
+                const headline = result.data[1][0].length === 0 ? `${this.props.match.params.fieldValue}` : result.data[1][0];
+                this.setState({data: {imageUrl: mainInfoImage, headline, detailedInfo}});
 
             })
             .catch(function(error){console.log(error);});
@@ -164,7 +165,7 @@ class GeneralInfo extends Component {
         let url = '';
         switch(fieldName) {
             case 'airport':
-                url = '/defaultPicturesToBeDisplayed/defaultAirport.png';
+                url = '/defaultPicturesToBeDisplayed/defaultAirport.jpg';
             break;
             case 'airline':
                     url = '/defaultPicturesToBeDisplayed/defaultAirline.jpg';
@@ -176,7 +177,7 @@ class GeneralInfo extends Component {
                     url = '/defaultPicturesToBeDisplayed/defaultCity.jpg';
             break;
             default:
-                    url = '/defaultPicturesToBeDisplayed/defaultAirport.png';
+                    url = '/defaultPicturesToBeDisplayed/defaultAirport.jpg';
             break;
         }
 

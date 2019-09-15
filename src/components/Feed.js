@@ -1,11 +1,8 @@
-
 import React, { Component } from "react"
 import Loader from 'react-loader-spinner'
 import Popup from "reactjs-popup";
 import Comments from "./Comments";
 import { BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom'
-
-
 
 class Feed extends Component {
     constructor(props) {

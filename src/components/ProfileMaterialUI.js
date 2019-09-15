@@ -176,11 +176,7 @@ export default function Album(props) {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-<<<<<<< HEAD
                   { !isUserVistingOwnProfile ? 
-=======
-                  {!isUserVistingOwnProfile ? 
->>>>>>> e4f0292b493e90c3293f7adb18f3a7dbb793db48
                     (!loggedInUser.following.includes(currentProfileUser.userName) ?
                       <button className="follow-button" onClick={() => props.handleFollow(currentProfileUser.userName)}>
                         Follow

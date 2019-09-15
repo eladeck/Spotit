@@ -209,7 +209,7 @@ class Header extends Component {
                   </form> 
               </li> 
               
-              {this.props.loggedInUser ? <li><Link to="/">Home</Link></li> :
+              {this.props.loggedInUser ? <li><Link to="/home">Home</Link></li> :
                <li><Link to="/register">Login</Link></li>}
                {/* <li onClick={this.handleUrlChanged}><Link to="/register">Register</Link></li>} */}
               <li>
@@ -218,6 +218,9 @@ class Header extends Component {
                         <span className="tooltiptext">Soon!</span>
                     </div>
                 </a>
+             </li>
+             <li>
+                 <Link to="/about">About</Link>
              </li>
           </ul>
       </nav>
