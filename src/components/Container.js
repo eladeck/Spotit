@@ -252,7 +252,6 @@ class Container extends Component {
 
         return (
 
-
           <>
             {/*{(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/reportSpecials"><div className="side-button">Report Special Arrival/Departure</div></Link> : null}
             {this.state.isLoggedIn ? <Link to="/imageForm"><div className="side-button">Add Image</div></Link> : null}*/}
@@ -260,7 +259,7 @@ class Container extends Component {
             <Route path="/imageForm" component={() => <ImageForm />} />
             <Route path="/reportSpecials" component={() => <PlaneReportForm />} />
             <Route path="/home" component={() => <Main extratAllFollowing={this.extratAllFollowing} loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser} flightInfo={this.state.flightInfo}/>} />
-            <Route path="/main" component={() => <Main extratAllFollowing={this.extratAllFollowing} loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser}/>} />
+            <Route path="/main" component={() => <Main extratAllFollowing={this.extratAllFollowing} loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser} flightInfo={this.state.flightInfo}/>} />
             {<Route exact path="/" component={() => <LandingPage flightInfo={this.state.flightInfo} imagesToDisplay={this.state.generalImages}/>} />}
             <Route path="/register" component={() => <Register handleSuccessfulLogin={this.handleSuccessfulLogin} />} />
             <Route path="/profile/:userName" component={(props) => <Profile {...props} handleFollow={this.props.handleFollow} handleUnfollow={this.props.handleUnfollow} loggedInUser={this.state.loggedInUser} desiredUserProfile={this.state.desiredUserProfile} />} />
@@ -270,7 +269,7 @@ class Container extends Component {
             {
               this.state.isLoggedIn ?  
                 <Redirect push to="/home">
-                  <Route path="/home" component={() => <Main extratAllFollowing={this.extratAllFollowing} loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages}/>} />
+                  <Route path="/home" component={() => <Main extratAllFollowing={this.extratAllFollowing} loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages} flightInfo={this.state.flightInfo}/>} />
                 </Redirect>
               : 
                 <Redirect push to="/">

@@ -125,12 +125,29 @@ async function startServer() {
         }
     
         const callCollectionPromise = async () => {
-            imageFormData.airlines = await (collectionPromise(airlines));
-            imageFormData.aircrafts = await (collectionPromise(aircrafts));
-            imageFormData.countries = await (collectionPromise(countries));
-            imageFormData.cities = await (collectionPromise(cities));
-            imageFormData.airports = await (collectionPromise(airports));
-	    // https://stackoverflow.com/questions/35612428/call-async-await-functions-in-parallel
+            // imageFormData.airlines  = await ( collectionPromise(airlines));
+            // imageFormData.aircrafts = await (collectionPromise(aircrafts));
+            // imageFormData.countries = await (collectionPromise(countries));
+            // imageFormData.cities    = await (   collectionPromise(cities));
+            // imageFormData.airports  = await ( collectionPromise(airports));
+            // 5.2 seconds
+            // 3.5 seconds
+            let [airlines1, aircrafts1, countries1, cities1, airports1] =
+                await Promise.all([
+                    collectionPromise(airlines),
+                    collectionPromise(aircrafts),
+                    collectionPromise(countries),
+                    collectionPromise(cities),
+                    collectionPromise(airports)])
+
+            imageFormData.airlines  = airlines1;
+            imageFormData.aircrafts = aircrafts1;
+            imageFormData.countries = countries1;
+            imageFormData.cities    = cities1;
+            imageFormData.airports  = airports1;
+
+        // https://stackoverflow.com/questions/35612428/call-async-await-functions-in-parallel
+        
             return imageFormData;
         }
     

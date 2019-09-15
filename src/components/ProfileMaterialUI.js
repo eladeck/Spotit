@@ -116,9 +116,10 @@ export default function Album(props) {
     return <div>Problem fetching / There is no logged in user. please refresh or try again</div>
   }
 
-  const isUserVistingOwnProfile = props.loggedInUser.userName === props.desiredProfile;
+  const isUserVistingOwnProfile = props.loggedInUser.userName === currentProfileUser.userName;
   console.log(`in mateiralUI, currentProfileUser is`);
   console.log(currentProfileUser);
+  console.log(isUserVistingOwnProfile);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -151,7 +152,7 @@ export default function Album(props) {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  { isUserVistingOwnProfile ? 
+                  {!isUserVistingOwnProfile ? 
                     (!loggedInUser.following.includes(currentProfileUser.userName) ?
                       <button className="follow-button" onClick={() => props.handleFollow(currentProfileUser.userName)}>
                         Follow

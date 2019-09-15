@@ -142,13 +142,13 @@ class Feed extends Component {
     render() {
         const images = this.importImages();
         console.log(images)
-        const noImgMsg = <div>No picrutes to display. please click 'follow' above, to follow a spotter with images, or encourage your followings to upload some.</div>;
+        const noImgMsg = <p>No picrutes to display. please click 'follow' above, to follow a spotter with images, or encourage your followings to upload some.</p>;
         
         return (
             <div className="feed">
                 <h1 className="title">Spotit Feed</h1>
                 <Link to="/imageForm"><img className="feed-post-image" title="Post" src="cameraIcon.png" /></Link>
-                { this.props.loggedInUser.reportPermission ? <Link to="/reportSpecials"><img className="feed-post-image" title="Report Special Arrival" src="megaphone.png" /></Link> : null}
+                {this.props.loggedInUser && this.props.loggedInUser.reportPermission ? <Link to="/reportSpecials"><img className="feed-post-image" title="Report Special Arrival" src="megaphone.png" /></Link> : null}
                 {images ? (images.length === 0 ? noImgMsg : images) : 
                     <Loader type="TailSpin" color="lightblue" height={80} width={80} />}
             </div>
