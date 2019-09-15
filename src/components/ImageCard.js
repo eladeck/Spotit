@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
 export default function ImageCard(props) {
     const classes = useStyles();
     const imageObj = props.imageObj;
+    console.log(props)
     console.log(imageObj)
     console.log(classes)
     console.log(`url is: ${imageObj.userName}/${imageObj.url}`);
@@ -29,7 +30,13 @@ export default function ImageCard(props) {
                     modal
                     closeOnDocumentClick
                     >
-                        <span> <img className="hoverable-image" alt="Image couldn't be displayed" src={`/${imageObj.userName}/${imageObj.url}`} /> </span>
+                        <span> 
+                            <img className="hoverable-image" alt="Image couldn't be displayed" src={`/${imageObj.userName}/${imageObj.url}`} />
+                            {props.isUserVistingOwnProfile ? 
+                             <button onClick={() => {props.handleDelete(imageObj._id, imageObj.url); window.location.href = `/`}} class="fa fa-trash" aria-hidden="true"></button> :
+                             null
+                            }
+                        </span>
                     </Popup>
                     <div className="hoverable-overlay">
                         <ul className="text-in-overlay">

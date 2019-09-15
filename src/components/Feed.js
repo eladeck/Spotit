@@ -142,7 +142,7 @@ class Feed extends Component {
     render() {
         const images = this.importImages();
         console.log(images)
-        const noImgMsg = <div>No picrutes to display. please click 'follow' above, to follow a spotter with images, or encourage your followings to upload some.</div>;
+        const noImgMsg = <p>No picrutes to display. please click 'follow' above, to follow a spotter with images, or encourage your followings to upload some.</p>;
         
         return (
             <div className="feed">

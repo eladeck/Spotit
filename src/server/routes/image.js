@@ -196,6 +196,40 @@ router.post('/newComment', (req, res) => {
    )
 });
 
+router.get('/delete', (req, res) => {
+
+  const id = req.query.id;
+  const imgOwner = req.query.imgOwner;
+  const imgUrl = req.query.imgUrl;
+
+  console.log("want to delete:")
+  console.log(req.query)
+
+  // remove from user collection that owns that image
+  req.app.locals.imgCollection.remove(
+    {_id:ObjectId(id) }
+ )
+
+  // remove from img collection
+  req.app.locals.usersCollection.updateOne(
+    {userName: imgOwner},
+    { $pull: { images: ObjectId(id) } },
+    { multi: true }, () => {
+      console.log("yes removed from " + imgOwner + "the image " + id);
+      const pathToRemove = path.join(__dirname, `../images/${imgOwner}/${imgUrl}`);
+      try {
+       fs.unlinkSync(pathToRemove)
+       console.log("removed from file system the " + pathToRemove)
+        res.sendStatus(200);
+     } catch(err) {
+       console.error("oyyyy vey " + err)
+       res.sendStatus(401);
+     } // catch
+    } // inline method
+) // updateOne
+});
+
+
 router.get('/like', (req, res) => {
     const id = req.query.id;
     const happyUserName = req.query.happyUserName;

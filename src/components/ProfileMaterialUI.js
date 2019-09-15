@@ -120,6 +120,14 @@ alert("ProfileMaterialUI: handleSubmit!!!!!!");
 
 
 export default function Album(props) {
+
+  let handleDelete = function(_id, imgUrl) {
+    console.log("in image delete with " + _id + " " + imgUrl)
+    fetch(`/image/delete?imgUrl=${imgUrl}&id=${_id}&imgOwner=${props.currentProfileUser.userName}`, {method: 'GET', credentials: 'include'})
+    .then(res => res.json())
+    .then(_ => {console.log(window.location.href);window.location.href = `/`})
+  };
+
   const classes = useStyles();
 
   const currentProfileUser = props.currentProfileUser;
@@ -133,6 +141,7 @@ export default function Album(props) {
   const isUserVistingOwnProfile = props.loggedInUser.userName === currentProfileUser.userName;
   console.log(`in mateiralUI, currentProfileUser is`);
   console.log(currentProfileUser);
+  console.log(isUserVistingOwnProfile);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -167,7 +176,11 @@ export default function Album(props) {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
+<<<<<<< HEAD
                   { !isUserVistingOwnProfile ? 
+=======
+                  {!isUserVistingOwnProfile ? 
+>>>>>>> e4f0292b493e90c3293f7adb18f3a7dbb793db48
                     (!loggedInUser.following.includes(currentProfileUser.userName) ?
                       <button className="follow-button" onClick={() => props.handleFollow(currentProfileUser.userName)}>
                         Follow
@@ -192,8 +205,9 @@ export default function Album(props) {
           <Grid container spacing={4}>
             {!images ? "Loading..." :
             images.map((imageObj, index) => ( // to render loader until the images are here!
+              
             
-                    <ImageCard key={index} imageObj={imageObj} />
+                    <ImageCard key={index} imageObj={imageObj} handleDelete={handleDelete} isUserVistingOwnProfile={isUserVistingOwnProfile}/>
     
             ))}
           </Grid>

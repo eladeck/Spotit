@@ -33,9 +33,10 @@ class App extends React.Component {
 
         componentDidMount() {
                 // for fetching airplanes and stuff
+                const ms = new Date().getTime();
                 fetch(`/imageFormData`, {method: 'GET', credentials: 'include'})
                 .then(response => response.json())
-                .then(iataCodeData => this.setState({iataCodeData}))
+                .then(iataCodeData => {console.log("finished");console.log(ms - new Date().getTime());this.setState({iataCodeData})})
                 .catch(errMsg => this.setState({errMsg}))
                 //this.fetchUser();
 

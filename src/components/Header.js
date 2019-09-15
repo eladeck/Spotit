@@ -165,18 +165,18 @@ class Header extends Component {
         this.setState({searchFor})
     }
 
-    componentWillUnmount() {
-        fetch(`/imageFormData`, {method: 'GET', credentials: 'include'})
-        .then(response => {
-            return response.json()
-        })
-        .then(res => {
-            console.log(`in this.componentDidMount, res is:`);
-            console.log(res.airlines[0]);
-            this.setState({formData: res})
-        })
-        .catch(errMsg => {console.log(errMsg); this.setState({errMsg})})
-      } // componentWillUnmount
+    // componentWillUnmount() {
+    //     fetch(`/imageFormData`, {method: 'GET', credentials: 'include'})
+    //     .then(response => {
+    //         return response.json()
+    //     })
+    //     .then(res => {
+    //         console.log(`in this.componentDidMount, res is:`);
+    //         console.log(res.airlines[0]);
+    //         this.setState({formData: res})
+    //     })
+    //     .catch(errMsg => {console.log(errMsg); this.setState({errMsg})})
+    //   } // componentWillUnmount
 
     handleUrlChanged() {
         this.props.handleUrlChanged();
@@ -209,8 +209,8 @@ class Header extends Component {
                   </form> 
               </li> 
               
-              {this.props.loggedInUser ? <li><Link to="/home">Home</Link></li> :
-               <li><Link to="/register">Register</Link></li>}
+              {this.props.loggedInUser ? <li><Link to="/">Home</Link></li> :
+               <li><Link to="/register">Login</Link></li>}
                {/* <li onClick={this.handleUrlChanged}><Link to="/register">Register</Link></li>} */}
               <li>
                 <a className="tooltip" href="/">
@@ -219,7 +219,6 @@ class Header extends Component {
                     </div>
                 </a>
              </li>
-              <li><Link to="/about">About</Link></li>
           </ul>
       </nav>
       {this.props.loggedInUser ?
