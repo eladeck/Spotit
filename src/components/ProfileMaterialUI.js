@@ -106,6 +106,14 @@ function handleGoToAirport(e) {
 
 
 export default function Album(props) {
+
+  let handleDelete = function(_id, imgUrl) {
+    console.log("in image delete with " + _id + " " + imgUrl)
+    fetch(`/image/delete?imgUrl=${imgUrl}&id=${_id}&imgOwner=${props.currentProfileUser.userName}`, {method: 'GET', credentials: 'include'})
+    .then(res => res.json())
+    .then(_ => {console.log(window.location.href);window.location.href = `/`})
+  };
+
   const classes = useStyles();
 
   const currentProfileUser = props.currentProfileUser;
@@ -177,8 +185,9 @@ export default function Album(props) {
           <Grid container spacing={4}>
             {!images ? "Loading..." :
             images.map((imageObj, index) => ( // to render loader until the images are here!
+              
             
-                    <ImageCard key={index} imageObj={imageObj} />
+                    <ImageCard key={index} imageObj={imageObj} handleDelete={handleDelete} isUserVistingOwnProfile={isUserVistingOwnProfile}/>
     
             ))}
           </Grid>
