@@ -5,6 +5,11 @@
   "engines": {
     "node": "10.16.3"
   },
+  "resolveLoader": {
+    "modulesDirectories": [
+        "/node_modules"
+    ]
+  },
   "main": "index.js",
   "private": true,
   "devDependencies": {
