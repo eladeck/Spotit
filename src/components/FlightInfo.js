@@ -5,20 +5,12 @@ import React, { Component } from "react"
 class FlightInfo extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
-
         } // Feed state
 
     } // c'tor
 
-
     render() {
-        // number={flightInfoObject.number}
-        // origin={flightInfoObject.origin}
-        // dest={flightInfoObject.dest}
-        // ETD={flightInfoObject.ETD}
-        // planeModel={flightInfoObject.planeModel}
         return (
         <div>
             <h1>{this.props.origin}-{this.props.dest}</h1>
@@ -31,6 +23,3 @@ class FlightInfo extends Component {
 } // FlightInfo Component
 
 export default FlightInfo
-
-
-

@@ -285,7 +285,6 @@ router.get('/login', (req, res) => {
     })
 }); // login
 
-
 router.get('/logout', (req, res) => {
     const userNameToLougOut = req.cookies.userName;
     res.clearCookie('userName');
@@ -293,8 +292,6 @@ router.get('/logout', (req, res) => {
     console.log(req.cookies.userName)
     return res.status(200).redirect('/login');
 }); // logout
-
-
 
 router.post('/addNewUser', (req, res) => {
 
@@ -309,19 +306,6 @@ router.post('/addNewUser', (req, res) => {
     
     res.cookie('userName', newUser.userName, {expires: new Date(2020, 1, 1)});
 
-    // const name = newUser.name;
-    // const email = newUser.email;
-    // const userName = newUser.userName;
-    // const password = newUser.password;
-    // const password2 = newUser.password2;
-
-    // req.checkBody('name', 'Name is required').notEmpty();
-    // req.checkBody('email', 'Email is required').notEmpty();
-    // req.checkBody('email', 'Email is not valid').isEmail();
-    // req.checkBody('userName', 'User name is required').notEmpty();
-    // req.checkBody('password', 'Password is required').notEmpty();
-    // req.checkBody('password2', 'Passwords do not match').equals(password);
-    
     const usersCollection = req.app.locals.usersCollection;
     usersCollection.insertOne(newUser, function(err, dbResult) {
         if (err) throw err;
@@ -360,9 +344,6 @@ router.post('/specialReport', (req, res) => {
     console.log(req.body);
     console.log(typeof req.body);
     console.log(typeof newReport);
-
-    //newReport.sourceAirport = findAirportCode(airportsCollection, newReport.sourceAirport);
-    //newReport.destinationAirport = findAirportCode(airportsCollection, newReport.destinationAirport);
 
     reportCollection.insertOne(newReport, (err, DbResult) => {
         if (err) throw err;

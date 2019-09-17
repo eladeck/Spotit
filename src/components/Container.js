@@ -1,19 +1,12 @@
 import React, { Component } from "react";
-import styled from "styled-components";
-import Loader from 'react-loader-spinner';
-import { TransitionGroup, CSSTransition } from "react-transition-group";
-import { BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom'
-import {withRouter} from 'react-router'
-import { PropsRoute, PublicRoute, PrivateRoute } from 'react-router-with-props';
+import { BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom';
 import Main from "./Main";
-import Register from "./Register"
-import ImageForm from "./ImageForm"
+import Register from "./Register";
+import ImageForm from "./ImageForm";
 import PlaneReportForm from "./PlaneReportForm";
-import Profile from "./Profile"
-import GeneralInfo from "./GeneralInfo"
-import LandingPage from "./LandingPage"
-
-//let Router = BrowserRouter;
+import Profile from "./Profile";
+import GeneralInfo from "./GeneralInfo";
+import LandingPage from "./LandingPage";
 
 class Container extends Component {
 
@@ -34,12 +27,10 @@ class Container extends Component {
       }
 
       this.handleSuccessfulLogin = this.handleSuccessfulLogin.bind(this);
-      // this.handleLogout = this.handleLogout.bind(this);
       this.extractAllImagesOfFollowings = this.extractAllImagesOfFollowings.bind(this);
       this.extratAllFollowing = this.extratAllFollowing.bind(this)
       this.setDesiredUser = this.setDesiredUser.bind(this)
       this.postLogin = this.postLogin.bind(this)
-      // this.renderContainer = this.renderContainer.bind(this);
     }
 
     componentWillUnmount() {
@@ -97,18 +88,9 @@ class Container extends Component {
           }
       })
       .catch(errMsg => {console.log(errMsg);})
-
       this.props.setRefToExtractAllFollowings(this.extratAllFollowing)
 
     } // componentDidMount
-
-    // handleLogout() {
-    //   this.setState({
-    //     isLoggedIn: false,
-    //     screenToRender: "Register"
-    //   });
-    //   console.log(`in Container\'s handle Logout!, screenToRender is ${this.state.screenToRender}`)
-    // }
 
     extractAllImagesOfFollowings(allFollowing) { 
       console.log("in extractAllImagesOfFollowings")
@@ -120,9 +102,7 @@ class Container extends Component {
       }
     
       let allFollowingImages = []
-
       let realAmountOfAllImages = 0
-
       console.log(`allFollowing is`)
       console.log(allFollowing)
       
@@ -137,9 +117,6 @@ class Container extends Component {
         fetch(`/user/getImages?userName=${followerObj.userName}`, {method: 'GET', credentials: 'include'})
         .then(response => response.json())
         .then(allImagesOfSpecificUser => {
-
-          // allImagesOfSpecificUser.forEach(img => {img.userName = followerObj.userName}); // so the client will have the userName in order to click on the name and to move to the userName profile page
-
           allFollowingImages = allFollowingImages.concat(allImagesOfSpecificUser);
           if(allFollowingImages.length === realAmountOfAllImages) {
             this.setState({allFollowingImages})
@@ -197,10 +174,6 @@ class Container extends Component {
         this.realLogicOfExtractAllFollowings(loggedInUser)
       }
     } // extratAllFollowing
-    
-  // renderContainer() {
-  //   this.setState(prevState=>{prevState});
-  // }
 
   postLogin() {
     if(this.state.loggedInUser.following.length === 0) {
@@ -216,11 +189,8 @@ class Container extends Component {
       this.props.updateLoggedInUser(userToLogin)
       this.setState({
         isLoggedIn: true,
-        // screenToRender: "Main",
         loggedInUser: userToLogin,
       }, this.postLogin);
-
-      //browserHistory.push('/main');
     } // handleSuccessfulLogin
 
      componentWillReceiveProps(nextProps) {
@@ -235,27 +205,17 @@ class Container extends Component {
     } // willRecieveProps
       
     setDesiredUser(desiredUser) {
-
       console.log("Container.js: sedDesiredUser: desired user is: ");
       console.log(desiredUser);
-
       this.setState({
         desiredUserProfile: desiredUser
       });
     }
 
       render() {
-
-        // const path = window.location.pathname;
-        // const path = window.location.pathname;
-        // return dict[path];
-
         return (
 
           <>
-            {/*{(this.state.isLoggedIn && this.state.loggedInUser.reportPermission) ? <Link to="/reportSpecials"><div className="side-button">Report Special Arrival/Departure</div></Link> : null}
-            {this.state.isLoggedIn ? <Link to="/imageForm"><div className="side-button">Add Image</div></Link> : null}*/}
-            
             <Route path="/imageForm" component={() => <ImageForm />} />
             <Route path="/reportSpecials" component={() => <PlaneReportForm />} />
             <Route path="/home" component={() => <Main extratAllFollowing={this.extratAllFollowing} loggedInUser={this.state.loggedInUser} allFollowingImages={this.state.allFollowingImages} setDesiredUser={this.setDesiredUser} flightInfo={this.state.flightInfo}/>} />
@@ -281,6 +241,4 @@ class Container extends Component {
         );
       } // render
 } // component Container
-
-// export default withRouter(Container);
 export default Container;

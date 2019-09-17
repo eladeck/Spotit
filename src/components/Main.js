@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import TopSpotIts from "./TopSpotIts"
-import Feed from "./Feed"
-import GoSpotit from "./GoSpotit"
-import "./theme.css"
+import Feed from "./Feed";
+import GoSpotit from "./GoSpotit";
+import "./theme.css";
 
 class Main extends Component {
   constructor(props) {
@@ -62,9 +62,5 @@ class Main extends Component {
     ) // return render
   } // render
 } // Main Component
-
-// const Wrapper = styled.div`
-//     /* omitted */
-// `;
 
 export default Main;
