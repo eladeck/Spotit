@@ -28,8 +28,6 @@ class PlaneReportForm extends Component {
             estimatedTimeArriaval: this.state.estimatedTimeArriaval
         };
 
-        console.log('gonna post this:----------------')
-        console.log(specialArrivalReport)
 
         fetch(`/user/specialReport`, {
             method:"POST",
@@ -38,10 +36,8 @@ class PlaneReportForm extends Component {
          })
          .then(res => {window.location.href="/"; res.json()})
          .then(uploadedImage => {
-            console.log("In PlaneReportForm:: handleSubmit:: inside second then. The response is:");
             console.log(uploadedImage);
          }).catch(error => {
-            console.log("In PlaneReportForm:: handleSubmit:: inside catch. The error is:");
             console.log(error);
          })
 
@@ -58,8 +54,6 @@ class PlaneReportForm extends Component {
             return response.json()
         })
         .then(res => {
-            console.log(`in this.componentDidMount, res is:`);
-            console.log(res.airlines[0]);
             this.setState({imageFormData: res})
         })
         .catch(errMsg => {console.log(errMsg); this.setState({errMsg})})
@@ -110,14 +104,6 @@ class PlaneReportForm extends Component {
                     <img className="image-form-right-image"src="/man-megaphone-shouting.jpg" />
                 </div>
                 </div>
-
-                {/*<hr />
-                <h2>Entered information:</h2>
-                <p>Source Airport: {this.state.sourceAirport}</p>
-                <p>Destination Airport: {this.state.destinationAirport}</p>
-                <p>Airline: {this.state.airline}</p>
-                <p>Airplane Model: {this.state.aircraft}</p>
-                <p>Date:{this.state.estimatedTimeArriaval}</p>*/}
             </main>
         ) // End of return
        

@@ -30,32 +30,15 @@ router.get('/all', (req, res) => {
     });
 });
 
-// router.get('/profile/:userName', (req, res) => {
-//     const userName = req.params.userName;
-//     console.log(`in profile of ${userName}`)
-//     res.send({msg: `in ${userName} profile`})
-// });
 
 router.post(`/follow`, (req, res) => {
-    // console.log(req.query)
     const loggedInUserName = req.cookies.userName;
-    
-    console.log("user.js: in router.post(/follow): req.query is:")
-    console.log(req.query);
-    
     const userNameToFollow = req.query.userNameToFollow;
     const usersCollection = req.app.locals.usersCollection;
-    console.log(`${loggedInUserName} wanna follow ${userNameToFollow}`)
-
-   
-
      usersCollection.updateOne(
         { userName: userNameToFollow },
         { $addToSet: { followedBy: loggedInUserName } }
      );
-
-     // must know: the code-line 61 reutrns succus to client (browser) maybe before updatOne above occured.
-     // but most most importantly it will occur after updateOne in 59
 
      usersCollection.updateOne(
         { userName: loggedInUserName },
@@ -66,25 +49,14 @@ router.post(`/follow`, (req, res) => {
 });
 
 router.post(`/unfollow`, (req, res) => {
-    // console.log(req.query)
     const loggedInUserName = req.cookies.userName;
-
-    console.log("user.js: in router.post(/follow): req.query is:")
-    console.log(req.query);
-
     const userNameToUnfollow = req.query.userNameToUnfollow;
     const usersCollection = req.app.locals.usersCollection;
-    console.log(`${loggedInUserName} wanna unfollow ${userNameToUnfollow}`)
-
-
-
      usersCollection.updateOne(
         { userName: userNameToUnfollow },
         { $pull: { followedBy: loggedInUserName } }
      );
 
-     // must know: the code-line 61 reutrns succus to client (browser) maybe before updatOne above occured.
-     // but most most importantly it will occur after updateOne in 59
 
      usersCollection.updateOne(
         { userName: loggedInUserName },
@@ -95,20 +67,12 @@ router.post(`/unfollow`, (req, res) => {
 
 // Register form
 router.get('/register', (req, res) => {
-
-
-    // const userId = Math.floor(Math.random() * 900000) + 100000; //some random number
-    // res.cookie('user_id', userId, {expires: new Date(2020, 1, 1)});
-    // res.send("you are signed up with the user id: " + userId + ". go back <a href='/'>HOME</a>")
-
-
     res.render('register');
 });
 
 router.get('/getUser', (req, res) => {
     const userName = req.query.userName;
     const usersCollection = req.app.locals.usersCollection;
-    console.log("gonna bring user" + userName)
     router.getUserFromDb(userName, usersCollection, res);
 });
 
@@ -132,7 +96,6 @@ router.get('/getImages', (req, res) => {
     const userName = req.query.userName;
     const imgCollection = req.app.locals.imgCollection;
     const usersCollection = req.app.locals.usersCollection;
-    console.log(`in router.get('/getImages'). line 135`)
     let flag = true;
     const images = [];
     usersCollection.find({"userName": userName}).toArray((err, result) => {
@@ -162,12 +125,8 @@ router.get('/getImages', (req, res) => {
 
                 flag = false;
             }
-
-            // console.log("images array is: ")
-            // console.log(images);
             
             if (flag) {
-
                 res.send(images);
             }
             
@@ -180,7 +139,6 @@ const findFollowerPromise = (usersCollection, follower) => {
     return new Promise((resolve,reject) => {
         usersCollection.find({"userName": follower}).toArray((err, innerUser) => {
             if(err || innerUser.length === 0) {
-                //console.log(`in router.get('/getFollowersProfilePicture'). In forEach: couldn't find follower ${follower}`)
                 reject(err);
             } else {
                 const userFollower = innerUser[0];
@@ -193,21 +151,16 @@ const findFollowerPromise = (usersCollection, follower) => {
 
 const callFindFollowersPromise = async (usersCollection, follower) => {
     const result = await findFollowerPromise(usersCollection, follower);              
-    // console.log(`router.get('/getFollowersProfilePicture'): in callFindFollowersPromise: result is  `)
-    // console.log(result)
     return result;
 }
 
 router.get('/getFollowersProfilePicture', (req, res) => {
     const userName = req.query.userName;
     const usersCollection = req.app.locals.usersCollection;
-   // console.log(`in router.get('/getFollowersProfilePicture')!!!!!!!!!!!!!!!!!!!!!!`)
 
     let user = null;
 
     usersCollection.find({"userName": userName}).toArray((err, result) => {
-       // console.log("in router.get('/getFollowersProfilePicture'): usersCollection.find({'userName' userName}): result is");
-        //console.log(result);
         if (err || result.length === 0) {
             console.log(`in router.get('/getFollowersProfilePicture'): There was no user found under the name '${userName}'`)
             res.send(401, {errMsg:`no userName ${userName}.`});
@@ -219,20 +172,14 @@ router.get('/getFollowersProfilePicture', (req, res) => {
 
         let followingProfilePicture =[];
         let followedByProfilePicture = [];
-        // fetch all followingws profile picture url.
 
         user.following.forEach(follower => {
 
             callFindFollowersPromise(usersCollection, follower).then(obj => {
-                // console.log(`router.get('/getFollowersProfilePicture'): in callFindFollowersPromise().then(): obj is  `)
-                // console.log(obj)
                 followingProfilePicture.push(obj);
 
                 if (followedByProfilePicture.length == user.followedBy.length && followingProfilePicture.length == user.following.length) {
                     const allProfilePictures = {followedByProfilePicture, followingProfilePicture};
-                    console.log(`router.get('/getFollowersProfilePicture'): res.send() is done from followingProfilePicture.`)
-                    console.log(`router.get('/getFollowersProfilePicture'): allProfilePictures is`)
-                    console.log(allProfilePictures);
                     res.send(allProfilePictures);
                 }
             });
@@ -241,16 +188,10 @@ router.get('/getFollowersProfilePicture', (req, res) => {
         user.followedBy.forEach(follower => {
 
             callFindFollowersPromise(usersCollection, follower).then(obj => {
-                // console.log(`router.get('/getFollowersProfilePicture'): in callFindFollowersPromise().then(): obj is  `)
-                // console.log(obj)
                 followedByProfilePicture.push(obj);
 
                 if (followedByProfilePicture.length == user.followedBy.length && followingProfilePicture.length == user.following.length) {
                     const allProfilePictures = {followedByProfilePicture, followingProfilePicture};
-                   // console.log(`router.get('/getFollowersProfilePicture'): res.send() is done from followedByProfilePicture.`)
-                    
-                    //console.log(`router.get('/getFollowersProfilePicture'): allProfilePictures is`)
-                    //console.log(allProfilePictures);
                     res.send(allProfilePictures);
                 }
             });
@@ -266,11 +207,6 @@ router.get('/login', (req, res) => {
     console.log(`user.js: in router.get('/login'): userName is ${userName} and password is ${password}`)
 
     res.cookie('userName', userName, {expires: new Date(2020, 1, 1)});
-
-    // console.log(userName)
-    // console.log(password)
-    // console.log(typeof userName)
-    // console.log(typeof password)
 
     // search the user in Db
     var query = {userName, password}
@@ -288,8 +224,6 @@ router.get('/login', (req, res) => {
 router.get('/logout', (req, res) => {
     const userNameToLougOut = req.cookies.userName;
     res.clearCookie('userName');
-    console.log(`just clearedCookie of ${userNameToLougOut}, and req.cookies.userName is:`)
-    console.log(req.cookies.userName)
     return res.status(200).redirect('/login');
 }); // logout
 
@@ -309,7 +243,6 @@ router.post('/addNewUser', (req, res) => {
     const usersCollection = req.app.locals.usersCollection;
     usersCollection.insertOne(newUser, function(err, dbResult) {
         if (err) throw err;
-        console.log("1 document inserted");
         res.send(dbResult.ops[0]) // automatically send status 200
         // db.close();
       });
@@ -340,14 +273,10 @@ router.post('/specialReport', (req, res) => {
     const airportsCollection = req.app.locals.airports;
     //const newReport =req.body;
 
-    console.log("user.js: router.post('/specialReport'):: req.body is: ")
-    console.log(req.body);
-    console.log(typeof req.body);
-    console.log(typeof newReport);
+
 
     reportCollection.insertOne(newReport, (err, DbResult) => {
         if (err) throw err;
-        console.log("1 document inserted");
         res.send('<div style="position:fixed;left:40%;top:40%;font-family:fantasy;letter-spacing:1px;word-spacing:2px;">' +
         'Thank you for report and contribute to the community. go back to <a href="/">home page</a></div>')
       });
@@ -358,8 +287,7 @@ const findAirportCode = (airportsCollection, currentAirport) => {
     airportsCollection.findOne({name: currentAirport}, (err, result) => {
         if(err) throw err;
 
-        console.log("user.js: findAirportCode(): inside findOne, result is:");
-        console.log(result);
+
         return result.code;
     });
 }

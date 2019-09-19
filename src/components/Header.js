@@ -11,14 +11,11 @@ class Header extends Component {
             showAllUsers:false,
             searchWord:"",
             searchFor:"users"
-            //loggInUser: null  // We have to use 'loggedInUser' in state because it is going to be changed each time we hit 'follow/'unfollow' button.
         }
 
-        //console.log("in constructor, loggedInUser is ", props.loggedInUser, this.props.loggedInUser);
         this.handleLogout = this.handleLogout.bind(this)
         this.handleFollow = this.handleFollow.bind(this)
         this.handleChange = this.handleChange.bind(this)
-        this.mouseEnterProfile = this.mouseEnterProfile.bind(this)
         this.handleUsersInputClick = this.handleUsersInputClick.bind(this)
         this.renderAllUsersUnderInput = this.renderAllUsersUnderInput.bind(this)
         this.handleUrlChanged = this.handleUrlChanged.bind(this);
@@ -72,7 +69,6 @@ class Header extends Component {
             fetch('/user/all', {method:"GET", credentials:"include"})
             .then(res => res.json())
             .then(users => {
-                // TODO: error handling
                 this.setState(prevState => {
                     return {
                         allUsers:users,
@@ -88,11 +84,6 @@ class Header extends Component {
             })
         } // else
     } // handleUsersInputClick
-
-    mouseEnterProfile(e) {
-        // this.setState(  )
-
-    } // mouseEnterProfile
 
     handleChange(e) {
         const {name, value} = e.target;
@@ -169,7 +160,6 @@ class Header extends Component {
         return (  
                    <header>
       <a href="/" className="logo"><img src={"logo.png"} style={{width:'60px', height: '61px'}} alt="Spotit"/></a>
-      {/* <input placeholder="Search..." className="input-style" type="textbox"></input> */}
       <nav>
           <ul>
               <li><a>Search For</a></li>
@@ -205,7 +195,7 @@ class Header extends Component {
           </ul>
       </nav>
       {this.props.loggedInUser ?
-      <div onMouseEnter={this.mouseEnterProfile} className="profile-logo">
+      <div className="profile-logo">
           <Link to={`/profile/${this.props.loggedInUser.userName}`}>{this.props.loggedInUser.userName}</Link>
           </div> : null} 
       {this.props.loggedInUser ?

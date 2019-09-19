@@ -57,11 +57,7 @@ class ImageForm extends Component {
          .then(realResObj => {
              console.log("realResObj")
              console.log(realResObj)
-            //  this.setState({
-            //     //  realResObj,
-            //      uploading:false,
-            //      completed:true,
-            //  }, () => setTimeout(this.redirectMethod, 2000))
+
             this.setState({
                 //  realResObj,
                  uploading:false,
@@ -158,14 +154,6 @@ class ImageForm extends Component {
                 </div>
                 </div>
 
-              {/*<hr />
-               <h2>Entered information:</h2>
-               <p>Airline: {this.state.airline}</p>
-               <p>Airplane Model: {this.state.airplaneModel}</p>
-               <p>Country: {this.state.country}</p>
-               <p>City: {this.state.city}</p>
-               <p>Airport:{this.state.airport}</p>
-              <p>registration:{this.state.registration}</p> */}
            </main>
         ) // End of return
     }

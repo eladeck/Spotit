@@ -77,7 +77,7 @@ class Comments extends React.Component {
             {
               isSending: false,
               inputComment: ""
-            } /*, () => window.location.href="/"*/
+            } 
           );
         }, 500);
       })

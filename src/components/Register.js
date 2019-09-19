@@ -52,7 +52,6 @@ class Register extends Component {
     handleRegister() {
         console.log("in handleRegister of Register.js, going in to handleSuccessfulLogin");
         console.log("the user is " + this.state.newUser.firstName);
-        // this.props.handleSuccessfulLogin();
         let newUser = this.state.newUser
 
         if(this.state.newUser.password !== this.state.newUser.password2) {
@@ -130,7 +129,6 @@ class Register extends Component {
                     <input type="password" name="password2"  value={this.state.newUser.password2} onChange={this.handleChange}  placeholder="Confirm password" />
                     <div style={{color:"red"}}>{this.state.registerErrMsg}</div>
                     <button type="submit" class="form-submit-button">Register</button>
-                    {/*<input type="submit" name="signup_submit"  value="Register" onClick={this.handleRegister} />*/}
                     </form>
                 </div>
                 <div className="or">OR</div> 
@@ -141,7 +139,6 @@ class Register extends Component {
                     <input type="password" name="regPassword"  value={this.state.registeredUser.password} onChange={this.handleChange}  placeholder="Password" />
                     <div style={{color:"red"}}>{this.state.errMsg}</div>
                     <button type="submit" class="form-submit-button">Register</button>
-                    {/*<input type="submit" name="signup_submit" value="Sign me in" onClick={this.handleLogin} />*/}
                     </form>
                 </div>
             </div>

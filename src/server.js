@@ -4,7 +4,10 @@ const app = express();
 const MongoClient = require('mongodb').MongoClient;
 const user = require('./server/routes/user');
 const image = require('./server/routes/image');
+
 const airport = require('./server/routes/airport');
+
+
 const data = require('./server/routes/data');
 const cookieParser = require('cookie-parser');
 const password = '1234';
@@ -20,46 +23,6 @@ let dbo;
 
 const port = process.env.PORT || 3002;
 app.listen(port, () => console.log(`started listening to port ${port}!`))
-
-// MongoClient.connect(mongoUrl, { useNewUrlParser: true }, (err, db) => {
-//     if (err) {console.log(`----------------${err}----------`); throw err};
-//     console.log('Connected successfully to database!');
-//     isConnectedToMongoDb = true;
-//     dbo = db.db("SpotItCollection");
-    
-//     app.locals.usersCollection = dbo.collection('users');
-//     app.locals.imgCollection = dbo.collection('images');
-//     app.locals.airlines = dbo.collection('airlines');
-//     app.locals.aircrafts = dbo.collection('aircrafts');
-//     app.locals.countries = dbo.collection('countries');
-//     app.locals.cities = dbo.collection('cities');
-//     app.locals.airports = dbo.collection('airports');
-//     app.locals.cities = dbo.collection('cities');
-//     app.locals.specialReport = dbo.collection('specialReports');
-// });
-
-// should fix it, it is not good practice, just wanted to work it
-// but I noticed when browser gets the pictures, it ask the path of /profile
-// rather than user/profile.
-// or maybe we should just create a route here 'profile'?
-
-
-
-
-
-/*
-app.get('/signup', function(req,res) {
-    const userId = Math.floor(Math.random() * 900000) + 100000; //some random number
-    res.cookie('user_id', userId, {expires: new Date(2020, 1, 1)});
-    res.send("you are signed up with the user id: " + userId + ". go back <a href='/'>HOME</a>")
-})
-
-app.get('/logout', function (req, res) {
-    res.clearCookie('user_id');
-    res.redirect('/');
-    res.end();
-});
-*/
 
 async function startServer() {
     console.log(`starting the db...`)
@@ -88,7 +51,6 @@ async function startServer() {
         const userName = req.params.someUserName;
     
         // in the future we should get all these pics from the user folder
-        // res.sendfile( __dirname + `/server/images/${req.cookies.userName}/${url}`);
         console.log(__dirname + `/server/images/${userName}/${imgUrl}`);
         res.sendfile( __dirname + `/server/images/${userName}/${imgUrl}`);
     });
@@ -116,20 +78,13 @@ async function startServer() {
         
         const collectionPromise = (collection) => {
             return new Promise((resolve, reject) => {
-                // collection.find({}).toArray((err, result) => { // limit to only 10
                 collection.find({}).limit(1000).toArray((err, result) => { // limit to only 10
                     err ? reject(err) : resolve(result);
                 })});
         }
     
         const callCollectionPromise = async () => {
-            // imageFormData.airlines  = await ( collectionPromise(airlines));
-            // imageFormData.aircrafts = await (collectionPromise(aircrafts));
-            // imageFormData.countries = await (collectionPromise(countries));
-            // imageFormData.cities    = await (   collectionPromise(cities));
-            // imageFormData.airports  = await ( collectionPromise(airports));
-            // 5.2 seconds
-            // 3.5 seconds
+
             let [airlines1, aircrafts1, countries1, cities1, airports1] =
                 await Promise.all([
                     collectionPromise(airlines),
@@ -143,8 +98,6 @@ async function startServer() {
             imageFormData.countries = countries1;
             imageFormData.cities    = cities1;
             imageFormData.airports  = airports1;
-
-        // https://stackoverflow.com/questions/35612428/call-async-await-functions-in-parallel
         
             return imageFormData;
         }
@@ -165,8 +118,8 @@ async function startServer() {
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname + "/../public/index.html"))
     })
-} // startServer 
+} // startServer
 
 startServer();
 
-module.exports = MongoClient; 
+module.exports = MongoClient;

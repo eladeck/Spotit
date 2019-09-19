@@ -1,12 +1,5 @@
 const express = require("express");
-
-//const ObjectId = require('mongodb').ObjectId; 
-
 const router = express.Router();
-//const bycrypt = require('bcryptjs');
-//Bring in User Model
-// let userSchema = require('../models/userSchema');
-// let dbo = require('../../server');
 
 router.get('/:airportName', (req, res) => {
     const airportName = req.params.airportName;
