@@ -26,15 +26,6 @@ export default function PopupModal(props) {
    
               </div>
               <div className="actions">
-                {/*<Popup
-                  trigger={<button className="button"> {props.inside} </button>}
-                  position="top center"
-                  closeOnDocumentClick
-                >
-                  <span>
-  
-                  </span>
-                </Popup>*/} 
                 <button
                   className="button"
                   onClick={() => {

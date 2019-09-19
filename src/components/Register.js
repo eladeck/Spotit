@@ -1,6 +1,4 @@
 import React, {Component} from "react"
-import SignUp from './SignUp'
-import SignIn from './SignIn'
 
 class Register extends Component {
     constructor() {

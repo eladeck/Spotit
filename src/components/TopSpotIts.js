@@ -1,8 +1,6 @@
 import React, { Component } from "react"
 import Loader from 'react-loader-spinner'
 
-
-
 class TopSpotIts extends Component {
     constructor(props) {
         super(props);
@@ -62,18 +60,6 @@ class TopSpotIts extends Component {
                            </div>
                        </li> 
                      )}
-                    {/* <li>
-                        <div className='top-spotit-user'>
-                            <img style={{maxWidth:"12%"}} src={'./img/camera-logo.png'}></img>
-                            Elad Eckstein (Top-Hit)
-                        </div>
-                    </li>
-                    <li>
-                        <div className='top-spotit-user'>
-                            <img style={{maxWidth:"12%"}} src={'./img/camera-logo.png'}></img>
-                            Dor Ben Lulu (Top-Hit)
-                        </div>
-                    </li> */}
                 </ul>  
             </div>
         );
@@ -81,9 +67,5 @@ class TopSpotIts extends Component {
 
 
 } // TopSpotIts Component
-
-
-
-
 
 export default TopSpotIts

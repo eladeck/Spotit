@@ -10,15 +10,12 @@ class Feed extends Component {
 
         this.state = {
             likedImages:[],
-            // images:[],
         } // Feed state
 
         this.importImages = this.importImages.bind(this);
         this.handleGoToProfile = this.handleGoToProfile.bind(this);
         this.handleLike = this.handleLike.bind(this);
     } // c'tor
-
-
 
     removeImageFromArray(imgId) {
         this.setState(prevState => {
@@ -62,10 +59,6 @@ class Feed extends Component {
             console.log(err);
         })
     } // handleGoToProfile
-
-    // handleNewComment() {
-
-    // }
 
     importImages() {
         if(this.props.allFollowingImages === "NO IMAGES!") {
@@ -112,11 +105,7 @@ class Feed extends Component {
                                 </div>
                           </div>
                            {console.log(image)}
-                           <Comments 
-                                comments={image.comments} 
-                                imageId={image._id}
-                                extratAllFollowing={this.props.extratAllFollowing}
-                                loggedInUser={this.props.loggedInUser}
+                           <Comments  comments={image.comments}  imageId={image._id} extratAllFollowing={this.props.extratAllFollowing} loggedInUser={this.props.loggedInUser}
                             />
                       </span>
                     </Popup>
@@ -154,20 +143,3 @@ class Feed extends Component {
 } // Feed Component
 
 export default Feed
-
-
-/**            <div className="feed">
-                <h1 className="title">Spotit Feed</h1>
-                <div className="image-wrapper">
-                    <h2>Dor Ben Lulu</h2>
-                    <img src={img1} alt="not working" />
-                </div>
-                <div className="image-wrapper">
-                  <h2>Elad Eckstein</h2>
-                  <img src={img2} alt={"not working"} />
-                </div>
-                <div className="image-wrapper">
-                  <h2>Ilan Kirsh</h2>
-                  <img src={img1} alt={"not working"} />
-                </div>
-        </div> */

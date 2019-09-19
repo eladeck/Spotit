@@ -55,7 +55,7 @@ router.get('/all', (req, res) => {
         if (err || result.length === 0) {
             res.send(401, {errMsg:`error fetching all users`});
         } else {
-            res.send(result) 
+            res.send(result)  
         }
     });
 });

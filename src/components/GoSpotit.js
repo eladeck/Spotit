@@ -13,21 +13,8 @@ class GoSpotit extends Component {
         } // state
 
     this.createListItems = this.createListItems.bind(this);    
-    //this.fetchFlightInfo = this.fetchFlightInfo.bind(this);
     } // c'tor
 
-    // fetchFlightInfo() {
-    //   fetch(`/data/flights`, {method: 'GET', credentials: 'include'})
-    //   .then(response => {
-    //       return response.json()
-    //   })
-    //   .then(res => {
-    //       console.log(`in GoSpotIt:this.componentDidMount, res is:`);
-    //       console.log(res);
-    //       return res;
-    //   })
-    //   .catch(errMsg => {console.log("in GoSpotIt:this.componentDidMount in catch err is");console.log(errMsg); return null;})
-    // }
 
     createListItems() {
         const listLength = 10;
@@ -74,15 +61,6 @@ class GoSpotit extends Component {
            
                       </div>
                       <div className="actions">
-                      { /* <Popup
-                          trigger={<button className="button"> {this.props.inside} </button>}
-                          position="top center"
-                          closeOnDocumentClick
-                        >
-                          <span>
-
-                          </span>
-                      </Popup>*/}
                         <button
                           className="button"
                           onClick={() => {

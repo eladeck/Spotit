@@ -1,12 +1,5 @@
-import React, { Component } from "react"
-import ReactTooltip from 'react-tooltip'
-// import pilotLogo from "./img/pilot-logo.jpg"
-import Container from './Container';
-import ImageForm from './ImageForm';
-//import {BrowserRouter, Link,Route} from "react-router-dom";
+import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Redirect, Link, WithRouter} from 'react-router-dom'
-//let Router = BrowserRouter;
-//let {BrowserRouter, Link,Route} = ReactRouterDOM;
 
 class Header extends Component {
     constructor(props) {
@@ -166,19 +159,6 @@ class Header extends Component {
         this.setState({searchFor})
     }
 
-    // componentWillUnmount() {
-    //     fetch(`/imageFormData`, {method: 'GET', credentials: 'include'})
-    //     .then(response => {
-    //         return response.json()
-    //     })
-    //     .then(res => {
-    //         console.log(`in this.componentDidMount, res is:`);
-    //         console.log(res.airlines[0]);
-    //         this.setState({formData: res})
-    //     })
-    //     .catch(errMsg => {console.log(errMsg); this.setState({errMsg})})
-    //   } // componentWillUnmount
-
     handleUrlChanged() {
         this.props.handleUrlChanged();
     }
@@ -212,7 +192,6 @@ class Header extends Component {
               
               {this.props.loggedInUser ? <li><Link to="/home">Home</Link></li> :
                <li><Link to="/register">Login</Link></li>}
-               {/* <li onClick={this.handleUrlChanged}><Link to="/register">Register</Link></li>} */}
               <li>
                 <a className="tooltip" href="/">
                     <div className="tooltip">Forum
@@ -231,8 +210,6 @@ class Header extends Component {
           </div> : null} 
       {this.props.loggedInUser ?
       <img src="/exit.png" className="logout" onClick={this.handleLogout}/> : null}
-      {/* <p data-tip="hello world">Tooltip</p>
-      <ReactTooltip/> */}
    </header>
         );
     } // render
