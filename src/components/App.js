@@ -28,7 +28,6 @@ class App extends React.Component {
         this.setState({ iataCodeData });
       })
       .catch(errMsg => this.setState({ errMsg }));
-    //this.fetchUser();
   }
 
   fetchUser() {
@@ -64,15 +63,13 @@ class App extends React.Component {
       .then(res => res.json())
       .then(obj => {
         this.state.refToExtractAllFollowings(shouldFetchLoggedInUserFromDb);
-        console.log("after");
       });
     // this.fetchUser();
   }
 
   handleFollow(userNameToFollow) {
     const shouldFetchLoggedInUserFromDb = true;
-    console.log("in handleFollow");
-    // e.preventDefault();
+
     fetch(`/user/follow?userNameToFollow=${userNameToFollow}`, {
       method: "POST",
       credentials: "include"
