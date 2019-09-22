@@ -49,7 +49,8 @@ class Register extends Component {
         })
     }
 
-    handleRegister() {
+    handleRegister(e) {
+        e.preventDefault();
         console.log("in handleRegister of Register.js, going in to handleSuccessfulLogin");
         console.log("the user is " + this.state.newUser.firstName);
         let newUser = this.state.newUser
