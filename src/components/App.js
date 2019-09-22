@@ -20,7 +20,7 @@ class App extends React.Component {
   } //
 
   componentDidMount() {
-    // for fetching airplanes and stuff
+    // for fetching airplanes and data
     const ms = new Date().getTime();
     fetch(`/imageFormData`, { method: "GET", credentials: "include" })
       .then(response => response.json())
@@ -69,7 +69,7 @@ class App extends React.Component {
 
   handleFollow(userNameToFollow) {
     const shouldFetchLoggedInUserFromDb = true;
-
+    console.log("in handleFollow");
     fetch(`/user/follow?userNameToFollow=${userNameToFollow}`, {
       method: "POST",
       credentials: "include"

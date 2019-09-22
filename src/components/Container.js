@@ -96,7 +96,7 @@ class Container extends Component {
       console.log("in extractAllImagesOfFollowings")
 
       if(allFollowing.length === 0) {
-        // loggedInUser does not follow anyone
+        // case loggedInUser does not follow anyone
         this.setState({allFollowingImages:[]})
         return;
       }
@@ -185,7 +185,7 @@ class Container extends Component {
     }
   } // postLogin
 
-    handleSuccessfulLogin(userToLogin) {
+  async handleSuccessfulLogin(userToLogin) {
       this.props.updateLoggedInUser(userToLogin)
       this.setState({
         isLoggedIn: true,

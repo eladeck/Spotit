@@ -88,7 +88,7 @@ class Feed extends Component {
                 return (
                 <div key={i} className="image-wrapper">
                     <label className="like-count">{image.likes.length + maybeAddOneToLikes}</label>
-                    <i onClick={(e) => this.handleLike(image._id, image, e)} class={likeClassName}></i>
+                    <i onClick={(e) => this.handleLike(image._id, image, e)} className={likeClassName}></i>
                     <Link to={`/profile/${image.userName}`}>
                         <h2>{image.userName}</h2>
                     </Link>
@@ -110,7 +110,7 @@ class Feed extends Component {
                       </span>
                     </Popup>
                     
-                    <div id="myModal" class="modal">
+                    <div id="myModal" className="modal">
                         <span className="close">&times;</span>
                         <img className="modal-content" id="img01" />
                         <div id="caption"></div>

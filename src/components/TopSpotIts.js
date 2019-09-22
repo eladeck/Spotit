@@ -24,9 +24,6 @@ class TopSpotIts extends Component {
 
     componentDidMount() {
         this.fetchAllUsers();
-        console.log(this.props)
-        console.log(this.props.setRefTofetchAllUsers)
-        console.log(typeof this.props.setRefTofetchAllUsers)
         this.props.setRefTofetchAllUsers(this.fetchAllUsers)
     } // componentDidMount
 

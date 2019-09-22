@@ -94,11 +94,11 @@ export default function ProfileMaterialUI(props) {
             >
               <div>
                 {" "}
-                <PopupModal users={props.followingProfilePicture} textToDisplay={"Followers"} />
+                <PopupModal users={props.followedByProfilePicture} textToDisplay={"Followers"} />
               </div>
               <div>
                 {" "}
-                <PopupModal users={props.followedByProfilePicture} textToDisplay={"Following"} />{" "}
+                <PopupModal users={props.followingProfilePicture} textToDisplay={"Following"} />{" "}
               </div>
             </Typography>
             <div className={classes.heroButtons}>

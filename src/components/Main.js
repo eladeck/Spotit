@@ -48,7 +48,6 @@ class Main extends Component {
             />
             <Feed
                 loggedInUser={this.props.loggedInUser}
-                // allFollowingImages={this.shuffleArray(this.props.allFollowingImages)}
                 allFollowingImages={this.props.allFollowingImages}
                 setDesiredUser={this.props.setDesiredUser}
                 extratAllFollowing={this.props.extratAllFollowing}
